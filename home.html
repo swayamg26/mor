@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mor - Premium Fashion for Women</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo {
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            color: #2d5a2d;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-btn, .cart-btn {
+            background: transparent;
+            border: 2px solid #e0e0e0;
+            color: #333;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .search-btn:hover, .cart-btn:hover {
+            background: #1a3d1a;
+            color: #ffffff;
+            border-color: #1a3d1a;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+
+        /* Promo Section */
+        .promo-section {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .promo-slider-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 1;
+            max-height: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .promo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .promo-img.active {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="green-pattern" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="1" fill="%231a3d1a" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23green-pattern)"/></svg>');
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            margin-bottom: 1rem; 
+            color: #1a3d1a;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .hero p {
+            font-size: 1.5rem; 
+            margin-bottom: 2rem;
+            color: #555;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .cta-btn {
+            background: linear-gradient(45deg, #1a3d1a, #2d5a2d);
+            color: #ffffff;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(26, 61, 26, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 61, 26, 0.4);
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 6rem 2rem;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem; 
+            color: #1a3d1a;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+
+        .categories-scroll {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: thin; 
+            scrollbar-color: #2d5a2d transparent;
+        }
+
+        .categories-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .categories-scroll::-webkit-scrollbar-track {
+            background: rgba(45, 90, 45, 0.1);
+            border-radius: 10px;
+        }
+
+        .categories-scroll::-webkit-scrollbar-thumb {
+            background: #2d5a2d;
+            border-radius: 10px;
+        }
+
+        .category-card {
+            min-width: 250px;
+            height: 350px;
+            background-color: #f9f9f9;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0, 0.15);
+        }
+
+        .category-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=2534&auto=format&fit=crop'); }
+        .category-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1551803091-e206d7e0f8de?q=80&w=2574&auto=format&fit=crop'); }
+        .category-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1525457136159-8878648b8514?q=80&w=2574&auto=format&fit=crop'); }
+        .category-card:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1598554747476-38602d04259d?q=80&w=2574&auto=format&fit=crop'); }
+        .category-card:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1523359366921-a131ed4b5a45?q=80&w=2574&auto=format&fit=crop'); }
+
+        .category-content {
+            position: relative;
+            padding: 1.5rem;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .category-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .category-content p {
+            color: #f0f0f0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Glamour Collection Section */
+        .glamour-section {
+            padding: 6rem 2rem; 
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .glamour-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glamour-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #DAA520, #B8860B);
+            color: #fff;
+            padding: 0.5rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .glamour-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .glamour-description {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        /* Featured Section */
+        .featured-section {
+            padding: 6rem 2rem; 
+            background: #ffffff;
+        }
+
+        .featured-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .featured-categories {
+            display: flex;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .featured-category {
+            text-align: center;
+        }
+
+        .featured-category h3 {
+            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            color: #333;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .featured-scroll {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            max-width: 500px;
+        }
+
+        .product-card {
+            min-width: 200px;
+            height: 280px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0, 0.08);
+        }
+
+        .view-all-btn {
+            background: none;
+            border: 2px solid #1a3d1a;
+            color: #1a3d1a;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .view-all-btn:hover {
+            background: #1a3d1a;
+            color: #ffffff;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 6rem 2rem; 
+            background: #f9f9f9;
+        }
+
+        .values-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0, 0.08);
+        }
+
+        .value-number {
+            font-size: 3rem;
+            color: #2d5a2d;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .value-title {
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .value-description {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f9f9f9;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            font-family: 'Playfair Display', serif;
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #555;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #1a3d1a;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo-img {
+                height: 40px; width: 40px;
+            }
+
+            .promo-section {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .promo-slider-container {
+                aspect-ratio: 16 / 9;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .categories-section, .featured-section, .values-section, .glamour-section {
+                padding: 3rem 1rem;
+            }
+
+            .category-card {
+                min-width: 220px;
+                height: 300px;
+            }
+
+            .glamour-title {
+                font-size: 2.2rem;
+            }
+
+            .glamour-description {
+                font-size: 1.1rem;
+            }
+            
+            .featured-categories {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .featured-scroll {
+                max-width: 100%;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="#home" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#collections">Collections</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="promo-section">
+            <div class="promo-slider-container">
+                <img src="p1.jpg" alt="Promo Image 1" class="promo-img active">
+                <img src="p2.jpg" alt="Promo Image 2" class="promo-img">
+                <img src="p3.jpg" alt="Promo Image 3" class="promo-img">
+            </div>
+        </section>
+
+        <section class="hero" id="home">
+            <div class="hero-content fade-in">
+                <h1>MOR</h1>
+                <p>Where Elegance Meets Excellence</p>
+                <button class="cta-btn">Discover Collection</button>
+            </div>
+        </section>
+
+        <section class="categories-section" id="categories">
+            <h2 class="section-title fade-in">Shop by Categories</h2>
+            <div class="categories-scroll">
+                <div class="category-card fade-in">
+                    <div class="category-content">
+                        <h3>Dresses</h3>
+                        <p>Elegant dresses for every occasion.</p>
+                    </div>
+                </div>
+                <div class="category-card fade-in">
+                    <div class="category-content">
+                        <h3>Tops</h3>
+                        <p>Comfortable and contemporary.</p>
+                    </div>
+                </div>
+                <div class="category-card fade-in">
+                    <div class="category-content">
+                        <h3>Bottoms</h3>
+                        <p>Find the perfect fit for your lifestyle.</p>
+                    </div>
+                </div>
+                <div class="category-card fade-in">
+                    <div class="category-content">
+                        <h3>Accessories</h3>
+                        <p>Complete your look with our selection.</p>
+                    </div>
+                </div>
+                <div class="category-card fade-in">
+                    <div class="category-content">
+                        <h3>Outerwear</h3>
+                        <p>Stay stylish in any weather with our collection of jackets and coats.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glamour-section">
+            <div class="glamour-content fade-in" style="position: relative; z-index: 1;">
+                <span class="glamour-badge">Limited Edition</span>
+                <h2 class="glamour-title">A Glamour Collection</h2>
+                <p class="glamour-description">
+                    A limited-edition range that embodies elegance, grace, and timeless beauty. Only at Mor.
+                    Each piece is carefully curated to represent the pinnacle of fashion excellence.
+                </p>
+                <button class="cta-btn">Explore Glamour</button>
+            </div>
+        </section>
+
+        <section class="featured-section" id="collections">
+            <div class="featured-header">
+                <h2 class="section-title fade-in">Featured In</h2>
+            </div>
+            <div class="featured-categories">
+                <div class="featured-category fade-in">
+                    <h3>Fresh Off The Runway</h3>
+                    <div class="featured-scroll">
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                    </div>
+                    <button class="view-all-btn">View All</button>
+                </div>
+                <div class="featured-category fade-in">
+                    <h3>Seasonal Favorites</h3>
+                    <div class="featured-scroll">
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                        <div class="product-card"></div>
+                    </div>
+                    <button class="view-all-btn">View All</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section" id="about">
+            <div class="values-content">
+                <h2 class="section-title fade-in">Values</h2>
+                <h3 class="section-title" style="font-size: 2rem; color: #555; font-family: 'Montserrat', sans-serif; text-transform: none;">Why Choose Mor</h3>
+                <div class="values-grid">
+                    <div class="value-card fade-in">
+                        <div class="value-number">01</div>
+                        <h4 class="value-title">Trendsetting Designs</h4>
+                        <p class="value-description">Ahead of the curve with innovative styles that set tomorrow's trends today.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-number">02</div>
+                        <h4 class="value-title">Sustainable Fashion</h4>
+                        <p class="value-description">Eco-friendly choices you'll love, crafted with respect for our planet.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-number">03</div>
+                        <h4 class="value-title">Quality Craftsmanship</h4>
+                        <p class="value-description">Garments made to last, with attention to every stitch and seam.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-number">04</div>
+                        <h4 class="value-title">Inclusive Sizing</h4>
+                        <p class="value-description">Fashion for every body, because style knows no boundaries.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-number">05</div>
+                        <h4 class="value-title">Customer-Centric</h4>
+                        <p class="value-description">We're with you every step of your fashion journey.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Mor</h4>
+                <p>Premium fashion for the modern woman. Discover elegance, embrace style, and express your unique personality with our curated collections.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="#home">Home</a></p>
+                <p><a href="#categories">Categories</a></p>
+                <p><a href="#collections">Collections</a></p>
+                <p><a href="#about">About Us</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <p><a href="#">Size Guide</a></p>
+                <p><a href="#">Shipping Info</a></p>
+                <p><a href="#">Returns & Exchanges</a></p>
+                <p><a href="#">Contact Support</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Twitter</a></p>
+                <p><a href="#">Newsletter</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Mor Fashion. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Promo Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.promo-img');
+        const slideCount = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slideCount;
+            showSlide(currentSlide);
+        }
+
+        if (slideCount > 0) {
+            slides[0].classList.add('active');
+            setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+
+        // Cart functionality
+        let cartCount = 0;
+        const cartBtn = document.querySelector('.cart-btn');
+
+        function updateCartCount() { // This function is not called in the provided snippet
+            cartBtn.textContent = `Cart (${cartCount})`;
+        }
+
+        // Product card click handlers
+        document.querySelectorAll('.product-card, .category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Simulate adding to cart
+                cartCount++;
+                const cartIcon = cartBtn.querySelector('i');
+                cartBtn.innerHTML = `<i class="fas fa-shopping-bag"></i> ${cartCount}`;
+                cartBtn.style.width = 'auto';
+                cartBtn.style.padding = '0.5rem 1rem';
+                
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // CTA button handlers
+        document.querySelectorAll('.cta-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const categoriesSection = document.getElementById('categories');
+                categoriesSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Search functionality
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = prompt('Search for products:');
+            if (searchTerm) {
+                alert(`Searching for: ${searchTerm}`);
+            }
+        });
+
+        // Header background opacity on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            const scrollTop = window.pageYOffset;
+            
+            if (scrollTop > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.style.background = '#ffffff';
+            }
+        });
+    </script>
+</body>
+</html>
