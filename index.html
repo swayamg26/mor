@@ -77,6 +77,21 @@
             color: #2d5a2d;
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #2d5a2d;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         .nav-actions {
             display: flex;
             gap: 1rem;
@@ -119,7 +134,7 @@
         .promo-slider-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 3 / 1;
+            aspect-ratio: 2.5 / 1;
             max-height: 500px;
             margin: 0 auto;
             overflow: hidden;
@@ -208,16 +223,18 @@
         /* Categories Section */
         .categories-section {
             padding: 6rem 2rem;
-            background: #ffffff;
+            background: linear-gradient(135deg, #fdeec9, #fbf2d7);
         }
 
         .section-title {
             text-align: center;
             font-family: 'Playfair Display', serif;
-            font-size: 3rem; 
-            color: #1a3d1a;
+            font-weight: 700;
+            font-size: 3rem;
+            color: #4a2c2a;
             margin-bottom: 3rem;
             text-transform: uppercase;
+            letter-spacing: 4px;
         }
 
         .categories-scroll {
@@ -244,42 +261,44 @@
         }
 
         .category-card {
-            min-width: 250px;
-            height: 350px;
+            min-width: 220px;
+            height: 320px;
             background-color: #f9f9f9;
             background-size: cover;
             background-position: center;
-            border-radius: 15px;
+            border-radius: 50px 15px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
             display: flex;
             align-items: flex-end;
+            box-shadow: 0 8px 25px rgba(0,0,0, 0.07);
         }
 
         .category-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 80%);
             z-index: 1;
+            transition: all 0.4s ease;
         }
 
         .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0, 0.15);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(218, 165, 32, 0.2);
+            border-color: #e4c590;
         }
 
-        .category-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=2534&auto=format&fit=crop'); }
-        .category-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1551803091-e206d7e0f8de?q=80&w=2574&auto=format&fit=crop'); }
-        .category-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1525457136159-8878648b8514?q=80&w=2574&auto=format&fit=crop'); }
-        .category-card:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1598554747476-38602d04259d?q=80&w=2574&auto=format&fit=crop'); }
-        .category-card:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1523359366921-a131ed4b5a45?q=80&w=2574&auto=format&fit=crop'); }
+        .category-card:hover::before {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+        }
+
+        .category-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1622470953794-345a7c2d467c?q=80&w=2574&auto=format&fit=crop'); }
+        .category-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1588117269521-f35947d30355?q=80&w=2574&auto=format&fit=crop'); }
+        .category-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=2534&auto=format&fit=crop'); }
 
         .category-content {
             position: relative;
@@ -291,17 +310,30 @@
         .category-content h3 {
             font-family: 'Playfair Display', serif;
             color: #ffffff;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            transition: all 0.3s ease;
         }
         
         .category-content p {
-            color: #f0f0f0;
-            font-size: 1rem;
+            color: #e0e0e0;
+            font-size: 0.9rem;
             line-height: 1.5;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .category-card:hover .category-content h3 {
+            transform: translateY(-10px);
+        }
+
+        .category-card:hover .category-content p {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Glamour Collection Section */
@@ -359,10 +391,11 @@
 
         .featured-categories {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 4rem;
             max-width: 1200px;
             margin: 0 auto;
-            justify-content: center;
         }
 
         .featured-category {
@@ -420,6 +453,23 @@
             background: #1a3d1a;
             color: #ffffff;
         }
+
+        /* Specific styles for featured product cards */
+        .featured-category .product-card {
+            background-size: cover;
+            background-position: center;
+        }
+        .featured-category-runway .product-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2520&auto=format&fit=crop'); }
+        .featured-category-runway .product-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1539109136881-3be0616f4951?q=80&w=2535&auto=format&fit=crop'); }
+        .featured-category-runway .product-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?q=80&w=2565&auto=format&fit=crop'); }
+        .featured-category-runway .product-card:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=2535&auto=format&fit=crop'); }
+        .featured-category-runway .product-card:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=2574&auto=format&fit=crop'); }
+
+        .featured-category-seasonal .product-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1617922001434-c7a4222b3a44?q=80&w=2574&auto=format&fit=crop'); }
+        .featured-category-seasonal .product-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1611312449412-6cefac5dc3e4?q=80&w=2574&auto=format&fit=crop'); }
+        .featured-category-seasonal .product-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1579309410162-5a1542a31a96?q=80&w=2574&auto=format&fit=crop'); }
+        .featured-category-seasonal .product-card:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1542838686-37da4a9fd1b3?q=80&w=2574&auto=format&fit=crop'); }
+        .featured-category-seasonal .product-card:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1545291730-faff8ca1d4b0?q=80&w=2574&auto=format&fit=crop'); }
 
         /* Values Section */
         .values-section {
@@ -570,11 +620,6 @@
                 font-size: 1.1rem;
             }
             
-            .featured-categories {
-                flex-direction: column;
-                gap: 3rem;
-            }
-
             .featured-scroll {
                 max-width: 100%;
             }
@@ -634,46 +679,22 @@
             <div class="categories-scroll">
                 <div class="category-card fade-in">
                     <div class="category-content">
+                        <h3>Co-ord Sets</h3>
+                        <p>Effortless style in matching sets.</p>
+                    </div>
+                </div>
+                <div class="category-card fade-in">
+                    <div class="category-content">
+                        <h3>Indo Western</h3>
+                        <p>A beautiful fusion of tradition and trend.</p>
+                    </div>
+                </div>
+                <div class="category-card fade-in">
+                    <div class="category-content">
                         <h3>Dresses</h3>
-                        <p>Elegant dresses for every occasion.</p>
+                        <p>Elegant designs for every occasion.</p>
                     </div>
                 </div>
-                <div class="category-card fade-in">
-                    <div class="category-content">
-                        <h3>Tops</h3>
-                        <p>Comfortable and contemporary.</p>
-                    </div>
-                </div>
-                <div class="category-card fade-in">
-                    <div class="category-content">
-                        <h3>Bottoms</h3>
-                        <p>Find the perfect fit for your lifestyle.</p>
-                    </div>
-                </div>
-                <div class="category-card fade-in">
-                    <div class="category-content">
-                        <h3>Accessories</h3>
-                        <p>Complete your look with our selection.</p>
-                    </div>
-                </div>
-                <div class="category-card fade-in">
-                    <div class="category-content">
-                        <h3>Outerwear</h3>
-                        <p>Stay stylish in any weather with our collection of jackets and coats.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="glamour-section">
-            <div class="glamour-content fade-in" style="position: relative; z-index: 1;">
-                <span class="glamour-badge">Limited Edition</span>
-                <h2 class="glamour-title">A Glamour Collection</h2>
-                <p class="glamour-description">
-                    A limited-edition range that embodies elegance, grace, and timeless beauty. Only at Mor.
-                    Each piece is carefully curated to represent the pinnacle of fashion excellence.
-                </p>
-                <button class="cta-btn">Explore Glamour</button>
             </div>
         </section>
 
@@ -682,7 +703,7 @@
                 <h2 class="section-title fade-in">Featured In</h2>
             </div>
             <div class="featured-categories">
-                <div class="featured-category fade-in">
+                <div class="featured-category fade-in featured-category-runway">
                     <h3>Fresh Off The Runway</h3>
                     <div class="featured-scroll">
                         <div class="product-card"></div>
@@ -693,7 +714,7 @@
                     </div>
                     <button class="view-all-btn">View All</button>
                 </div>
-                <div class="featured-category fade-in">
+                <div class="featured-category fade-in featured-category-seasonal">
                     <h3>Seasonal Favorites</h3>
                     <div class="featured-scroll">
                         <div class="product-card"></div>
