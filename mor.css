@@ -138,6 +138,18 @@ main {
     opacity: 1;
 }
 
+/* Styles for the video background */
+.hero-bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: -2;
+}
+
 /* Hero Section */
 .hero {
     height: 60vh;
@@ -149,18 +161,6 @@ main {
     position: relative;
     overflow: hidden;
     color: #fff;
-}
-
-.hero-bg-img,
-.hero-bg-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    z-index: -2;
 }
 
 .hero-overlay {
@@ -179,7 +179,7 @@ main {
 .hero h1 {
     font-family: 'Playfair Display', serif;
     font-size: 4.5rem;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 5px;
@@ -565,7 +565,7 @@ main {
         box-shadow: 5px 0 15px rgba(0,0,0,0.2);
         transform: translateX(-100%);
         transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        z-index: 1001;
+    z-index: 1002;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -640,8 +640,7 @@ main {
     .promo-slider-container {
         width: 100%;
         height: auto; /* Let aspect-ratio control height */
-        aspect-ratio: 5 / 4; /* Match image aspect ratio */
-        aspect-ratio: 1 / 1; /* A taller, mobile-friendly aspect ratio */
+        aspect-ratio: 5 / 4; /* A wider, landscape-style aspect ratio */
     }
     
     .hero h1 {
