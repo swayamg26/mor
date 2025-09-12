@@ -25,14 +25,13 @@
                     <li><a href="#collections">Collections</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li class="mobile-only-link"><a href="login.html"><i class="fas fa-user"></i> Login</a></li>
-                    <li class="mobile-only-link"><a href="#"><i class="fas fa-heart"></i> Favorites</a></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
             <div class="nav-actions">
                 <button class="login-btn" aria-label="Login"><i class="fas fa-user"></i></button>
                 <button class="favorites-btn" aria-label="Favorites"><i class="fas fa-heart"></i></button>
-                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
                 <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i></button>
             </div>
         </nav>
@@ -94,20 +93,44 @@
                 <div class="featured-category fade-in featured-category-runway">
                     <h3>Fresh Off The Runway</h3>
                     <div class="featured-scroll">
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/Yellow-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240857890.jpg?v=1735200808&width=713" alt="Yellow Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/Pink-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859591.jpg?v=1735202298&width=360" alt="Pink Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/Blue-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859613.jpg?v=1750425096&width=360" alt="Blue Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/White-Short-Two-Flared-Kurta-_-Saadgi-The-House-of-Indu-240857752.jpg?v=1735200551&width=360" alt="White Flared Kurta"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card" 
+                             data-name="Yellow Chikankari Kurti" 
+                             data-price="₹1,499" 
+                             data-sizes="S, M, L, XL" 
+                             data-material="Cotton"
+                             data-img-src="https://thehouseofindu.com/cdn/shop/files/Yellow-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240857890.jpg?v=1735200808&width=713">
+                            <img src="https://thehouseofindu.com/cdn/shop/files/Yellow-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240857890.jpg?v=1735200808&width=713" alt="Yellow Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card"
+                             data-name="Pink Chikankari Kurti"
+                             data-price="₹1,399"
+                             data-sizes="S, M, L"
+                             data-material="Rayon"
+                             data-img-src="https://thehouseofindu.com/cdn/shop/files/Pink-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859591.jpg?v=1735202298&width=360">
+                            <img src="https://thehouseofindu.com/cdn/shop/files/Pink-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859591.jpg?v=1735202298&width=360" alt="Pink Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card"
+                             data-name="Blue Chikankari Kurti"
+                             data-price="₹1,599"
+                             data-sizes="M, L, XL"
+                             data-material="Georgette"
+                             data-img-src="https://thehouseofindu.com/cdn/shop/files/Blue-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859613.jpg?v=1750425096&width=360">
+                            <img src="https://thehouseofindu.com/cdn/shop/files/Blue-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859613.jpg?v=1750425096&width=360" alt="Blue Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card"
+                             data-name="White Flared Kurta"
+                             data-price="₹1,899"
+                             data-sizes="S, M, L, XL, XXL"
+                             data-material="Viscose"
+                             data-img-src="https://thehouseofindu.com/cdn/shop/files/White-Short-Two-Flared-Kurta-_-Saadgi-The-House-of-Indu-240857752.jpg?v=1735200551&width=360">
+                            <img src="https://thehouseofindu.com/cdn/shop/files/White-Short-Two-Flared-Kurta-_-Saadgi-The-House-of-Indu-240857752.jpg?v=1735200551&width=360" alt="White Flared Kurta"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
                     </div>
                     <button class="view-all-btn">View All</button>
                 </div>
                 <div class="featured-category fade-in featured-category-seasonal">
                     <h3>Seasonal Favorites</h3>
                     <div class="featured-scroll">
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/Rayon-Straight-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240860378.jpg?v=1735202865&width=360" alt="Rayon Straight Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/Straight-Kurti-With-Pink-Chikankari-_-Saadgi-The-House-of-Indu-240861340.jpg?v=1735203989&width=360" alt="Straight Kurti with Pink Chikankari"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/Pink-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859591.jpg?v=1735202298&width=360" alt="Pink Short Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                        <div class="product-card"><img src="https://thehouseofindu.com/cdn/shop/files/White-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-254358979.jpg?v=1739022121&width=360" alt="White Short Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card" data-name="Rayon Straight Kurti" data-price="₹1,299" data-sizes="S, M, L" data-material="Rayon" data-img-src="https://thehouseofindu.com/cdn/shop/files/Rayon-Straight-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240860378.jpg?v=1735202865&width=360"><img src="https://thehouseofindu.com/cdn/shop/files/Rayon-Straight-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240860378.jpg?v=1735202865&width=360" alt="Rayon Straight Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card" data-name="Straight Kurti with Pink Chikankari" data-price="₹1,450" data-sizes="M, L, XL" data-material="Cotton" data-img-src="https://thehouseofindu.com/cdn/shop/files/Straight-Kurti-With-Pink-Chikankari-_-Saadgi-The-House-of-Indu-240861340.jpg?v=1735203989&width=360"><img src="https://thehouseofindu.com/cdn/shop/files/Straight-Kurti-With-Pink-Chikankari-_-Saadgi-The-House-of-Indu-240861340.jpg?v=1735203989&width=360" alt="Straight Kurti with Pink Chikankari"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card" data-name="Pink Short Kurti" data-price="₹1,399" data-sizes="S, M" data-material="Rayon" data-img-src="https://thehouseofindu.com/cdn/shop/files/Pink-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859591.jpg?v=1735202298&width=360"><img src="https://thehouseofindu.com/cdn/shop/files/Pink-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-240859591.jpg?v=1735202298&width=360" alt="Pink Short Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                        <div class="product-card" data-name="White Short Kurti" data-price="₹1,199" data-sizes="S, M, L, XL" data-material="Cotton" data-img-src="https://thehouseofindu.com/cdn/shop/files/White-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-254358979.jpg?v=1739022121&width=360"><img src="https://thehouseofindu.com/cdn/shop/files/White-Straight-Short-Kurti-With-Chikankari-_-Saadgi-The-House-of-Indu-254358979.jpg?v=1739022121&width=360" alt="White Short Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
                     </div>
                     <button class="view-all-btn">View All</button>
                 </div>
@@ -126,38 +149,25 @@
             </div>
         </section>
 
-        <section class="why-choose-mor">
-          <h2>Why Choose Mor</h2>
-          <div class="features-grid">
-            <div class="feature-card fade-in">
-              <div class="feature-icon"><i class="fas fa-star"></i></div>
-              <h3>Trendsetting Designs</h3>
-              <p>Ahead of the curve with innovative styles that set tomorrow's trends today.</p>
-            </div>
-            <div class="feature-card fade-in">
-              <div class="feature-icon"><i class="fas fa-leaf"></i></div>
-              <h3>Sustainable Fashion</h3>
-              <p>Eco-friendly choices you'll love, crafted with respect for our planet.</p>
-            </div>
-            <div class="feature-card fade-in">
-              <div class="feature-icon"><i class="fas fa-gem"></i></div>
-              <h3>Quality Craftsmanship</h3>
-              <p>Garments made to last, with attention to every stitch and seam.</p>
-            </div>
-            <div class="feature-card fade-in">
-              <div class="feature-icon"><i class="fas fa-users"></i></div>
-              <h3>Inclusive Sizing</h3>
-              <p>Fashion for every body, because style knows no boundaries.</p>
-            </div>
-            <div class="feature-card fade-in">
-              <div class="feature-icon"><i class="fas fa-handshake"></i></div>
-              <h3>Customer-Centric</h3>
-              <p>We're with you every step of your fashion journey.</p>
-            </div>
-          </div>
-        </section>
-
     </main>
+
+    <!-- Auto-Sliding Info Banner -->
+    <section class="info-banner-section">
+        <div class="info-slider-container">
+            <div class="info-slider">
+                <div class="info-slide"><i class="fas fa-truck"></i><p>Free Delivery HYDERABAD</p></div>
+                <div class="info-slide"><i class="fas fa-headset"></i><p>24 x 7 Customer Support</p></div>
+                <div class="info-slide"><i class="fas fa-ruler-combined"></i><p>Made to Measure</p></div>
+                <div class="info-slide"><i class="fas fa-undo-alt"></i><p>Easy Returns</p></div>
+            </div>
+        </div>
+        <div class="info-dots">
+            <span class="info-dot active" data-slide="0"></span>
+            <span class="info-dot" data-slide="1"></span>
+            <span class="info-dot" data-slide="2"></span>
+            <span class="info-dot" data-slide="3"></span>
+        </div>
+    </section>
 
     <footer class="footer" id="contact">
         <div class="footer-content">
@@ -193,6 +203,48 @@
     </footer>
 
     <div class="overlay"></div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content-wrapper">
+            <span class="modal-close">&times;</span>
+            <div class="modal-product-image">
+                <img id="modal-product-img" src="" alt="Product Image">
+            </div>
+            <div class="modal-product-details">
+                <h3 id="modal-product-name"></h3>
+                <p class="modal-price" id="modal-product-price"></p>
+                <p><strong>Sizes:</strong> <span id="modal-product-sizes"></span></p>
+                <p><strong>Material:</strong> <span id="modal-product-material"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay" style="display: none;">
+        <div class="login-modal-content">
+            <span class="modal-close login-modal-close">&times;</span>
+            <h2>Welcome Back</h2>
+            <p>Log in to access your account and favorites.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-submit-btn">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919885489448" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-text">WhatsApp</span>
+    </a>
 
     <script src="mor.js"></script>
 </body>

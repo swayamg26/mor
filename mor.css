@@ -68,7 +68,7 @@ body {
     align-items: center;
 }
 
-.search-btn, .cart-btn, .login-btn, .favorites-btn {
+.login-btn, .favorites-btn {
     background: transparent; 
     border: 2px solid #f0e68c;
     color: #fff;
@@ -83,7 +83,21 @@ body {
     align-items: center;
 }
 
-.search-btn:hover, .cart-btn:hover, .login-btn:hover, .favorites-btn:hover, .nav-links a:hover {
+/* New style for the cart button to remove the circle */
+.cart-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem; /* Slightly larger icon */
+    padding: 10px; /* Add some padding for easier clicking */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-btn:hover, .favorites-btn:hover, .nav-links a:hover, .cart-btn:hover {
     background: #fff;
     color: #a0782c;
     border-color: #fff;
@@ -101,7 +115,64 @@ body {
 
 /* Main Content */
 main {
-    margin-top: 80px;
+    margin-top: 65px; /* Push content below fixed header */
+}
+
+/* Info Banner Section */
+.info-banner-section {
+    background: #000; /* Black background */
+    padding: 1.5rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-slider-container {
+    overflow: hidden;
+}
+
+.info-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.info-slide {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* White text */
+    gap: 0.5rem;
+}
+
+.info-slide i {
+    font-size: 1.5rem;
+}
+
+.info-slide p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.info-dots {
+    padding-top: 0.75rem;
+}
+
+.info-dot {
+    cursor: pointer;
+    height: 8px;
+    width: 8px;
+    margin: 0 4px;
+    background-color: #555; /* Inactive dot color */
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.info-dot.active {
+    background-color: #fff; /* Active dot color */
 }
 
 /* Promo Section */
@@ -465,49 +536,6 @@ main {
     border: 1px solid #eee;
 }
 
-/* Why Choose Mor Section */
-.why-choose-mor {
-    padding: 3rem 2rem; /* Reduced vertical padding */
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-}
-.why-choose-mor h2 {
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    color: #1b5e20;
-    margin-bottom: 2rem; /* Reduced bottom margin */
-}
-.feature-card {
-    text-align: center;
-    padding: 1rem;
-}
-.features-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.feature-icon {
-    font-size: 2.5rem;
-    color: #4caf50;
-    margin-bottom: 1rem;
-}
-.feature-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: #1b5e20;
-    margin-bottom: 0.5rem;
-}
-.feature-card p {
-    color: #3e6641;
-    line-height: 1.6;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* Footer */
 .footer {
     background: #111;
@@ -552,7 +580,7 @@ main {
 }
 
 .login-btn, .favorites-btn {
-    display: none; /* Hide from top bar on all screen sizes */
+    display: flex; /* Make login button visible on desktop */
 }
 
 /* Responsive Design */
@@ -633,9 +661,33 @@ main {
     .login-btn, .favorites-btn {
         display: none; /* Hide from top bar on mobile */
     }
+
+    /* Style for buttons inside the mobile nav to look like links */
+    .nav-link-button {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-family: inherit;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #333;
+        cursor: pointer;
+        text-align: left;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem; /* Space between icon and text */
+    }
 }
 
 @media (max-width: 768px) {
+    .info-slide i {
+        font-size: 1.2rem;
+    }
+    .info-slide p {
+        font-size: 0.8rem;
+    }
     .promo-section {
         padding: 0; /* Fill the width */
     }
@@ -659,8 +711,8 @@ main {
         margin-bottom: 2rem;
     }
 
-    .categories-section, .featured-section, .why-choose-mor {
-        padding: 3rem 1rem;
+    .categories-section, .featured-section {
+        padding: 2rem 1rem;
     }
 
     .category-card {
@@ -677,13 +729,6 @@ main {
         font-size: 1.5rem;
     }
 
-    .why-choose-mor h2 {
-        font-size: 2rem;
-    }
-    .feature-card h3 {
-        font-size: 1.2rem;
-    }
-    
     .featured-scroll {
         max-width: 100%;
     }
@@ -768,4 +813,213 @@ html {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    width: 55px;
+    height: 55px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 26px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden; /* Hide the text initially */
+}
+
+@media (min-width: 769px) { /* Apply hover effect only on desktop */
+    .whatsapp-float {
+        width: 60px;
+        height: 60px;
+        bottom: 30px;
+        right: 30px;
+        font-size: 28px;
+    }
+    .whatsapp-float:hover {
+        width: 170px; /* Expand width on hover */
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+}
+
+.whatsapp-text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 8px;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Product Modal Styles */
+/* This is the overlay that covers the entire screen for any modal */
+.modal-overlay {
+    position: fixed; /* Stay in place even when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    /* display: flex; */ /* This is now controlled by JavaScript to prevent conflicts */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000; /* Ensure it's on top of other content */
+    opacity: 0; /* Start fully transparent */
+    transition: opacity 0.3s ease; /* Smooth fade-in/out transition */
+    padding: 1rem;
+}
+
+.modal-content-wrapper {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    position: relative;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal-content-wrapper {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-product-image {
+    width: 100%;
+    height: 300px;
+}
+
+.modal-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-product-details {
+    padding: 1.5rem 2rem;
+}
+
+.modal-product-details h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.modal-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #a0782c;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .modal-content-wrapper {
+        flex-direction: row;
+        max-height: 90vh;
+    }
+    .modal-product-image {
+        width: 50%;
+        height: auto;
+    }
+    .modal-product-details {
+        width: 50%;
+        padding: 2rem 2.5rem;
+    }
+}
+
+/* Login Modal Styles */
+/* This is the white box containing the login form */
+.login-modal-content {
+    background: #fff;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    max-width: 400px; /* Set a maximum width */
+    width: 100%; /* Make it responsive */
+    text-align: center;
+    position: relative;
+    transform: scale(0.95); /* Start slightly smaller for a pop-in effect */
+    transition: transform 0.3s ease; /* Smooth animation for the pop-in effect */
+}
+
+.login-modal-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #4a2c2a; /* A dark, warm color for the heading */
+    margin-bottom: 0.5rem;
+}
+
+.login-modal-content p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+/* Styles for each form field group (label + input) */
+.form-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+/* Styles for the email and password input fields */
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Styles for the main login button */
+.login-submit-btn {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    background: linear-gradient(135deg, #c89b3f, #a0782c);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-submit-btn:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Add a subtle shadow on hover */
 }
