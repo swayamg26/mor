@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add click event listeners to all login buttons
     loginBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default link behavior
-            openLoginModal();
+            e.preventDefault(); // Prevent default button behavior
+            openLoginModal(); // Re-enable the on-page modal
         });
     });
 
@@ -128,6 +128,86 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- Login/Signup View Toggle ---
+    const toggleViewLink = document.getElementById('toggle-view-link');
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
+    if (toggleViewLink && forgotPasswordLink) {
+        let currentView = 'login'; // Can be 'login', 'signup', or 'forgotPassword'
+
+        const title = document.getElementById('login-modal-title');
+        const subtitle = document.getElementById('login-modal-subtitle');
+        const emailGroup = document.querySelector('#login-form .form-group:first-of-type');
+        const passwordGroup = document.querySelector('#login-form .form-group:nth-of-type(2)');
+        const confirmGroup = document.getElementById('confirm-password-group');
+        const confirmInput = document.getElementById('confirm-password');
+        const submitBtn = document.getElementById('login-submit-btn');
+        const toggleText = document.getElementById('toggle-view-text');
+        const forgotPasswordGroup = document.getElementById('forgot-password-group');
+
+        const updateView = () => {
+            // Reset all states first
+            emailGroup.style.display = 'block';
+            passwordGroup.style.display = 'block';
+            confirmGroup.style.display = 'none';
+            confirmInput.required = false;
+            forgotPasswordGroup.style.display = 'block';
+
+            if (currentView === 'login') {
+                title.textContent = 'Welcome Back';
+                subtitle.textContent = 'Log in to access your account and favorites.';
+                submitBtn.textContent = 'Log In';
+                toggleText.textContent = "Don't have an account? ";
+                toggleViewLink.textContent = 'Create your account';
+            } else if (currentView === 'signup') {
+                title.textContent = 'Create Account';
+                subtitle.textContent = 'Join us to save your favorites and more.';
+                submitBtn.textContent = 'Sign Up';
+                confirmGroup.style.display = 'block';
+                confirmInput.required = true;
+                forgotPasswordGroup.style.display = 'none';
+                toggleText.textContent = 'Already have an account? ';
+                toggleViewLink.textContent = 'Log in';
+            } else if (currentView === 'forgotPassword') {
+                title.textContent = 'Reset Password';
+                subtitle.textContent = 'Enter your email to receive a password reset link.';
+                submitBtn.textContent = 'Send Reset Link';
+                passwordGroup.style.display = 'none';
+                forgotPasswordGroup.style.display = 'none';
+                toggleText.textContent = 'Remembered your password? ';
+                toggleViewLink.textContent = 'Back to Login';
+            }
+        };
+
+        toggleViewLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentView === 'login') {
+                currentView = 'signup';
+            } else if (currentView === 'signup') {
+                currentView = 'login';
+            } else {
+                currentView = 'login'; // From 'forgotPassword' view, go back to login
+            }
+            updateView();
+        });
+
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentView = 'forgotPassword';
+            updateView();
+        });
+
+        // Also handle form submission
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (currentView === 'forgotPassword') {
+                alert('Password reset link sent to your email!');
+                closeLoginModal();
+            }
+            // Other submission logic for login/signup would go here
+        })
+    }
+
 
     // Header background opacity on scroll
     window.addEventListener('scroll', () => {
@@ -168,15 +248,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Cart Side Panel ---
+    const cartPopup = document.getElementById('cart-popup');
+    const openCartBtn = document.querySelector('.cart-btn');
+    const closeCartBtn = document.querySelector('.close-cart-btn');
+    const continueShoppingBtn = document.querySelector('.continue-shopping-btn');
+
+    const openCart = () => {
+        if (cartPopup) {
+            cartPopup.classList.add('open');
+            overlay.style.display = 'block';
+            overlay.classList.add('active'); // Use active class for fade-in
+        }
+    };
+
+    const closeSidePanels = () => {
+        let isPanelOpen = false;
+        if (cartPopup && cartPopup.classList.contains('open')) {
+            cartPopup.classList.remove('open');
+            isPanelOpen = true;
+        }
+        if (favoritesPopup && favoritesPopup.classList.contains('open')) {
+            favoritesPopup.classList.remove('open');
+            isPanelOpen = true;
+        }
+
+        if (isPanelOpen) {
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 400); // Match CSS transition duration
+        }
+    };
+
+    // --- Favorites Side Panel ---
+    const favoritesPopup = document.getElementById('favorites-popup');
+    const openFavoritesBtn = document.querySelector('.favorites-btn');
+    const closeFavoritesBtn = document.querySelector('.close-favorites-btn');
+    const startBrowsingBtn = document.querySelector('.start-browsing-btn');
+
+    const openFavorites = () => {
+        if (favoritesPopup) {
+            favoritesPopup.classList.add('open');
+            overlay.style.display = 'block';
+            overlay.classList.add('active');
+        }
+    };
+
+    // --- Event Listeners for Panels ---
+    if (openCartBtn) openCartBtn.addEventListener('click', openCart);
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeSidePanels);
+    if (continueShoppingBtn) continueShoppingBtn.addEventListener('click', closeSidePanels);
+    
+    if (openFavoritesBtn) openFavoritesBtn.addEventListener('click', openFavorites);
+    if (closeFavoritesBtn) closeFavoritesBtn.addEventListener('click', closeSidePanels);
+    if (startBrowsingBtn) {
+        startBrowsingBtn.addEventListener('click', () => {
+            closeSidePanels();
+            document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    // Add closing functionality to the main overlay
+    if (overlay) {
+        overlay.addEventListener('click', closeSidePanels);
+    }
+
     // --- Cart functionality ---
     let cartCount = 0;
-    const cartBtn = document.querySelector('.cart-btn');
+    document.querySelectorAll('.product-favorite-icon').forEach(icon => {
+        icon.addEventListener('click', (e) => e.stopPropagation()); // Prevent card click for now
+    });
+
     document.querySelectorAll('.product-cart-icon').forEach(icon => {
         icon.addEventListener('click', function(event) {
             event.stopPropagation();
             cartCount++;
-            if (cartBtn) {
-                cartBtn.innerHTML = `<i class="fas fa-shopping-bag"></i> ${cartCount}`;
+            if (openCartBtn) {
+                openCartBtn.innerHTML = `<i class="fas fa-shopping-bag"></i> ${cartCount}`;
             }
             alert('Added to cart successfully!');
             const parentCard = this.closest('.product-card');

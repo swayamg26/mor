@@ -91,7 +91,7 @@
             </div>
             <div class="featured-categories">
                 <div class="featured-category fade-in featured-category-runway">
-                    <h3>Fresh Off The Runway</h3>
+                    <h3>Best Sellers This Week</h3>
                     <div class="featured-scroll">
                         <div class="product-card" 
                              data-name="Yellow Chikankari Kurti" 
@@ -224,8 +224,8 @@
     <div id="login-modal" class="modal-overlay" style="display: none;">
         <div class="login-modal-content">
             <span class="modal-close login-modal-close">&times;</span>
-            <h2>Welcome Back</h2>
-            <p>Log in to access your account and favorites.</p>
+            <h2 id="login-modal-title">Welcome Back</h2>
+            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
             <form id="login-form">
                 <div class="form-group">
                     <label for="login-email">Email</label>
@@ -235,8 +235,51 @@
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="login-submit-btn">Log In</button>
+                <div class="form-group" id="forgot-password-group">
+                    <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                <div class="form-group" id="confirm-password-group" style="display: none;">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••">
+                </div>
+                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
             </form>
+            <p class="create-account-link">
+                <span id="toggle-view-text">Don't have an account? </span>
+                <a href="#" id="toggle-view-link">Create your account</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Cart Side Panel -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart-btn" aria-label="Close Cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Your cart is empty</p>
+                <button class="cta-btn continue-shopping-btn">Continue Shopping</button>
+            </div>
+            <div class="cart-items" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Favorites Side Panel -->
+    <div id="favorites-popup" class="favorites-popup">
+        <div class="favorites-header">
+            <h3>Your Favorites</h3>
+            <button class="close-favorites-btn" aria-label="Close Favorites"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="favorites-content">
+            <div class="favorites-empty">
+                <i class="far fa-heart"></i>
+                <p>You have no favorites yet</p>
+                <button class="cta-btn start-browsing-btn">Start Browsing</button>
+            </div>
+            <div class="favorites-items" style="display: none;"></div>
         </div>
     </div>
 

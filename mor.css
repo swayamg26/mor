@@ -24,6 +24,12 @@ body {
     transition: background-color 0.4s ease;
 }
 
+.header.scrolled {
+    background-color: rgba(160, 120, 44, 0.9); /* #a0782c with transparency */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
@@ -473,6 +479,11 @@ main {
     box-shadow: 0 10px 25px rgba(0,0,0, 0.08);
 }
 
+.product-card.added-to-cart {
+    transform: scale(0.98);
+}
+
+
 .view-all-btn {
     background: none;
     border: 2px solid #1a3d1a;
@@ -785,17 +796,14 @@ html {
 }
 
 .overlay {
-    display: none;
-    /* position: fixed;
-    top: 0; left: 0; */
-    /* width: 100%; height: 100%; */
-    /* background: rgba(0,0,0,0.5); */
-    /* z-index: 1000; */
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: rgba(0,0,0,0.5);
     z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Keyframe Animations */
@@ -868,13 +876,11 @@ html {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-    /* display: flex; */ /* This is now controlled by JavaScript to prevent conflicts */
-    align-items: center;
-    justify-content: center;
+    display: flex; /* Use flexbox to center content */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
     z-index: 2000; /* Ensure it's on top of other content */
-    opacity: 0; /* Start fully transparent */
-    transition: opacity 0.3s ease; /* Smooth fade-in/out transition */
-    padding: 1rem;
+    opacity: 0; /* Start fully transparent for fade-in effect */
 }
 
 .modal-content-wrapper {
@@ -882,7 +888,6 @@ html {
     border-radius: 15px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.2);
     position: relative;
-    max-width: 800px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -891,8 +896,13 @@ html {
     transition: transform 0.3s ease;
 }
 
-.modal-overlay.show .modal-content-wrapper {
-    transform: scale(1);
+.modal-overlay.show {
+    opacity: 1; /* Fade in the overlay */
+    pointer-events: auto; /* Allow clicks when visible */
+}
+
+.modal-overlay.show .modal-content-wrapper, .modal-overlay.show .login-modal-content {
+    transform: scale(1); /* Pop the modal to full size */
 }
 
 .modal-close {
@@ -958,27 +968,27 @@ html {
 /* Login Modal Styles */
 /* This is the white box containing the login form */
 .login-modal-content {
-    background: #fff;
+    background: #ffffff;
     padding: 2rem 2.5rem;
     border-radius: 10px;
-    max-width: 400px; /* Set a maximum width */
-    width: 100%; /* Make it responsive */
+    width: 100%;
+    max-width: 420px; /* Set a maximum width for the sidebar */
     text-align: center;
     position: relative;
     transform: scale(0.95); /* Start slightly smaller for a pop-in effect */
-    transition: transform 0.3s ease; /* Smooth animation for the pop-in effect */
-}
-
-.login-modal-content h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    color: #4a2c2a; /* A dark, warm color for the heading */
-    margin-bottom: 0.5rem;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth pop animation */
 }
 
 .login-modal-content p {
     color: #666;
     margin-bottom: 1rem;
+}
+
+.login-modal-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #4a2c2a;
+    margin-bottom: 0.5rem;
 }
 
 /* Styles for each form field group (label + input) */
@@ -1019,7 +1029,207 @@ html {
     transition: all 0.3s ease;
 }
 
+#forgot-password-group {
+    text-align: right;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+#forgot-password-link {
+    font-size: 0.85rem;
+    color: #a0782c;
+    text-decoration: none;
+}
+
 .login-submit-btn:hover {
     transform: translateY(-2px); /* Slight lift on hover */
     box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Add a subtle shadow on hover */
+}
+
+.create-account-link {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.create-account-link a {
+    color: #a0782c;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.create-account-link a:hover {
+    text-decoration: underline;
+}
+
+/* Cart Popup Styles */
+.cart-popup {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Start off-screen */
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+    z-index: 2001; /* Above modal overlay */
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-popup.open {
+    right: 0; /* Slide in */
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #4a2c2a;
+    margin: 0;
+}
+
+.close-cart-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-cart-btn:hover {
+    color: #333;
+}
+
+.cart-content {
+    flex-grow: 1;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.cart-empty {
+    text-align: center;
+    color: #888;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInScale 0.5s 0.2s forwards;
+}
+
+.cart-empty i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: iconWobble 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s;
+}
+
+.cart-empty p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes iconWobble {
+    0% { transform: rotate(0deg) scale(1); }
+    20% { transform: rotate(-12deg) scale(1.1); }
+    40% { transform: rotate(12deg) scale(1.1); }
+    60% { transform: rotate(-8deg) scale(1.1); }
+    80% { transform: rotate(8deg) scale(1.1); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Favorites Popup Styles */
+.favorites-popup {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Start off-screen from the left */
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+    z-index: 2001;
+    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+}
+
+.favorites-popup.open {
+    left: 0; /* Slide in */
+}
+
+.favorites-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.favorites-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #4a2c2a;
+    margin: 0;
+}
+
+.close-favorites-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-favorites-btn:hover {
+    color: #333;
+}
+
+.favorites-content {
+    flex-grow: 1;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.favorites-empty {
+    text-align: center;
+    color: #888;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInScale 0.5s 0.2s forwards;
+}
+
+.favorites-empty i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #c89b3f;
+    animation: heartBeat 1.5s infinite 0.7s;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(0.9); }
+    20%, 40%, 60%, 80% { transform: scale(1.1); }
+    50%, 70% { transform: scale(1.1); }
 }
