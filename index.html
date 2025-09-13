@@ -26,7 +26,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
-                    <li class="mobile-only-link"><button class="nav-link-button"><i class="fas fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
             <div class="nav-actions">
@@ -93,81 +93,94 @@
                 <div class="featured-category fade-in featured-category-runway">
                     <h3>Best Sellers This Week</h3>
                     <div class="featured-scroll">
-                        <div class="product-card"
-                             data-name="Black Chikankari Kurti"
-                             data-price="₹1,499" 
-                             data-sizes="S, M, L, XL" 
-                             data-material="Cotton"
-                             data-img-src="A10.jpg"
-                             data-gallery-images="A11.jpg,A12.jpg">
-                            <div class="product-image-container">
-                                <img src="A10.jpg" alt="Black Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Black Chikankari Kurti" data-price="₹1,499" data-sizes="S, M, L, XL" data-material="Cotton" data-img-src="A10.jpg" data-gallery-images="A11.jpg,A12.jpg">
+                                <div class="product-image-container">
+                                    <img src="A10.jpg" alt="Black Chikankari Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                                </div>
                             </div>
                             <div class="product-info">
-                                <h4 class="product-name">Black Chikankari Kurti</h4><p class="product-price">₹1,499</p></div></div>
-                        <div class="product-card"
-                             data-name="Stylish Rayon Kurti"
-                             data-price="₹1,399"
-                             data-sizes="S, M, L"
-                             data-material="Rayon"
-                             data-img-src="B11.jpg"
-                             data-gallery-images=",B11.jpg">
-                            <div class="product-image-container">
-                                <img src="B11.jpg" alt="Stylish Rayon Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                                <h4 class="product-name">Black Chikankari Kurti</h4><p class="product-price">₹1,499</p>
                             </div>
-                            <div class="product-info"><h4 class="product-name">Stylish Rayon Kurti</h4><p class="product-price">₹1,399</p></div></div>
-                        <div class="product-card"
-                             data-name="Elegant Georgette Kurti"
-                             data-price="₹1,599"
-                             data-sizes="M, L, XL"
-                             data-material="Georgette"
-                             data-img-src="C10.jpg"
-                             data-gallery-images="C11.jpg,C12.jpg,C13.jpg">
-                            <div class="product-image-container">
-                                <img src="C10.jpg" alt="Elegant Georgette Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Stylish Rayon Kurti" data-price="₹1,399" data-sizes="S, M, L" data-material="Rayon" data-img-src="B11.jpg" data-gallery-images=",B11.jpg">
+                                <div class="product-image-container">
+                                    <img src="B11.jpg" alt="Stylish Rayon Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                                </div>
                             </div>
-                            <div class="product-info"><h4 class="product-name">Elegant Georgette Kurti</h4><p class="product-price">₹1,599</p></div></div>
-                        <div class="product-card"
-                             data-name="Classic Viscose Kurta"
-                             data-price="₹1,899"
-                             data-sizes="S, M, L, XL, XXL"
-                             data-material="Viscose"
-                             data-img-src="D10.jpg"
-                             data-gallery-images="D11.jpg,D12.jpg">
-                            <div class="product-image-container">
-                                <img src="D10.jpg" alt="Classic Viscose Kurta"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                            <div class="product-info"><h4 class="product-name">Stylish Rayon Kurti</h4><p class="product-price">₹1,399</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Elegant Georgette Kurti" data-price="₹1,599" data-sizes="M, L, XL" data-material="Georgette" data-img-src="C10.jpg" data-gallery-images="C11.jpg,C12.jpg,C13.jpg">
+                                <div class="product-image-container">
+                                    <img src="C10.jpg" alt="Elegant Georgette Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                                </div>
                             </div>
-                            <div class="product-info"><h4 class="product-name">Classic Viscose Kurta</h4><p class="product-price">₹1,899</p></div></div>
-                        <div class="product-card" data-name="Navy Blue Kurti Set" data-price="₹1,799" data-sizes="M, L, XL" data-material="Silk Blend" data-img-src="I10.jpg" data-gallery-images="I11.jpg,I12.jpg">
-                            <div class="product-image-container"><img src="I10.jpg" alt="Navy Blue Kurti Set"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Navy Blue Kurti Set</h4><p class="product-price">₹1,799</p></div></div>
-                        <div class="product-card" data-name="Maroon Velvet Kurti" data-price="₹2,499" data-sizes="S, M, L" data-material="Velvet" data-img-src="J10.jpg" data-gallery-images="J11.jpg,J12.jpg">
-                            <div class="product-image-container"><img src="J10.jpg" alt="Maroon Velvet Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Maroon Velvet Kurti</h4><p class="product-price">₹2,499</p></div></div>
+                            <div class="product-info"><h4 class="product-name">Elegant Georgette Kurti</h4><p class="product-price">₹1,599</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Classic Viscose Kurta" data-price="₹1,899" data-sizes="S, M, L, XL, XXL" data-material="Viscose" data-img-src="D10.jpg" data-gallery-images="D11.jpg,D12.jpg">
+                                <div class="product-image-container">
+                                    <img src="D10.jpg" alt="Classic Viscose Kurta"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Classic Viscose Kurta</h4><p class="product-price">₹1,899</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Navy Blue Kurti Set" data-price="₹1,799" data-sizes="M, L, XL" data-material="Silk Blend" data-img-src="I10.jpg" data-gallery-images="I11.jpg,I12.jpg">
+                                <div class="product-image-container"><img src="I10.jpg" alt="Navy Blue Kurti Set"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Navy Blue Kurti Set</h4><p class="product-price">₹1,799</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Maroon Velvet Kurti" data-price="₹2,499" data-sizes="S, M, L" data-material="Velvet" data-img-src="J10.jpg" data-gallery-images="J11.jpg,J12.jpg">
+                                <div class="product-image-container"><img src="J10.jpg" alt="Maroon Velvet Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Maroon Velvet Kurti</h4><p class="product-price">₹2,499</p></div>
+                        </div>
                     </div>
                     <button class="view-all-btn">View All</button>
                 </div>
                 <div class="featured-category fade-in featured-category-seasonal">
                     <h3>Seasonal Favorites</h3>
                     <div class="featured-scroll">
-                        <div class="product-card" data-name="Green Floral Kurti" data-price="₹1,199" data-sizes="S, M, L" data-material="Cotton" data-img-src="E10.jpg" data-gallery-images="E11.jpg,E12.jpg">
-                            <div class="product-image-container"><img src="E10.jpg" alt="Green Floral Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Green Floral Kurti</h4><p class="product-price">₹1,199</p></div></div>
-                        <div class="product-card" data-name="Red Printed Kurti" data-price="₹1,299" data-sizes="M, L, XL" data-material="Rayon" data-img-src="F10.jpg" data-gallery-images="F11.jpg,F12.jpg">
-                            <div class="product-image-container"><img src="F10.jpg" alt="Red Printed Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Red Printed Kurti</h4><p class="product-price">₹1,299</p></div></div>
-                        <div class="product-card" data-name="Yellow Summer Kurti" data-price="₹1,099" data-sizes="S, M" data-material="Cotton" data-img-src="G10.jpg" data-gallery-images="G11.jpg,G12.jpg">
-                            <div class="product-image-container"><img src="G10.jpg" alt="Yellow Summer Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Yellow Summer Kurti</h4><p class="product-price">₹1,099</p></div></div>
-                        <div class="product-card" data-name="Blue Casual Kurti" data-price="₹1,399" data-sizes="S, M, L, XL" data-material="Viscose" data-img-src="H10.jpg" data-gallery-images="H11.jpg,H12.jpg">
-                            <div class="product-image-container"><img src="H10.jpg" alt="Blue Casual Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Blue Casual Kurti</h4><p class="product-price">₹1,399</p></div></div>
-                        <div class="product-card" data-name="Light Green Kurti" data-price="₹1,450" data-sizes="S, M, L" data-material="Cotton" data-img-src="K10.jpg" data-gallery-images="K11.jpg,K12.jpg">
-                            <div class="product-image-container"><img src="K10.jpg" alt="Light Green Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Light Green Kurti</h4><p class="product-price">₹1,450</p></div></div>
-                        <div class="product-card" data-name="Purple Silk Kurti" data-price="₹1,999" data-sizes="M, L, XL" data-material="Silk" data-img-src="L10.jpg" data-gallery-images="L11.jpg,L12.jpg">
-                            <div class="product-image-container"><img src="L10.jpg" alt="Purple Silk Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
-                            <div class="product-info"><h4 class="product-name">Purple Silk Kurti</h4><p class="product-price">₹1,999</p></div></div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Green Floral Kurti" data-price="₹1,199" data-sizes="S, M, L" data-material="Cotton" data-img-src="E10.jpg" data-gallery-images="E11.jpg,E12.jpg">
+                                <div class="product-image-container"><img src="E10.jpg" alt="Green Floral Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Green Floral Kurti</h4><p class="product-price">₹1,199</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Red Printed Kurti" data-price="₹1,299" data-sizes="M, L, XL" data-material="Rayon" data-img-src="F10.jpg" data-gallery-images="F11.jpg,F12.jpg">
+                                <div class="product-image-container"><img src="F10.jpg" alt="Red Printed Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Red Printed Kurti</h4><p class="product-price">₹1,299</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Yellow Summer Kurti" data-price="₹1,099" data-sizes="S, M" data-material="Cotton" data-img-src="G10.jpg" data-gallery-images="G11.jpg,G12.jpg">
+                                <div class="product-image-container"><img src="G10.jpg" alt="Yellow Summer Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Yellow Summer Kurti</h4><p class="product-price">₹1,099</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Blue Casual Kurti" data-price="₹1,399" data-sizes="S, M, L, XL" data-material="Viscose" data-img-src="H10.jpg" data-gallery-images="H11.jpg,H12.jpg">
+                                <div class="product-image-container"><img src="H10.jpg" alt="Blue Casual Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Blue Casual Kurti</h4><p class="product-price">₹1,399</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Light Green Kurti" data-price="₹1,450" data-sizes="S, M, L" data-material="Cotton" data-img-src="K10.jpg" data-gallery-images="K11.jpg,K12.jpg">
+                                <div class="product-image-container"><img src="K10.jpg" alt="Light Green Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Light Green Kurti</h4><p class="product-price">₹1,450</p></div>
+                        </div>
+                        <div class="product-item-wrapper">
+                            <div class="product-card" data-name="Purple Silk Kurti" data-price="₹1,999" data-sizes="M, L, XL" data-material="Silk" data-img-src="L10.jpg" data-gallery-images="L11.jpg,L12.jpg">
+                                <div class="product-image-container"><img src="L10.jpg" alt="Purple Silk Kurti"><div class="product-favorite-icon"><i class="far fa-heart"></i></div><div class="product-cart-icon"><i class="fas fa-cart-plus"></i></div></div>
+                            </div>
+                            <div class="product-info"><h4 class="product-name">Purple Silk Kurti</h4><p class="product-price">₹1,999</p></div>
+                        </div>
                     </div>
                     <button class="view-all-btn">View All</button>
                 </div>
@@ -355,9 +368,6 @@
         <i class="fab fa-whatsapp"></i>
         <span class="whatsapp-text">WhatsApp</span>
     </a>
-
-    <!-- Notification Toast -->
-    <div id="notification-toast" class="notification-toast"></div>
 
     <script src="mor.js"></script>
 </body>

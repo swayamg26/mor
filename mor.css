@@ -461,18 +461,21 @@ main {
     border-radius: 10px;
 }
 
-.product-card {
+.product-item-wrapper {
+    display: flex;
+    flex-direction: column;
     min-width: 200px;
-    /* height is now auto to fit content */
+}
+
+.product-card {
     background: #f9f9f9;
     border-radius: 15px;
     border: 1px solid #e0e0e0;
     transition: all 0.3s ease;
     cursor: pointer;
     will-change: transform; /* Performance optimization */
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
+    flex-shrink: 0; /* Prevent card from shrinking */
 }
 
 .product-card:hover {
@@ -517,9 +520,8 @@ main {
 }
 
 .product-info {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 0.5rem;
     text-align: left;
-    min-height: 60px; /* Ensures a consistent height even if empty */
 }
 
 .product-name {
@@ -794,7 +796,7 @@ main {
 
     .cart-popup,
     .favorites-popup {
-        max-width: 280px; /* Make side panels even narrower */
+        max-width: 320px; /* Make side panels a bit wider on mobile */
     }
 }
 
@@ -963,7 +965,7 @@ html {
 }
 
 .modal-product-image {
-    width: 50%;
+    width: 100%;
     height: 500px; /* Increased height for a taller popup */
     position: relative;
     overflow: hidden;
@@ -1022,7 +1024,8 @@ html {
 }
 
 .modal-product-details {
-    padding: 1.5rem 2rem;
+    padding: 1.5rem;
+    overflow-y: auto; /* Allow details to scroll on mobile if content is long */
 }
 
 .modal-product-details h3 {
@@ -1120,18 +1123,20 @@ html {
         max-height: 90vh;
     }
     .modal-product-image {
-        width: 50%; /* The 'height: auto' rule was overriding the desired height on desktop */
+        width: 50%; /* This was overriding the mobile style */
     }
     .modal-product-details {
         width: 50%;
         padding: 2rem 2.5rem;
+        max-height: none; /* Remove mobile max-height on desktop */
+        overflow-y: visible; /* Remove mobile scroll on desktop */
     }
 }
 
 /* Login Modal Styles */
 /* This is the white box containing the login form */
 .login-modal-content {
-    background: #ffffff;
+    background: #fff;
     padding: 2rem 2.5rem;
     border-radius: 10px;
     width: 100%;
@@ -1556,31 +1561,4 @@ html {
 
 .product-favorite-icon .fas.fa-heart {
     color: #c89b3f; /* Style for the filled heart icon */
-}
-
-/* Notification Toast */
-.notification-toast {
-    position: fixed;
-    bottom: -100px; /* Start off-screen */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #222;
-    color: #fff;
-    padding: 1rem 1.5rem;
-    border-radius: 30px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    z-index: 3000;
-    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.notification-toast.show {
-    bottom: 30px; /* Slide in */
-}
-
-.notification-toast i {
-    color: #25D366; /* Green checkmark */
 }

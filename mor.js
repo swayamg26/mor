@@ -395,22 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const subtotalAmountEl = document.getElementById('cart-subtotal-amount');
     const cartFooter = document.querySelector('.cart-footer');
 
-    // --- Notification Toast ---
-    const notificationToast = document.getElementById('notification-toast');
-    let notificationTimeout;
-
-    const showNotification = (message) => {
-        if (!notificationToast) return;
-
-        clearTimeout(notificationTimeout); // Clear previous timeout if any
-
-        notificationToast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-        notificationToast.classList.add('show');
-
-        notificationTimeout = setTimeout(() => {
-            notificationToast.classList.remove('show');
-        }, 3000); // Hide after 3 seconds
-    };
     const updateCartUI = () => {
         // Update cart count in header
         const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -469,7 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             cartItems.push(product);
         }
-        showNotification(`"${product.name}" added to cart!`);
         updateCartUI();
     };
 
