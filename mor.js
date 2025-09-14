@@ -229,25 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.querySelector('.overlay');
     const closeMenuBtn = document.querySelector('.close-menu');
 
-    const toggleMenu = () => {
-        if (navLinksContainer) navLinksContainer.classList.toggle('open');
-        if (overlay) overlay.style.display = navLinksContainer.classList.contains('open') ? 'block' : 'none';
-    };
-
-    if (hamburger) hamburger.addEventListener('click', toggleMenu);
-    if (overlay) overlay.addEventListener('click', toggleMenu);
-    if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
-
-    if (navLinksContainer) {
-        navLinksContainer.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinksContainer.classList.contains('open')) {
-                    toggleMenu();
-                }
-            });
-        });
-    }
-
     // --- Cart Side Panel ---
     const cartPopup = document.getElementById('cart-popup');
     const openCartBtn = document.querySelector('.cart-btn');
@@ -258,27 +239,49 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cartPopup) {
             cartPopup.classList.add('open');
             overlay.style.display = 'block';
-            overlay.classList.add('active'); // Use active class for fade-in
+            setTimeout(() => handleOverlayAndScroll(true), 10);
+        }
+    };
+
+    const toggleMenu = () => {
+        if (!navLinksContainer) return;
+        const shouldOpen = !navLinksContainer.classList.contains('open');
+        navLinksContainer.classList.toggle('open', shouldOpen);
+        handleOverlayAndScroll(shouldOpen);
+    };
+
+    const handleOverlayAndScroll = (shouldOpen) => {
+        if (shouldOpen) {
+            overlay.style.display = 'block';
+            setTimeout(() => overlay.classList.add('active'), 10); // Fade in
+            document.body.classList.add('no-scroll');
+        } else {
+            overlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+            setTimeout(() => { // Wait for transition to finish
+                // Only hide overlay if no other panels are open
+                if (!cartPopup.classList.contains('open') && !favoritesPopup.classList.contains('open') && !navLinksContainer.classList.contains('open')) {
+                    overlay.style.display = 'none';
+                }
+            }, 400); // Match CSS transition
         }
     };
 
     const closeSidePanels = () => {
-        let isPanelOpen = false;
+        let wasPanelOpen = false;
         if (cartPopup && cartPopup.classList.contains('open')) {
             cartPopup.classList.remove('open');
-            isPanelOpen = true;
+            wasPanelOpen = true;
         }
         if (favoritesPopup && favoritesPopup.classList.contains('open')) {
             favoritesPopup.classList.remove('open');
-            isPanelOpen = true;
+            wasPanelOpen = true;
         }
-
-        if (isPanelOpen) {
-            overlay.classList.remove('active');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 400); // Match CSS transition duration
+        if (navLinksContainer && navLinksContainer.classList.contains('open')) {
+            navLinksContainer.classList.remove('open');
+            wasPanelOpen = true;
         }
+        if (wasPanelOpen) handleOverlayAndScroll(false);
     };
 
     // --- Favorites Side Panel ---
@@ -291,11 +294,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (favoritesPopup) {
             favoritesPopup.classList.add('open');
             overlay.style.display = 'block';
-            overlay.classList.add('active');
+            setTimeout(() => handleOverlayAndScroll(true), 10);
         }
     };
 
     // --- Event Listeners for Panels ---
+    if (hamburger) hamburger.addEventListener('click', toggleMenu);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+
+    if (navLinksContainer) {
+        navLinksContainer.querySelectorAll('a, button').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinksContainer.classList.contains('open')) {
+                    // Close menu, but don't toggle if it's already closing
+                    toggleMenu();
+                }
+            });
+        });
+    }
     if (openCartBtn) openCartBtn.addEventListener('click', openCart);
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeSidePanels);
     if (continueShoppingBtn) continueShoppingBtn.addEventListener('click', closeSidePanels);
@@ -316,10 +332,29 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.addEventListener('click', closeSidePanels);
     }
 
+    // --- Toast Notification ---
+    const toast = document.getElementById('notification-toast');
+    const showToast = (message, iconClass = 'fa-check-circle') => {
+        if (toast) {
+            toast.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    };
+    // Make it globally accessible for product pages
+    window.showToast = showToast;
+
     // --- Favorites Functionality ---
-    let favoriteItems = [];
+    let favoriteItems = JSON.parse(localStorage.getItem('mor_favorites')) || [];
     const favoritesItemsContainer = document.querySelector('.favorites-items');
     const favoritesEmptyMsg = document.querySelector('.favorites-empty');
+
+    const saveFavorites = () => {
+        localStorage.setItem('mor_favorites', JSON.stringify(favoriteItems));
+        updateFavoritesUI();
+    };
 
     const updateFavoritesUI = () => {
         // Update UI based on whether there are favorite items
@@ -358,8 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
             favoriteItems.push(product);
             icon.innerHTML = '<i class="fas fa-heart"></i>'; // Change to solid heart
         }
-        updateFavoritesUI();
+        saveFavorites();
     };
+    window.toggleFavorite = toggleFavorite; // Make it global
 
     // Event delegation for favorite item removal
     favoritesItemsContainer.addEventListener('click', (e) => {
@@ -369,8 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target.classList.contains('favorite-item-remove')) {
             const productCardIcon = document.querySelector(`.product-card[data-name="${name}"] .product-favorite-icon`);
             favoriteItems = favoriteItems.filter(item => item.name !== name);
-            if (productCardIcon) productCardIcon.innerHTML = '<i class="far fa-heart"></i>';
-            updateFavoritesUI();
+            if (productCardIcon) productCardIcon.innerHTML = '<i class="far fa-heart"></i>'; // Reset icon on main page
+            saveFavorites();
         }
 
         if (target.classList.contains('favorite-item-move-to-cart')) {
@@ -389,11 +425,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Cart functionality ---
-    let cartItems = [];
+    let cartItems = JSON.parse(localStorage.getItem('mor_cart')) || [];
     const cartItemsContainer = document.querySelector('.cart-items');
     const cartEmptyMsg = document.querySelector('.cart-empty');
     const subtotalAmountEl = document.getElementById('cart-subtotal-amount');
     const cartFooter = document.querySelector('.cart-footer');
+
+    const saveCart = () => {
+        localStorage.setItem('mor_cart', JSON.stringify(cartItems));
+        updateCartUI();
+    };
+    window.saveCart = saveCart; // Make it global
 
     const updateCartUI = () => {
         // Update cart count in header
@@ -453,8 +495,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             cartItems.push(product);
         }
-        updateCartUI();
+        saveCart();
     };
+    window.addToCart = addToCart; // Make it global
 
     // Event delegation for cart item actions
     cartItemsContainer.addEventListener('click', (e) => {
@@ -478,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        updateCartUI();
+        saveCart();
     });
 
     document.querySelectorAll('.product-favorite-icon').forEach(icon => {
@@ -494,159 +537,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.querySelectorAll('.product-cart-icon').forEach(icon => {
-        icon.addEventListener('click', function(event) {
-            event.stopPropagation();
-            const card = this.closest('.product-card');
-            const product = {
-                name: card.dataset.name,
-                price: card.dataset.price,
-                size: card.dataset.sizes.split(',')[0].trim(), // Default to first size
-                imgSrc: card.querySelector('img').src,
-                quantity: 1
-            };
-            addToCart(product);
-            openCart(); // Open cart when item is added
-
-            const parentCard = this.closest('.product-card');
-            if (parentCard) {
-                parentCard.style.transform = 'scale(0.98)';
-                setTimeout(() => {
-                    parentCard.style.transform = '';
-                }, 150);
-            }
-        });
-    });
-
-    // --- Product Modal Functionality ---
-    const productModal = document.getElementById('product-modal');
+    // --- Product Card Click to Navigate ---
     const productCards = document.querySelectorAll('.product-card');
-    const closeProductModalBtn = productModal.querySelector('.modal-close');
-
-    const openProductModal = (card) => {
-        const name = card.dataset.name;
-        const price = card.dataset.price;
-        const sizes = card.dataset.sizes;
-        const material = card.dataset.material;
-        const mainImgSrc = card.dataset.imgSrc;
-        const galleryImages = card.dataset.galleryImages ? card.dataset.galleryImages.split(',') : [];
-
-        // Populate text details
-        document.getElementById('modal-product-name').textContent = name;
-        document.getElementById('modal-product-price').textContent = price;
-        document.getElementById('modal-product-sizes').textContent = sizes;
-        document.getElementById('modal-product-material').textContent = material;
-
-        // Populate image/gallery
-        const galleryContainer = document.getElementById('modal-gallery-container');
-        const galleryDots = document.getElementById('gallery-dots');
-        galleryContainer.innerHTML = '';
-        galleryDots.innerHTML = '';
-
-        const images = [mainImgSrc, ...galleryImages];
-        let currentGallerySlide = 0;
-
-        images.forEach((src, index) => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = `${name} - Image ${index + 1}`;
-            img.className = 'gallery-img';
-            if (index === 0) img.classList.add('active');
-            galleryContainer.appendChild(img);
-
-            const dot = document.createElement('span');
-            dot.className = 'gallery-dot';
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => showGallerySlide(index));
-            galleryDots.appendChild(dot);
-        });
-
-        const showGallerySlide = (index) => {
-            galleryContainer.querySelectorAll('.gallery-img').forEach((img, i) => img.classList.toggle('active', i === index));
-            galleryDots.querySelectorAll('.gallery-dot').forEach((dot, i) => dot.classList.toggle('active', i === index));
-            currentGallerySlide = index;
-        };
-
-        document.getElementById('gallery-prev').onclick = () => showGallerySlide((currentGallerySlide - 1 + images.length) % images.length);
-        document.getElementById('gallery-next').onclick = () => showGallerySlide((currentGallerySlide + 1) % images.length);
-
-        // Show/hide arrows and dots based on image count
-        const showControls = images.length > 1;
-        document.getElementById('gallery-prev').style.display = showControls ? 'block' : 'none';
-        document.getElementById('gallery-next').style.display = showControls ? 'block' : 'none';
-        document.getElementById('gallery-dots').style.display = showControls ? 'block' : 'none';
-
-        // --- Populate Size Options ---
-        const sizeSelector = document.getElementById('size-selector');
-        sizeSelector.innerHTML = '';
-        const availableSizes = sizes.split(',').map(s => s.trim());
-        availableSizes.forEach((size, index) => {
-            const sizeBtn = document.createElement('button');
-            sizeBtn.className = 'size-btn';
-            sizeBtn.textContent = size;
-            if (index === 0) {
-                sizeBtn.classList.add('active'); // Select first size by default
+    productCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Prevent navigation if an icon inside the card was clicked
+            if (e.target.closest('.product-favorite-icon')) {
+                return;
             }
-            sizeBtn.addEventListener('click', () => {
-                sizeSelector.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-                sizeBtn.classList.add('active');
-            });
-            sizeSelector.appendChild(sizeBtn);
+            const productPage = card.dataset.pageUrl;
+            if (productPage) {
+                window.location.href = productPage;
+            }
         });
-
-        // --- Handle Quantity Counter ---
-        const quantityValue = document.querySelector('.quantity-value');
-        quantityValue.textContent = '1'; // Reset to 1
-        document.querySelectorAll('.quantity-btn').forEach(btn => {
-            btn.onclick = () => {
-                let currentQty = parseInt(quantityValue.textContent);
-                if (btn.dataset.action === 'increase') {
-                    currentQty++;
-                } else if (currentQty > 1) {
-                    currentQty--;
-                }
-                quantityValue.textContent = currentQty;
-            };
-        });
-
-        // --- Handle Add to Cart from Modal ---
-        document.getElementById('modal-add-to-cart-btn').onclick = () => {
-            const selectedSize = sizeSelector.querySelector('.size-btn.active').textContent;
-            const quantity = parseInt(quantityValue.textContent);
-            const product = {
-                name: name,
-                price: price,
-                size: selectedSize,
-                imgSrc: mainImgSrc,
-                quantity: quantity
-            };
-            addToCart(product);
-            closeProductModal();
-            openCart();
-        };
-
-        productModal.style.display = 'flex';
-        setTimeout(() => productModal.classList.add('show'), 10);
-    };
-
-    const closeProductModal = () => {
-        productModal.classList.remove('show');
-        setTimeout(() => productModal.style.display = 'none', 300);
-    };
-
-    productCards.forEach(card => card.addEventListener('click', () => openProductModal(card)));
-    closeProductModalBtn.addEventListener('click', closeProductModal);
-    productModal.addEventListener('click', (e) => {
-        if (e.target === productModal) closeProductModal();
     });
 
     // --- CTA button handlers ---
     document.querySelectorAll('.cta-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const categoriesSection = document.getElementById('categories');
-            if (categoriesSection) {
-                categoriesSection.scrollIntoView({ behavior: 'smooth' });
+        // Exclude the new hero button which is now a link
+        if (btn.id !== 'hero-shop-now') {
+            btn.addEventListener('click', () => {
+                const categoriesSection = document.getElementById('categories');
+                if (categoriesSection) {
+                    categoriesSection.scrollIntoView({ behavior: 'smooth' });
+                }
             }
-        });
+        );
+        }
     });
+
+    // Initial UI updates on page load
+    updateCartUI();
+    updateFavoritesUI();
 });
