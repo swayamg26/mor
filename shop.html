@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All Products - Mor</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="mor.css">
+    <style>
+        .shop-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fdeec9, #fbf2d7);
+        }
+        .shop-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #4a2c2a;
+        }
+        .shop-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .search-bar:focus {
+            outline: none;
+            border-color: #a0782c;
+        }
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: #4a2c2a;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter-btn:hover {
+            background-color: #a0782c;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #888;
+        }
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            .shop-header h1 {
+                font-size: 2rem;
+            }
+            .shop-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html#home" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img"></a>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#categories">Categories</a></li>
+                    <li><a href="index.html#collections">Collections</a></li>
+                </ul>
+            </div>
+             <div class="nav-actions">
+                <a href="index.html" class="cart-btn" style="text-decoration: none; font-size: 1rem; gap: 0.5rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="shop-header">
+            <h1>All Products</h1>
+        </section>
+
+        <section class="shop-controls">
+            <input type="text" id="search-bar" class="search-bar" placeholder="Search for products...">
+            <button class="filter-btn"><i class="fas fa-filter"></i> Apply Filters</button>
+        </section>
+
+        <section id="product-grid" class="product-grid">
+            <!-- Products will be injected here by JS -->
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const allProducts = [
+                { name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "A10.jpg", pageUrl: "A10.html" },
+                { name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "B11.jpg", pageUrl: "B11.html" },
+                { name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "C10.jpg", pageUrl: "C10.html" },
+                { name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "D10.jpg", pageUrl: "D10.html" },
+                { name: "Green Floral Kurti", price: "₹1,199", imgSrc: "E10.jpg", pageUrl: "E10.html" },
+                { name: "Red Printed Kurti", price: "₹1,299", imgSrc: "F10.jpg", pageUrl: "F10.html" },
+                { name: "Yellow Summer Kurti", price: "₹1,099", imgSrc: "G10.jpg", pageUrl: "G10.html" },
+                { name: "Blue Casual Kurti", price: "₹1,399", imgSrc: "H10.jpg", pageUrl: "H10.html" },
+                { name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "I10.jpg", pageUrl: "I10.html" },
+                { name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "J10.jpg", pageUrl: "J10.html" },
+                { name: "Light Green Kurti", price: "₹1,450", imgSrc: "K10.jpg", pageUrl: "K10.html" },
+                { name: "Purple Silk Kurti", price: "₹1,999", imgSrc: "L10.jpg", pageUrl: "L10.html" },
+                { name: "Royal Blue Silk Saree", price: "₹2,999", imgSrc: "M10.jpg", pageUrl: "M10.html" }
+            ];
+
+            const productGrid = document.getElementById('product-grid');
+            const searchBar = document.getElementById('search-bar');
+
+            const renderProducts = (productsToRender) => {
+                productGrid.innerHTML = ''; // Clear existing products
+
+                if (productsToRender.length === 0) {
+                    productGrid.innerHTML = '<p class="no-results">No products found matching your search.</p>';
+                    return;
+                }
+
+                productsToRender.forEach(product => {
+                    const productCardHTML = `
+                        <div class="product-item-wrapper">
+                            <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
+                                <div class="product-card">
+                                    <div class="product-image-container">
+                                        <img src="${product.imgSrc}" alt="${product.name}">
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <h4 class="product-name">${product.name}</h4>
+                                    <p class="product-price">${product.price}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                    productGrid.innerHTML += productCardHTML;
+                });
+            };
+
+            const handleSearch = () => {
+                const searchTerm = searchBar.value.toLowerCase();
+                const filteredProducts = allProducts.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm)
+                );
+                renderProducts(filteredProducts);
+            };
+
+            searchBar.addEventListener('input', handleSearch);
+
+            // Initial render of all products
+            renderProducts(allProducts);
+        });
+    </script>
+</body>
+</html>
