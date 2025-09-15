@@ -1214,6 +1214,41 @@ html {
     transform: scale(1.1);
 }
 
+/* Product Page Gallery Slider */
+.gallery-main-image {
+    position: relative; /* For positioning arrows */
+}
+
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    z-index: 6;
+    transition: background-color 0.3s;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.gallery-arrow.prev { left: 15px; }
+.gallery-arrow.next { right: 15px; }
+
+.gallery-main-image img {
+    transition: opacity 0.4s ease-in-out;
+}
 /* Image Zoom Effect */
 .gallery-main-image {
     position: relative;
@@ -1275,6 +1310,32 @@ html {
     position: relative;
     transform: scale(0.95); /* Start slightly smaller for a pop-in effect */
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth pop animation */
+}
+
+.login-toggle-options {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    background-color: #444;
+    border-radius: 25px;
+    padding: 4px;
+}
+
+.login-toggle-btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    background-color: transparent;
+    color: #d3d3d3;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.login-toggle-btn.active {
+    background-color: #555555;
+    color: #ffffff;
 }
 
 .login-modal-content p {

@@ -134,15 +134,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const forgotPasswordLink = document.getElementById('forgot-password-link');
     if (toggleViewLink && forgotPasswordLink) {
         let currentView = 'login'; // Can be 'login', 'signup', or 'forgotPassword'
+        let loginMethod = 'email'; // 'email' or 'phone'
+        let otpSent = false;
 
         const title = document.getElementById('login-modal-title');
         const subtitle = document.getElementById('login-modal-subtitle');
+        const loginToggleContainer = document.querySelector('.login-toggle-options');
         const emailGroup = document.querySelector('#login-form .form-group:first-of-type');
+        const emailInput = document.getElementById('login-email');
         const mobileNumberGroup = document.getElementById('mobile-number-group');
         const mobileInput = document.getElementById('mobile-number');
         const passwordGroup = document.getElementById('login-password').parentElement;
         const confirmGroup = document.getElementById('confirm-password-group');
         const confirmInput = document.getElementById('confirm-password');
+        const otpGroup = document.getElementById('otp-group');
+        const otpInput = document.getElementById('otp-input');
         const submitBtn = document.getElementById('login-submit-btn');
         const toggleText = document.getElementById('toggle-view-text');
         const forgotPasswordGroup = document.getElementById('forgot-password-group');
@@ -150,12 +156,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const updateView = () => {
             // Reset all states first
             emailGroup.style.display = 'block';
+            emailInput.placeholder = "you@example.com";
             mobileNumberGroup.style.display = 'none';
             mobileInput.required = false;
             passwordGroup.style.display = 'block';
             confirmGroup.style.display = 'none';
             confirmInput.required = false;
+            otpGroup.style.display = 'none';
+            otpInput.required = false;
             forgotPasswordGroup.style.display = 'block';
+            loginToggleContainer.style.display = 'flex';
+            otpSent = false;
 
             if (currentView === 'login') {
                 title.textContent = 'Welcome Back';
@@ -163,12 +174,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = 'Log In';
                 toggleText.textContent = "Don't have an account? ";
                 toggleViewLink.textContent = 'Create your account';
+
+                if (loginMethod === 'phone') {
+                    emailGroup.style.display = 'block'; // Re-use email field for phone
+                    emailInput.type = 'tel';
+                    emailInput.placeholder = '10-digit mobile number';
+                    passwordGroup.style.display = 'none';
+                    forgotPasswordGroup.style.display = 'none';
+                    submitBtn.textContent = 'Send OTP';
+                } else { // email
+                    emailInput.type = 'email';
+                    emailInput.placeholder = 'you@example.com';
+                }
+
             } else if (currentView === 'signup') {
                 title.textContent = 'Create Account';
                 subtitle.textContent = 'Join us to save your favorites and more.';
                 submitBtn.textContent = 'Sign Up';
                 mobileNumberGroup.style.display = 'block';
                 mobileInput.required = true;
+                loginToggleContainer.style.display = 'none';
                 confirmGroup.style.display = 'block';
                 confirmInput.required = true;
                 forgotPasswordGroup.style.display = 'none';
@@ -179,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 subtitle.textContent = 'Enter your email to receive a password reset link.';
                 submitBtn.textContent = 'Send Reset Link';
                 passwordGroup.style.display = 'none';
+                loginToggleContainer.style.display = 'none';
                 forgotPasswordGroup.style.display = 'none';
                 toggleText.textContent = 'Remembered your password? ';
                 toggleViewLink.textContent = 'Back to Login';
@@ -203,9 +229,44 @@ document.addEventListener('DOMContentLoaded', () => {
             updateView();
         });
 
+        // --- Login Method Toggle ---
+        loginToggleContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('login-toggle-btn')) {
+                loginMethod = e.target.dataset.method;
+                loginToggleContainer.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                updateView();
+            }
+        });
+
         // Also handle form submission
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
+
+            if (currentView === 'login' && loginMethod === 'phone') {
+                if (!otpSent) {
+                    if (!/^\d{10}$/.test(emailInput.value)) {
+                        alert('Please enter a valid 10-digit phone number.');
+                        return;
+                    }
+                    // Simulate sending OTP
+                    alert(`OTP sent to ${emailInput.value}`);
+                    otpSent = true;
+                    otpGroup.style.display = 'block';
+                    otpInput.required = true;
+                    submitBtn.textContent = 'Verify OTP & Log In';
+                } else {
+                    // Simulate OTP verification
+                    if (otpInput.value === '123456') { // Example OTP
+                        alert('Login successful!');
+                        closeLoginModal();
+                    } else {
+                        alert('Invalid OTP. Please try again.');
+                    }
+                }
+                return; // Stop further execution for phone login
+            }
+
             if (currentView === 'signup') {
                 const password = document.getElementById('login-password').value;
                 const confirmPassword = confirmInput.value;
@@ -213,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Passwords do not match. Please try again.');
                     return;
                 }
-                if (mobileInput.value.length !== 10) {
+                if (!/^\d{10}$/.test(mobileInput.value)) {
                     alert('Please enter a valid 10-digit mobile number.');
                     return; // Stop form submission
                 }
