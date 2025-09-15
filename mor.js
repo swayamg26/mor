@@ -213,12 +213,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         const header = document.querySelector('.header');
         if (header) {
-            if (window.pageYOffset > 50) {
-                header.style.backgroundColor = 'rgba(160, 120, 44, 0.9)'; /* #a0782c with transparency */
-                header.style.backdropFilter = 'blur(10px)';
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
             } else {
-                header.style.backgroundColor = ''; // Revert to CSS default
-                header.style.backdropFilter = 'none';
+                header.classList.remove('scrolled');
             }
         }
     });
@@ -238,32 +236,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const openCart = () => {
         if (cartPopup) {
             cartPopup.classList.add('open');
-            overlay.style.display = 'block';
-            setTimeout(() => handleOverlayAndScroll(true), 10);
+            handleOverlayAndScroll(true);
         }
     };
 
     const toggleMenu = () => {
         if (!navLinksContainer) return;
+        const header = document.querySelector('.header');
         const shouldOpen = !navLinksContainer.classList.contains('open');
+        
         navLinksContainer.classList.toggle('open', shouldOpen);
         handleOverlayAndScroll(shouldOpen);
+
+        if (header) header.classList.toggle('menu-open', shouldOpen);
     };
 
     const handleOverlayAndScroll = (shouldOpen) => {
+        // This function is now the single source of truth for the overlay and body scroll lock.
         if (shouldOpen) {
             overlay.style.display = 'block';
             setTimeout(() => overlay.classList.add('active'), 10); // Fade in
             document.body.classList.add('no-scroll');
         } else {
+            // Only close the overlay if no other side panels are open.
+            const anyPanelOpen = cartPopup?.classList.contains('open') || favoritesPopup?.classList.contains('open') || navLinksContainer?.classList.contains('open');
+            if (anyPanelOpen) return;
+
             overlay.classList.remove('active');
             document.body.classList.remove('no-scroll');
-            setTimeout(() => { // Wait for transition to finish
-                // Only hide overlay if no other panels are open
-                if (!cartPopup.classList.contains('open') && !favoritesPopup.classList.contains('open') && !navLinksContainer.classList.contains('open')) {
-                    overlay.style.display = 'none';
-                }
-            }, 400); // Match CSS transition
+            setTimeout(() => { overlay.style.display = 'none'; }, 400); // Match CSS transition
         }
     };
 
@@ -293,8 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openFavorites = () => {
         if (favoritesPopup) {
             favoritesPopup.classList.add('open');
-            overlay.style.display = 'block';
-            setTimeout(() => handleOverlayAndScroll(true), 10);
+            handleOverlayAndScroll(true);
         }
     };
 
@@ -303,13 +303,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
 
     if (navLinksContainer) {
-        navLinksContainer.querySelectorAll('a, button').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinksContainer.classList.contains('open')) {
-                    // Close menu, but don't toggle if it's already closing
-                    toggleMenu();
-                }
-            });
+        // Use event delegation to handle clicks inside the nav container
+        navLinksContainer.addEventListener('click', (e) => {
+            const target = e.target.closest('a, button');
+            if (!target) return;
+
+            // Only close the panel if it's a navigation link, not a button that opens another panel.
+            if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
+                closeSidePanels();
+            }
         });
     }
     if (openCartBtn) openCartBtn.addEventListener('click', openCart);

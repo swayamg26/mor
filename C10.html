@@ -48,21 +48,10 @@
             transition: border-color 0.3s;
         }
 
-        .thumbnail-img.active {
-            border-color: #a0782c;
-        }
-
         .product-details h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #a0782c;
-            margin-bottom: 1.5rem;
         }
 
         .product-details p {
@@ -116,7 +105,6 @@
             text-align: center;
             font-size: 2.2rem;
             margin-bottom: 2rem;
-            color: #4a2c2a;
         }
         .related-products-scroll {
             display: flex;
@@ -146,7 +134,7 @@
     </header>
 
     <main>
-        <div class="product-page-container">
+        <div class="product-page-container fade-in">
             <div class="product-gallery">
                 <div class="gallery-main-image">
                     <img src="C10.jpg" alt="Elegant Georgette Kurti" id="main-product-image">
@@ -226,135 +214,8 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-             const allProducts = [
-                { name: "Black Chikankari Kurti", price: "₹1,499", oldPrice: "₹1,999", imgSrc: "A10.jpg", pageUrl: "A10.html" },
-                { name: "Stylish Rayon Kurti", price: "₹1,399", oldPrice: "₹1,799", imgSrc: "B11.jpg", pageUrl: "B11.html" },
-                { name: "Elegant Georgette Kurti", price: "₹1,599", oldPrice: "₹2,199", imgSrc: "C10.jpg", pageUrl: "C10.html" },
-                { name: "Classic Viscose Kurta", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "D10.jpg", pageUrl: "D10.html" },
-                { name: "Green Floral Kurti", price: "₹1,199", oldPrice: "₹1,599", imgSrc: "E10.jpg", pageUrl: "E10.html" },
-                { name: "Red Printed Kurti", price: "₹1,299", oldPrice: "₹1,699", imgSrc: "F10.jpg", pageUrl: "F10.html" },
-                { name: "Yellow Summer Kurti", price: "₹1,099", oldPrice: "₹1,499", imgSrc: "G10.jpg", pageUrl: "G10.html" },
-                { name: "Blue Casual Kurti", price: "₹1,399", oldPrice: "₹1,899", imgSrc: "H10.jpg", pageUrl: "H10.html" },
-                { name: "Navy Blue Kurti Set", price: "₹1,799", oldPrice: "₹2,399", imgSrc: "I10.jpg", pageUrl: "I10.html" },
-                { name: "Maroon Velvet Kurti", price: "₹2,499", oldPrice: "₹3,199", imgSrc: "J10.jpg", pageUrl: "J10.html" },
-                { name: "Light Green Kurti", price: "₹1,450", oldPrice: "₹1,950", imgSrc: "K10.jpg", pageUrl: "K10.html" },
-                { name: "Purple Silk Kurti", price: "₹1,999", oldPrice: "₹2,599", imgSrc: "L10.jpg", pageUrl: "L10.html" }
-            ];
-
-            // --- Gallery ---
-            const mainImage = document.getElementById('main-product-image');
-            const thumbnails = document.querySelectorAll('.thumbnail-img');
-
-            // Function to update image and active states
-            const showImage = (thumb) => {
-                mainImage.src = thumb.dataset.src;
-                thumbnails.forEach(t => t.classList.remove('active'));
-                thumb.classList.add('active');
-            };
-
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    showImage(thumb);
-                });
-            });
-
-             // --- Click-to-Zoom Image Modal ---
-            const zoomModal = document.getElementById('zoom-modal');
-            const zoomIcon = document.getElementById('zoom-icon');
-            const zoomedImage = document.getElementById('zoomed-image');
-            const closeModal = document.getElementById('zoom-modal-close');
-
-            zoomIcon.addEventListener('click', () => {
-                zoomedImage.src = mainImage.src;
-                zoomModal.classList.add('show');
-            });
-
-            const closeZoomModal = () => {
-                zoomModal.classList.remove('show');
-            }
-
-            closeModal.addEventListener('click', closeZoomModal);
-            zoomModal.addEventListener('click', (e) => {
-                if (e.target === zoomModal) { // Close if clicking on the background
-                    closeZoomModal();
-                }
-            });
-
-            // --- Size Selector ---
-            const sizeSelector = document.getElementById('size-selector');
-            sizeSelector.addEventListener('click', (e) => {
-                if (e.target.classList.contains('size-btn')) {
-                    sizeSelector.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                }
-            });
-
-            // --- Quantity Counter ---
-            const quantityValue = document.querySelector('.quantity-value');
-            document.querySelectorAll('.quantity-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let currentQty = parseInt(quantityValue.textContent);
-                    if (btn.dataset.action === 'increase') {
-                        currentQty++;
-                    } else if (currentQty > 1) {
-                        currentQty--;
-                    }
-                    quantityValue.textContent = currentQty;
-                });
-            });
-
-            // --- Add to Cart ---
-            document.getElementById('add-to-cart-btn').addEventListener('click', (e) => {
-                const product = {
-                    name: document.getElementById('product-name').textContent,
-                    price: document.getElementById('product-price').textContent,
-                    size: sizeSelector.querySelector('.size-btn.active').textContent,
-                    imgSrc: mainImage.src,
-                    quantity: parseInt(quantityValue.textContent)
-                };
-                alert(`Added to cart!\n${product.quantity} x ${product.name} (Size: ${product.size})`);
-            });
-
-            // --- Write a Review Button ---
-            const writeReviewBtn = document.getElementById('write-review-btn');
-            const reviewsSection = document.querySelector('.reviews-section');
-            writeReviewBtn.addEventListener('click', () => {
-                reviewsSection.scrollIntoView({ behavior: 'smooth' });
-            });
-
-            // --- Related Products ---
-            const relatedProductsContainer = document.getElementById('related-products-container');
-            const currentProductName = document.getElementById('product-name').textContent;
-
-            const relatedProducts = allProducts.filter(p => p.name !== currentProductName).sort(() => 0.5 - Math.random()).slice(0, 4);
-
-            relatedProducts.forEach(product => {
-                const productCardHTML = `
-                    <div class="product-item-wrapper">
-                        <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="${product.imgSrc}" alt="${product.name}">
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h4 class="product-name">${product.name}</h4>
-                                <p class="product-price">${product.price}</p>
-                            </div>
-                        </a>
-                    </div>
-                `;
-                relatedProductsContainer.innerHTML += productCardHTML;
-            });
-
-            // Re-apply styles from mor.css that might be needed for related products
-            relatedProductsContainer.classList.add('featured-scroll');
-            relatedProductsContainer.querySelectorAll('.product-card').forEach(card => {
-                card.style.height = '17.5rem'; // Match height from mor.css
-            });
-        });
-    </script>
+    <script src="mor.js"></script>
+    <script src="product-data.js"></script>
+    <script src="product-page.js"></script>
 </body>
 </html>

@@ -48,21 +48,10 @@
             transition: border-color 0.3s;
         }
 
-        .thumbnail-img.active {
-            border-color: #a0782c;
-        }
-
         .product-details h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #a0782c;
-            margin-bottom: 1.5rem;
         }
 
         .product-details p {
@@ -116,7 +105,6 @@
             text-align: center;
             font-size: 2.2rem;
             margin-bottom: 2rem;
-            color: #4a2c2a;
         }
         .related-products-scroll {
             display: flex;
@@ -146,7 +134,7 @@
     </header>
 
     <main>
-        <div class="product-page-container">
+        <div class="product-page-container fade-in">
             <div class="product-gallery">
                 <div class="gallery-main-image">
                     <img src="M10.jpg" alt="Royal Blue Silk Saree" id="main-product-image">
@@ -221,6 +209,7 @@
         </div>
     </div>
 
+    <script src="mor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
              const allProducts = [
@@ -300,7 +289,7 @@
             });
 
             // --- Add to Cart ---
-            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            document.getElementById('add-to-cart-btn').addEventListener('click', (e) => {
                 const product = {
                     name: document.getElementById('product-name').textContent,
                     price: document.getElementById('product-price').textContent,
@@ -308,7 +297,8 @@
                     imgSrc: mainImage.src,
                     quantity: parseInt(quantityValue.textContent)
                 };
-                alert(`Added to cart!\n${product.quantity} x ${product.name} (Size: ${product.size})`);
+                window.addToCart(product);
+                window.showToast(`${product.name} added to cart!`);
             });
 
             // --- Write a Review Button ---
