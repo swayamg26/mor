@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stylish Rayon Kurti - Mor</title>
+    <title>Classic Viscose Kurta - Mor</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -157,24 +157,26 @@
         <div class="product-page-container fade-in">
             <div class="product-gallery">
                 <div class="gallery-main-image">
-                    <img src="B11.jpg" alt="Stylish Rayon Kurti" id="main-product-image" loading="lazy">
+                    <img src="D10.jpg" alt="Classic Viscose Kurta" id="main-product-image" loading="lazy">
                     <button class="gallery-arrow prev" id="gallery-prev" aria-label="Previous Image">&#10094;</button>
                     <button class="gallery-arrow next" id="gallery-next" aria-label="Next Image">&#10095;</button>
                     <div class="zoom-icon" id="zoom-icon"><i class="fas fa-search-plus"></i></div>
                 </div>
                 <div class="gallery-thumbnails" id="gallery-thumbnails" style="display: none;">
-                    <img src="B11.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="B11.jpg" loading="lazy">
+                    <img src="D10.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="D10.jpg" loading="lazy">
+                    <img src="D11.jpg" alt="Thumbnail 2" class="thumbnail-img" data-src="D11.jpg" loading="lazy">
+                    <img src="D12.jpg" alt="Thumbnail 3" class="thumbnail-img" data-src="D12.jpg" loading="lazy">
                 </div>
                 <div class="gallery-dots" id="gallery-dots-container"></div>
             </div>
             <div class="product-details">
-                <h1 id="product-name">Stylish Rayon Kurti</h1>
+                <h1 id="product-name">Classic Viscose Kurta</h1>
                 <div class="product-price-container">
-                    <p class="product-price" id="product-price">₹1,399</p>
-                    <p class="product-old-price">₹1,799</p>
-                    <p class="product-save-amount">Save ₹400</p>
+                    <p class="product-price" id="product-price">₹1,899</p>
+                    <p class="product-old-price">₹2,499</p>
+                    <p class="product-save-amount">Save ₹600</p>
                 </div>
-                <p><strong>Material:</strong> <span id="product-material">Rayon</span></p>
+                <p><strong>Material:</strong> <span id="product-material">Viscose</span></p>
                 
                 <div class="product-options">
                     <div class="option-group">
@@ -183,6 +185,8 @@
                             <button class="size-btn active">S</button>
                             <button class="size-btn">M</button>
                             <button class="size-btn">L</button>
+                            <button class="size-btn">XL</button>
+                            <button class="size-btn">XXL</button>
                         </div>
                     </div>
                     <div class="option-group">
@@ -208,10 +212,10 @@
             <div id="reviews-list">
                 <div class="review">
                     <div class="review-header">
-                        <span class="review-author">Anjali M.</span>
-                        <span class="review-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                        <span class="review-author">Neha G.</span>
+                        <span class="review-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                     </div>
-                    <p class="review-text">The fabric is very soft and comfortable for daily wear. The color is exactly as shown in the picture. Good purchase!</p>
+                    <p class="review-text">I love the rich color and the material is so soft. It's a very elegant and comfortable kurta for office wear.</p>
                 </div>
             </div>
             <!-- Review form can be added here -->

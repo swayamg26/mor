@@ -48,6 +48,27 @@
             transition: border-color 0.3s;
         }
 
+        .gallery-dots {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .gallery-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #555;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .gallery-dot.active {
+            background-color: #d3d3d3;
+        }
+
+
         .product-details h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
@@ -137,15 +158,18 @@
         <div class="product-page-container fade-in">
             <div class="product-gallery">
                 <div class="gallery-main-image">
-                    <img src="C10.jpg" alt="Elegant Georgette Kurti" id="main-product-image">
+                    <img src="C10.jpg" alt="Elegant Georgette Kurti" id="main-product-image" loading="lazy">
+                    <button class="gallery-arrow prev" id="gallery-prev" aria-label="Previous Image">&#10094;</button>
+                    <button class="gallery-arrow next" id="gallery-next" aria-label="Next Image">&#10095;</button>
                     <div class="zoom-icon" id="zoom-icon"><i class="fas fa-search-plus"></i></div>
                 </div>
-                <div class="gallery-thumbnails" id="gallery-thumbnails">
-                    <img src="C10.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="C10.jpg">
-                    <img src="C11.jpg" alt="Thumbnail 2" class="thumbnail-img" data-src="C11.jpg">
-                    <img src="C12.jpg" alt="Thumbnail 3" class="thumbnail-img" data-src="C12.jpg">
-                    <img src="C13.jpg" alt="Thumbnail 4" class="thumbnail-img" data-src="C13.jpg">
+                <div class="gallery-thumbnails" id="gallery-thumbnails" style="display: none;">
+                    <img src="C10.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="C10.jpg" loading="lazy">
+                    <img src="C11.jpg" alt="Thumbnail 2" class="thumbnail-img" data-src="C11.jpg" loading="lazy">
+                    <img src="C12.jpg" alt="Thumbnail 3" class="thumbnail-img" data-src="C12.jpg" loading="lazy">
+                    <img src="C13.jpg" alt="Thumbnail 4" class="thumbnail-img" data-src="C13.jpg" loading="lazy">
                 </div>
+                <div class="gallery-dots" id="gallery-dots-container"></div>
             </div>
             <div class="product-details">
                 <h1 id="product-name">Elegant Georgette Kurti</h1>
@@ -208,8 +232,10 @@
 
     <!-- Image Zoom Modal -->
     <div id="zoom-modal" class="zoom-modal">
+    <div id="zoom-modal" class="zoom-modal" style="display: none;">
         <span class="zoom-modal-close" id="zoom-modal-close">&times;</span>
         <div class="zoom-modal-content">
+            <img src="" alt="Zoomed Product Image" id="zoomed-image" loading="lazy">
             <img src="" alt="Zoomed Product Image" id="zoomed-image">
         </div>
     </div>

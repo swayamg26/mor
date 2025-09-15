@@ -92,18 +92,21 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html#home" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img"></a>
+            <button class="hamburger-menu" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img" loading="lazy"></a>
             <div class="nav-links-container">
+                <button class="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="index.html#categories">Categories</a></li>
-                    <li><a href="index.html#collections">Collections</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
              <div class="nav-actions">
-                <a href="index.html" class="cart-btn" style="text-decoration: none; font-size: 1rem; gap: 0.5rem;">
-                    <i class="fas fa-arrow-left"></i> Back to Home
-                </a>
+                <button class="login-btn" aria-label="Login"><i class="fas fa-user"></i></button>
+                <button class="favorites-btn" aria-label="Favorites"><i class="fas fa-heart"></i></button>
+                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i></button>
             </div>
         </nav>
     </header>

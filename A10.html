@@ -142,9 +142,9 @@
                 </ul>
             </div>
              <div class="nav-actions">
-                <button class="login-btn" aria-label="Login"><i class="fas fa-user"></i></button>
-                <button class="favorites-btn" aria-label="Favorites"><i class="fas fa-heart"></i></button>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i></button>
+                <a href="shop.html" class="cart-btn" style="text-decoration: none; font-size: 1rem; gap: 0.5rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Shop
+                </a>
             </div>
         </nav>
     </header>
@@ -153,13 +153,13 @@
         <div class="product-page-container">
             <div class="product-gallery">
                 <div class="gallery-main-image">
-                    <img src="A10.jpg" alt="Black Chikankari Kurti" id="main-product-image">
+                    <img src="A10.jpg" alt="Black Chikankari Kurti" id="main-product-image" loading="lazy">
                     <div class="zoom-icon" id="zoom-icon"><i class="fas fa-search-plus"></i></div>
                 </div>
                 <div class="gallery-thumbnails" id="gallery-thumbnails">
-                    <img src="A10.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="A10.jpg">
-                    <img src="A11.jpg" alt="Thumbnail 2" class="thumbnail-img" data-src="A11.jpg">
-                    <img src="A12.jpg" alt="Thumbnail 3" class="thumbnail-img" data-src="A12.jpg">
+                    <img src="A10.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="A10.jpg" loading="lazy">
+                    <img src="A11.jpg" alt="Thumbnail 2" class="thumbnail-img" data-src="A11.jpg" loading="lazy">
+                    <img src="A12.jpg" alt="Thumbnail 3" class="thumbnail-img" data-src="A12.jpg" loading="lazy">
                 </div>
             </div>
             <div class="product-details">
@@ -228,7 +228,7 @@
     <div id="zoom-modal" class="zoom-modal">
         <span class="zoom-modal-close" id="zoom-modal-close">&times;</span>
         <div class="zoom-modal-content">
-            <img src="" alt="Zoomed Product Image" id="zoomed-image">
+            <img src="" alt="Zoomed Product Image" id="zoomed-image" loading="lazy">
         </div>
     </div>
 
