@@ -1293,6 +1293,7 @@ html {
 .form-group {
     text-align: left;
     margin-bottom: 1rem;
+    position: relative; /* Needed for icon positioning */
 }
 
 .form-group label {
@@ -1311,6 +1312,16 @@ html {
     color: #ffffff;
     border-radius: 5px;
     font-size: 1rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    /* Position it vertically aligned with the input field */
+    bottom: 0.8rem; 
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease;
 }
 
 /* Styles for the main login button */

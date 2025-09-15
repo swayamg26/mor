@@ -138,7 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = document.getElementById('login-modal-title');
         const subtitle = document.getElementById('login-modal-subtitle');
         const emailGroup = document.querySelector('#login-form .form-group:first-of-type');
-        const passwordGroup = document.querySelector('#login-form .form-group:nth-of-type(2)');
+        const mobileNumberGroup = document.getElementById('mobile-number-group');
+        const mobileInput = document.getElementById('mobile-number');
+        const passwordGroup = document.getElementById('login-password').parentElement;
         const confirmGroup = document.getElementById('confirm-password-group');
         const confirmInput = document.getElementById('confirm-password');
         const submitBtn = document.getElementById('login-submit-btn');
@@ -148,6 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const updateView = () => {
             // Reset all states first
             emailGroup.style.display = 'block';
+            mobileNumberGroup.style.display = 'none';
+            mobileInput.required = false;
             passwordGroup.style.display = 'block';
             confirmGroup.style.display = 'none';
             confirmInput.required = false;
@@ -163,6 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.textContent = 'Create Account';
                 subtitle.textContent = 'Join us to save your favorites and more.';
                 submitBtn.textContent = 'Sign Up';
+                mobileNumberGroup.style.display = 'block';
+                mobileInput.required = true;
                 confirmGroup.style.display = 'block';
                 confirmInput.required = true;
                 forgotPasswordGroup.style.display = 'none';
@@ -200,11 +206,41 @@ document.addEventListener('DOMContentLoaded', () => {
         // Also handle form submission
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
+            if (currentView === 'signup') {
+                const password = document.getElementById('login-password').value;
+                const confirmPassword = confirmInput.value;
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match. Please try again.');
+                    return;
+                }
+                if (mobileInput.value.length !== 10) {
+                    alert('Please enter a valid 10-digit mobile number.');
+                    return; // Stop form submission
+                }
+                alert('Signup successful!');
+                closeLoginModal();
+            }
             if (currentView === 'forgotPassword') {
                 alert('Password reset link sent to your email!');
                 closeLoginModal();
             }
             // Other submission logic for login/signup would go here
+        });
+
+        // --- Show/Hide Password ---
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', () => {
+                const input = icon.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
         })
     }
 
