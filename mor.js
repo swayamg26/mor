@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, observerOptions);
-    document.querySelectorAll('.fade-in').forEach(el => {
+    // Observe any element with a class starting with "animate-"
+    document.querySelectorAll('[class*="animate-"]').forEach(el => {
         observer.observe(el);
     });
 
@@ -333,6 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openCart = () => {
         if (cartPopup) {
             cartPopup.classList.add('open');
+            if (overlay) overlay.className = 'overlay right'; // Set overlay style for right panel
             handleOverlayAndScroll(true);
         }
     };
@@ -343,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shouldOpen = !navLinksContainer.classList.contains('open');
         
         navLinksContainer.classList.toggle('open', shouldOpen);
+        if (overlay) overlay.className = 'overlay left'; // Set overlay style for left panel
         handleOverlayAndScroll(shouldOpen);
 
         if (header) header.classList.toggle('menu-open', shouldOpen);
@@ -356,16 +359,19 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('no-scroll');
         } else {
             // Only close the overlay if no other side panels are open.
-            const anyPanelOpen = cartPopup?.classList.contains('open') || favoritesPopup?.classList.contains('open') || navLinksContainer?.classList.contains('open');
-            if (anyPanelOpen) return;
-
-            overlay.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-            setTimeout(() => { overlay.style.display = 'none'; }, 400); // Match CSS transition
+            // We check this *after* the current panel has already started closing.
+            const anyOtherPanelOpen = document.querySelector('.cart-popup.open, .favorites-popup.open, .nav-links-container.open');
+            if (!anyOtherPanelOpen) {
+                overlay.className = 'overlay'; // Reset overlay classes
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                setTimeout(() => { overlay.style.display = 'none'; }, 400); // Match CSS transition
+            }
         }
     };
 
     const closeSidePanels = () => {
+        const header = document.querySelector('.header');
         let wasPanelOpen = false;
         if (cartPopup && cartPopup.classList.contains('open')) {
             cartPopup.classList.remove('open');
@@ -377,6 +383,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (navLinksContainer && navLinksContainer.classList.contains('open')) {
             navLinksContainer.classList.remove('open');
+            if (header) {
+                header.classList.remove('menu-open');
+            }
             wasPanelOpen = true;
         }
         if (wasPanelOpen) handleOverlayAndScroll(false);
@@ -391,6 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openFavorites = () => {
         if (favoritesPopup) {
             favoritesPopup.classList.add('open');
+            if (overlay) overlay.className = 'overlay left'; // Set overlay style for left panel
             handleOverlayAndScroll(true);
         }
     };
@@ -426,20 +436,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add closing functionality to the main overlay
-    if (overlay) {
-        overlay.addEventListener('click', closeSidePanels);
-    }
+    // Add closing functionality to the overlay for all side panels
+    if (overlay) overlay.addEventListener('click', closeSidePanels);
 
     // --- Toast Notification ---
     const toast = document.getElementById('notification-toast');
+    let toastTimeout;
+
     const showToast = (message, iconClass = 'fa-check-circle') => {
         if (toast) {
+            // Clear any existing timeouts to prevent the toast from hiding prematurely
+            clearTimeout(toastTimeout);
+
+            toast.style.display = 'flex'; // Ensure it's visible before animation
             toast.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
             toast.classList.add('show');
-            setTimeout(() => {
+
+            toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000);
+                // After the slide-out animation (500ms), hide it completely
+                setTimeout(() => { toast.style.display = 'none'; }, 500);
+            }, 2000);
         }
     };
     // Make it globally accessible for product pages
@@ -510,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (target.classList.contains('favorite-item-move-to-cart')) {
             const itemToMove = favoriteItems.find(item => item.name === name);
-            if (itemToMove) {
+            if (itemToMove && document.querySelector(`.product-card[data-name="${name}"]`)) {
                 const productCard = document.querySelector(`.product-card[data-name="${name}"]`);
                 const productForCart = {
                     ...itemToMove,
@@ -518,7 +535,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     quantity: 1
                 };
                 addToCart(productForCart);
-                toggleFavorite(itemToMove, productCard.querySelector('.product-favorite-icon')); // This removes it from favorites and updates UI
+                // This removes it from favorites and updates UI
+                if (productCard.querySelector('.product-favorite-icon')) {
+                    toggleFavorite(itemToMove, productCard.querySelector('.product-favorite-icon'));
+                }
             }
         }
     });
@@ -538,9 +558,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateCartUI = () => {
         // Update cart count in header
-        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
         if (openCartBtn) {
-            openCartBtn.innerHTML = `<i class="fas fa-shopping-bag"></i> ${totalItems > 0 ? totalItems : ''}`;
+            // This ensures the icon stays consistent and no number is displayed.
+            openCartBtn.innerHTML = `<i class="fas fa-shopping-basket"></i>`;
         }
 
         if (cartItems.length === 0) {

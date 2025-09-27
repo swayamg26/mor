@@ -31,6 +31,7 @@
             border-bottom: 1px solid #555555;
         }
         .search-bar {
+            flex-grow: 1;
             width: 100%;
             max-width: 400px;
             padding: 0.8rem 1.2rem; 
@@ -55,9 +56,11 @@
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         .filter-btn:hover { 
             background-color: #444444;
+            transform: scale(1.05);
         }
         .product-grid {
             display: grid;
@@ -74,6 +77,165 @@
             font-size: 1.2rem;
             color: #d3d3d3;
         }
+
+        /* Filter Sidebar */
+        .filter-sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px; /* Start off-screen */
+            width: 320px;
+            height: 100%;
+            background-color: #3a3a3a;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            z-index: 1001;
+            transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+        .filter-sidebar.open {
+            right: 0; /* Slide in */
+        }
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #555;
+        }
+        .filter-header h3 {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .close-filter-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .filter-content {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+        .filter-group h4 {
+            margin-bottom: 1rem;
+            font-weight: 500;
+            border-bottom: 1px solid #555;
+            padding-bottom: 0.5rem;
+        }
+        /* Animate filter groups on open */
+        .filter-group {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .filter-sidebar.open .filter-group {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .filter-sidebar.open .filter-group:nth-child(1) { transition-delay: 0.1s; }
+        .filter-sidebar.open .filter-group:nth-child(2) { transition-delay: 0.2s; }
+
+        .price-slider-container {
+            padding: 0 0.5rem;
+        }
+        #price-range {
+            width: 100%;
+        }
+        #price-value {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .material-filter label {
+            display: block;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            position: relative;
+            padding-left: 30px; /* Space for custom checkbox */
+            user-select: none;
+        }
+        .material-filter input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        /* Custom checkbox box */
+        .material-filter label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #444;
+            border: 1px solid #555;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+        /* Custom checkmark */
+        .material-filter label::after {
+            content: '\f00c'; /* Font Awesome check icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            font-size: 13px;
+            color: #fff;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.2s ease;
+        }
+        .material-filter input:checked + label::before {
+            background-color: #555;
+            border-color: #d3d3d3;
+        }
+        .material-filter input:checked + label::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .filter-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #555;
+            display: flex;
+            gap: 1rem;
+        }
+        .apply-filters-btn, .clear-filters-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .apply-filters-btn {
+            background-color: #d3d3d3;
+            color: #333;
+        }
+        .clear-filters-btn {
+            background-color: #555;
+            color: #fff;
+        }
+
+        /* Product Image Fade-in Animation */
+        .product-image-container img {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .product-item-wrapper.active .product-image-container img {
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -85,6 +247,10 @@
             }
             .shop-controls {
                 flex-direction: column;
+            }
+            .filter-sidebar {
+                width: 280px;
+                right: -300px;
             }
         }
     </style>
@@ -99,15 +265,12 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop</a></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
              <div class="nav-actions">
-                <button class="login-btn" aria-label="Login"><i class="fas fa-user"></i></button>
-                <button class="favorites-btn" aria-label="Favorites"><i class="fas fa-heart"></i></button>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i></button>
+                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
+            <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-basket"></i></button>
         </nav>
     </header>
 
@@ -118,34 +281,191 @@
 
         <section class="shop-controls">
             <input type="text" id="search-bar" class="search-bar" placeholder="Search for products...">
-            <button class="filter-btn"><i class="fas fa-filter"></i> Apply Filters</button>
+            <button class="filter-btn" id="open-filter-btn"><i class="fas fa-filter"></i> Filters</button>
         </section>
 
         <section id="product-grid" class="product-grid">
             <!-- Products will be injected here by JS -->
         </section>
     </main>
+    
+    <div class="overlay"></div>
 
+    <!-- Filter Sidebar -->
+    <aside id="filter-sidebar" class="filter-sidebar">
+        <div class="filter-header">
+            <h3>Filters</h3>
+            <button class="close-filter-btn" id="close-filter-btn">&times;</button>
+        </div>
+        <div class="filter-content">
+            <div class="filter-group">
+                <h4>Price</h4>
+                <div class="price-slider-container">
+                    <input type="range" id="price-range" min="1000" max="3000" step="100" value="3000">
+                    <div id="price-value">Max Price: ₹3,000</div>
+                </div>
+            </div>
+            <div class="filter-group">
+                <h4>Material</h4>
+                <div class="material-filter" id="material-filter">
+                    <!-- Material checkboxes will be generated by JS -->
+                </div>
+            </div>
+        </div>
+        <div class="filter-footer">
+            <button class="clear-filters-btn" id="clear-filters-btn">Clear</button>
+            <button class="apply-filters-btn" id="apply-filters-btn">Apply</button>
+        </div>
+    </aside>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay" style="display: none;">
+        <div class="login-modal-content">
+            <span class="modal-close login-modal-close">&times;</span>
+            <h2 id="login-modal-title">Welcome Back</h2>
+            <div class="login-toggle-options">
+                <button class="login-toggle-btn active" data-method="email">Email</button>
+                <button class="login-toggle-btn" data-method="phone">Phone</button>
+            </div>
+            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group" id="mobile-number-group" style="display: none;">
+                    <label for="mobile-number">Mobile Number</label>
+                    <input type="tel" id="mobile-number" placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="forgot-password-group">
+                    <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                <div class="form-group" id="confirm-password-group" style="display: none;">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••">
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="otp-group" style="display: none;">
+                    <label for="otp-input">Enter OTP</label>
+                    <input type="text" id="otp-input" placeholder="6-digit OTP" pattern="[0-9]{6}">
+                </div>
+                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
+            </form>
+            <p class="create-account-link">
+                <span id="toggle-view-text">Don't have an account? </span>
+                <a href="#" id="toggle-view-link">Create your account</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Cart Side Panel -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart-btn" aria-label="Close Cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Your cart is empty</p>
+                <button class="cta-btn continue-shopping-btn">Continue Shopping</button>
+            </div>
+            <div class="cart-items" style="display: none;"></div>
+        </div>
+        <div class="cart-footer" style="display: none;">
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span id="cart-subtotal-amount">₹0.00</span>
+            </div>
+            <button class="cta-btn checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Favorites Side Panel -->
+    <div id="favorites-popup" class="favorites-popup">
+        <div class="favorites-header">
+            <h3>Your Favorites</h3>
+            <button class="close-favorites-btn" aria-label="Close Favorites"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="favorites-content">
+            <div class="favorites-empty">
+                <i class="far fa-heart"></i>
+                <p>You have no favorites yet</p>
+                <button class="cta-btn start-browsing-btn">Start Browsing</button>
+            </div>
+            <div class="favorites-items" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919885489448" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-text">WhatsApp</span>
+    </a>
+
+    <!-- Notification Toast -->
+    <div id="notification-toast" class="notification-toast"></div>
+
+    <script src="mor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const allProducts = [
-                { name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "A10.jpg", pageUrl: "A10.html" },
-                { name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "B11.jpg", pageUrl: "B11.html" },
-                { name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "C10.jpg", pageUrl: "C10.html" },
-                { name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "D10.jpg", pageUrl: "D10.html" },
-                { name: "Green Floral Kurti", price: "₹1,199", imgSrc: "E10.jpg", pageUrl: "E10.html" },
-                { name: "Red Printed Kurti", price: "₹1,299", imgSrc: "F10.jpg", pageUrl: "F10.html" },
-                { name: "Yellow Summer Kurti", price: "₹1,099", imgSrc: "G10.jpg", pageUrl: "G10.html" },
-                { name: "Blue Casual Kurti", price: "₹1,399", imgSrc: "H10.jpg", pageUrl: "H10.html" },
-                { name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "I10.jpg", pageUrl: "I10.html" },
-                { name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "J10.jpg", pageUrl: "J10.html" },
-                { name: "Light Green Kurti", price: "₹1,450", imgSrc: "K10.jpg", pageUrl: "K10.html" },
-                { name: "Purple Silk Kurti", price: "₹1,999", imgSrc: "L10.jpg", pageUrl: "L10.html" },
-                { name: "Royal Blue Silk Saree", price: "₹2,999", imgSrc: "M10.jpg", pageUrl: "M10.html" }
+                { name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "A10.jpg", pageUrl: "A10.html", material: "Cotton" },
+                { name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "B11.jpg", pageUrl: "B11.html", material: "Rayon" },
+                { name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "C10.jpg", pageUrl: "C10.html", material: "Georgette" },
+                { name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "D10.jpg", pageUrl: "D10.html", material: "Viscose" },
+                { name: "Green Floral Kurti", price: "₹1,199", imgSrc: "E10.jpg", pageUrl: "E10.html", material: "Cotton" },
+                { name: "Red Printed Kurti", price: "₹1,299", imgSrc: "F10.jpg", pageUrl: "F10.html", material: "Rayon" },
+                { name: "Yellow Summer Kurti", price: "₹1,099", imgSrc: "G10.jpg", pageUrl: "G10.html", material: "Cotton" },
+                { name: "Blue Casual Kurti", price: "₹1,399", imgSrc: "H10.jpg", pageUrl: "H10.html", material: "Viscose" },
+                { name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "I10.jpg", pageUrl: "I10.html", material: "Silk Blend" },
+                { name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "J10.jpg", pageUrl: "J10.html", material: "Velvet" },
+                { name: "Light Green Kurti", price: "₹1,450", imgSrc: "K10.jpg", pageUrl: "K10.html", material: "Cotton" },
+                { name: "Purple Silk Kurti", price: "₹1,999", imgSrc: "L10.jpg", pageUrl: "L10.html", material: "Silk" },
+                { name: "Royal Blue Silk Saree", price: "₹2,999", imgSrc: "M10.jpg", pageUrl: "M10.html", material: "Silk" }
             ];
 
             const productGrid = document.getElementById('product-grid');
             const searchBar = document.getElementById('search-bar');
+            const filterSidebar = document.getElementById('filter-sidebar');
+            const openFilterBtn = document.getElementById('open-filter-btn');
+            const closeFilterBtn = document.getElementById('close-filter-btn');
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            const clearFiltersBtn = document.getElementById('clear-filters-btn');
+            const overlay = document.querySelector('.overlay');
+            const priceRange = document.getElementById('price-range');
+            const priceValue = document.getElementById('price-value');
+            const materialFilterContainer = document.getElementById('material-filter');
+
+            // --- Filter Sidebar Logic ---
+            const openFilterSidebar = () => {
+                filterSidebar.classList.add('open');
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.classList.add('active'), 10);
+                document.body.classList.add('no-scroll');
+            };
+
+            const closeFilterSidebar = () => {
+                filterSidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    document.body.classList.remove('no-scroll');
+                }, 400);
+            };
+
+            openFilterBtn.addEventListener('click', openFilterSidebar);
+            closeFilterBtn.addEventListener('click', closeFilterSidebar);
+            overlay.addEventListener('click', closeFilterSidebar);
+            applyFiltersBtn.addEventListener('click', () => {
+                handleFiltering();
+                closeFilterSidebar();
+            });
 
             const renderProducts = (productsToRender) => {
                 productGrid.innerHTML = ''; // Clear existing products
@@ -157,11 +477,14 @@
 
                 productsToRender.forEach(product => {
                     const productCardHTML = `
-                        <div class="product-item-wrapper">
-                            <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
-                                <div class="product-card">
+                        <div class="product-item-wrapper" data-page-url="${product.pageUrl}">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}">
+                                <a href="${product.pageUrl}" class="product-link-wrapper">
                                     <div class="product-image-container">
                                         <img src="${product.imgSrc}" alt="${product.name}">
+                                        <div class="product-favorite-icon">
+                                            <i class="far fa-heart"></i>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="product-info">
@@ -173,20 +496,93 @@
                     `;
                     productGrid.innerHTML += productCardHTML;
                 });
+
+                // Re-apply the fade-in animation to the newly rendered cards
+                setTimeout(() => {
+                    document.querySelectorAll('.product-item-wrapper').forEach((card, index) => {
+                        card.style.transitionDelay = `${index * 50}ms`;
+                        card.classList.add('animate-fade-in');
+                        card.classList.add('active'); // Trigger the animation
+                    });
+                }, 10); // A small delay to allow the DOM to update
+
+                // Add event listeners for new favorite icons
+                document.querySelectorAll('.product-favorite-icon').forEach(icon => {
+                    const card = icon.closest('.product-card');
+                    const product = {
+                        name: card.dataset.name,
+                        price: card.dataset.price,
+                        imgSrc: card.dataset.imgSrc,
+                    };
+                    // Check if item is already favorited on render
+                    const isFavorited = window.isFavorited(product);
+                    if (isFavorited) {
+                        icon.innerHTML = '<i class="fas fa-heart"></i>';
+                    }
+
+                    icon.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        window.toggleFavorite(product, this);
+                    });
+                });
+
+                // Add navigation for product cards
+                document.querySelectorAll('.product-item-wrapper').forEach(wrapper => {
+                    wrapper.addEventListener('click', (e) => { if (!e.target.closest('.product-favorite-icon')) window.location.href = wrapper.dataset.pageUrl; });
+                });
             };
 
-            const handleSearch = () => {
+            const handleFiltering = () => {
                 const searchTerm = searchBar.value.toLowerCase();
-                const filteredProducts = allProducts.filter(product => 
-                    product.name.toLowerCase().includes(searchTerm)
-                );
+                const maxPrice = parseInt(priceRange.value);
+                const selectedMaterials = [...materialFilterContainer.querySelectorAll('input:checked')].map(el => el.value);
+
+                const filteredProducts = allProducts.filter(product => {
+                    const price = parseInt(product.price.replace('₹', '').replace(',', ''));
+                    const nameMatch = product.name.toLowerCase().includes(searchTerm);
+                    const priceMatch = price <= maxPrice;
+                    const materialMatch = selectedMaterials.length === 0 || selectedMaterials.includes(product.material);
+
+                    return nameMatch && priceMatch && materialMatch;
+                });
                 renderProducts(filteredProducts);
             };
+            
+            // --- Populate Filters ---
+            const populateFilters = () => {
+                // Price Range
+                priceRange.addEventListener('input', () => {
+                    priceValue.textContent = `Max Price: ₹${parseInt(priceRange.value).toLocaleString()}`;
+                });
 
-            searchBar.addEventListener('input', handleSearch);
+                // Materials
+                const materials = [...new Set(allProducts.map(p => p.material))].sort();
+                materialFilterContainer.innerHTML = materials.map((material, index) => `
+                    <div>
+                        <input type="checkbox" value="${material}" id="mat-check-${index}">
+                        <label for="mat-check-${index}">${material}</label>
+                    </div>
+                `).join('');
+            };
 
-            // Initial render of all products
+            // --- Event Listeners ---
+            searchBar.addEventListener('input', handleFiltering);
+            priceRange.addEventListener('input', handleFiltering);
+            materialFilterContainer.addEventListener('change', handleFiltering);
+
+            clearFiltersBtn.addEventListener('click', () => {
+                searchBar.value = '';
+                priceRange.value = priceRange.max;
+                priceValue.textContent = `Max Price: ₹${parseInt(priceRange.max).toLocaleString()}`;
+                materialFilterContainer.querySelectorAll('input:checked').forEach(el => el.checked = false);
+                handleFiltering();
+            });
+
+            // --- Initial Setup ---
+            populateFilters();
             renderProducts(allProducts);
+            window.updateCartUI(); // Ensure cart count is correct on load
         });
     </script>
 </body>

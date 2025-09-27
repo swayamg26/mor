@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mor - Premium Fashion for women</title>
+    <title>Mor - Premium Fashion for men</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,19 +21,17 @@
                 <button class="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
                     <li><a href="#categories">Categories</a></li>
                     <li><a href="#collections">Collections</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
             <div class="nav-actions">
-                <button class="login-btn" aria-label="Login"><i class="fas fa-user"></i></button>
-                <button class="favorites-btn" aria-label="Favorites"><i class="fas fa-heart"></i></button>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i></button>
+                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
+            <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-basket"></i></button>
         </nav>
     </header>
 
@@ -47,37 +45,37 @@
         </section>
 
         <section class="categories-section" id="categories">
-            <h2 class="section-title fade-in">Shop by Categories</h2>
+            <h2 class="section-title animate-fade-in">Shop by Categories</h2>
             <div class="categories-scroll">
-                <div class="category-card fade-in">
+                <div class="category-card animate-fade-in" style="transition-delay: 0.1s;">
                     <div class="category-content">
                         <h3>Co-ord Sets</h3>
                         <p>Effortless style in matching sets.</p>
                     </div>
                 </div>
-                <div class="category-card fade-in">
+                <div class="category-card animate-fade-in" style="transition-delay: 0.2s;">
                     <div class="category-content">
                         <h3>Indo Western</h3>
                         <p>A beautiful fusion of tradition and trend.</p>
                     </div>
                 </div>
-                <div class="category-card fade-in">
+                <div class="category-card animate-fade-in" style="transition-delay: 0.3s;">
                     <div class="category-content">
                         <h3>Dresses</h3>
                         <p>Elegant designs for every occasion.</p>
                     </div>
                 </div>
-                <div class="category-card fade-in">
+                <div class="category-card animate-fade-in" style="transition-delay: 0.4s;">
                     <div class="category-content">
                         <h3>Kurtis</h3>
                     </div>
                 </div>
-                <div class="category-card fade-in">
+                <div class="category-card animate-fade-in" style="transition-delay: 0.5s;">
                     <div class="category-content">
                         <h3>Sarees</h3>
                     </div>
                 </div>
-                <div class="category-card fade-in">
+                <div class="category-card animate-fade-in" style="transition-delay: 0.6s;">
                     <div class="category-content">
                         <h3>Tops & Tunics</h3>
                     </div>
@@ -87,10 +85,10 @@
 
         <section class="featured-section" id="collections">
             <div class="featured-header">
-                <h2 class="section-title fade-in">Featured In</h2>
+                <h2 class="section-title animate-fade-in">Featured In</h2>
             </div>
             <div class="featured-categories">
-                <div class="featured-category fade-in featured-category-runway">
+                <div class="featured-category animate-fade-in featured-category-runway" style="transition-delay: 0.2s;">
                     <h3>Best Sellers This Week</h3>
                     <div class="featured-scroll">
                         <div class="product-item-wrapper">
@@ -146,7 +144,7 @@
                     </div>
                     <a href="best-sellers.html" class="view-all-btn" style="text-decoration: none; display: inline-block; text-align: center;">View All</a>
                 </div>
-                <div class="featured-category fade-in featured-category-seasonal">
+                <div class="featured-category animate-fade-in featured-category-seasonal" style="transition-delay: 0.4s;">
                     <h3>Seasonal Favorites</h3>
                     <div class="featured-scroll">
                         <div class="product-item-wrapper">
@@ -209,7 +207,7 @@
                 <source src="v1.mp4" type="video/mp4">
             </video>
             <div class="hero-overlay"></div>
-            <div class="hero-content fade-in">
+            <div class="hero-content">
                 <h1>MOR</h1>
                 <p>Where Elegance Meets Excellence</p>
                 <a href="shop.html" class="cta-btn" id="hero-shop-now">Shop Now</a>
@@ -269,6 +267,8 @@
         </div>
     </footer>
 
+    <div class="overlay"></div>
+
     <!-- Login Modal -->
     <div id="login-modal" class="modal-overlay" style="display: none;">
         <div class="login-modal-content">
@@ -313,9 +313,6 @@
             </p>
         </div>
     </div>
-
-    <!-- Overlay for all side panels (Menu, Cart, Favorites) -->
-    <div class="overlay"></div>
 
     <!-- Cart Side Panel -->
     <div id="cart-popup" class="cart-popup">
