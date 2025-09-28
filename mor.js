@@ -462,6 +462,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Make it globally accessible for product pages
     window.showToast = showToast;
 
+    // --- Simple Auth Check (for demonstration) ---
+    const isUserLoggedIn = () => {
+        return localStorage.getItem('mor_user_loggedin') === 'true';
+    };
+    window.isUserLoggedIn = isUserLoggedIn;
+
     // --- Favorites Functionality ---
     let favoriteItems = JSON.parse(localStorage.getItem('mor_favorites')) || [];
     const favoritesItemsContainer = document.querySelector('.favorites-items');
@@ -474,6 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateFavoritesUI = () => {
         // Update UI based on whether there are favorite items
+        if (!favoritesItemsContainer || !favoritesEmptyMsg) return;
         if (favoriteItems.length === 0) {
             favoritesItemsContainer.style.display = 'none';
             favoritesEmptyMsg.style.display = 'block';
@@ -512,6 +519,11 @@ document.addEventListener('DOMContentLoaded', () => {
         saveFavorites();
     };
     window.toggleFavorite = toggleFavorite; // Make it global
+
+    const isFavorited = (product) => {
+        return favoriteItems.some(item => item.name === product.name);
+    };
+    window.isFavorited = isFavorited;
 
     // Event delegation for favorite item removal
     favoritesItemsContainer.addEventListener('click', (e) => {
@@ -622,6 +634,46 @@ document.addEventListener('DOMContentLoaded', () => {
         saveCart();
     };
     window.addToCart = addToCart; // Make it global
+
+    // --- Fly-to-Cart Animation ---
+    const flyToCart = (startElement, product) => {
+        const cartIcon = document.querySelector('.cart-btn');
+        if (!cartIcon) return;
+
+        // Add to cart data structure first
+        addToCart(product);
+
+        // Create the visual element for the animation
+        const flyingImg = document.createElement('img');
+        flyingImg.src = product.imgSrc;
+        flyingImg.className = 'fly-to-cart-img';
+        document.body.appendChild(flyingImg);
+
+        // Get start and end positions for the animation
+        const startRect = startElement.getBoundingClientRect();
+        const cartRect = cartIcon.getBoundingClientRect();
+
+        // Set initial position
+        flyingImg.style.left = `${startRect.left + startRect.width / 2}px`;
+        flyingImg.style.top = `${startRect.top + startRect.height / 2}px`;
+
+        // Animate to the cart icon
+        setTimeout(() => {
+            flyingImg.style.left = `${cartRect.left + cartRect.width / 2}px`;
+            flyingImg.style.top = `${cartRect.top + cartRect.height / 2}px`;
+            flyingImg.style.transform = 'scale(0.1)';
+            flyingImg.style.opacity = '0';
+        }, 10);
+
+        // After animation, show feedback and clean up
+        setTimeout(() => {
+            flyingImg.remove();
+            showToast(`${product.name} has been added to your cart!`, 'fa-check-circle');
+            openCart();
+        }, 1000); // This duration should match the CSS transition duration
+    };
+    window.flyToCart = flyToCart;
+
 
     // Event delegation for cart item actions
     cartItemsContainer.addEventListener('click', (e) => {

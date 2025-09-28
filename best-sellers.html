@@ -14,7 +14,7 @@
     <style>
         .shop-header { text-align: center; padding: 2rem; background: #3a3a3a; }
         .shop-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #ffffff; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
         @media (max-width: 768px) {
             .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 0 1rem; }
             .shop-header h1 { font-size: 2rem; }
@@ -36,7 +36,6 @@
                 </ul>
             </div>
              <div class="nav-actions">
-                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
                 <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-basket"></i></button>
             </div>
         </nav>
@@ -52,11 +51,78 @@
         </section>
     </main>
 
-    <!-- Component Placeholders -->
+    <!-- Component Placeholders & Modals -->
     <div class="overlay"></div>
-    <div id="login-modal-placeholder"></div>
-    <div id="cart-placeholder"></div>
-    <div id="favorites-placeholder"></div>
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay" style="display: none;">
+        <div class="login-modal-content">
+            <span class="modal-close login-modal-close">&times;</span>
+            <h2 id="login-modal-title">Welcome Back</h2>
+            <div class="login-toggle-options">
+                <button class="login-toggle-btn active" data-method="email">Email</button>
+                <button class="login-toggle-btn" data-method="phone">Phone</button>
+            </div>
+            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group" id="mobile-number-group" style="display: none;">
+                    <label for="mobile-number">Mobile Number</label>
+                    <input type="tel" id="mobile-number" placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="forgot-password-group">
+                    <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                <div class="form-group" id="confirm-password-group" style="display: none;">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••">
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="otp-group" style="display: none;">
+                    <label for="otp-input">Enter OTP</label>
+                    <input type="text" id="otp-input" placeholder="6-digit OTP" pattern="[0-9]{6}">
+                </div>
+                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
+            </form>
+            <p class="create-account-link">
+                <span id="toggle-view-text">Don't have an account? </span>
+                <a href="#" id="toggle-view-link">Create your account</a>
+            </p>
+        </div>
+    </div>
+    <!-- Cart Side Panel -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart-btn" aria-label="Close Cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Your cart is empty</p><button class="cta-btn continue-shopping-btn">Continue Shopping</button></div>
+            <div class="cart-items" style="display: none;"></div>
+        </div>
+        <div class="cart-footer" style="display: none;">
+            <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-amount">₹0.00</span></div>
+            <button class="cta-btn checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+    <!-- Favorites Side Panel -->
+    <div id="favorites-popup" class="favorites-popup">
+        <div class="favorites-header">
+            <h3>Your Favorites</h3>
+            <button class="close-favorites-btn" aria-label="Close Favorites"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="favorites-content">
+            <div class="favorites-empty"><i class="far fa-heart"></i><p>You have no favorites yet</p><button class="cta-btn start-browsing-btn">Start Browsing</button></div>
+            <div class="favorites-items" style="display: none;"></div>
+        </div>
+    </div>
     <div id="notification-toast" class="notification-toast"></div>
 
     <script src="mor.js"></script>
@@ -77,23 +143,50 @@
                 productGrid.innerHTML = '';
                 productsToRender.forEach(product => {
                     const productCardHTML = `
-                        <div class="product-item-wrapper">
-                            <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
-                                <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}">
+                        <div class="product-item-wrapper" data-page-url="${product.pageUrl}">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}">
+                                <a href="${product.pageUrl}" class="product-link-wrapper">
                                     <div class="product-image-container">
                                         <img src="${product.imgSrc}" alt="${product.name}">
-                                        <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                        <div class="product-favorite-icon">
+                                            <i class="far fa-heart"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="product-info">
-                                    <h4 class="product-name">${product.name}</h4>
-                                    <p class="product-price">${product.price}</p>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
+                            <div class="product-info">
+                                <h4 class="product-name">${product.name}</h4>
+                                <p class="product-price">${product.price}</p>
+                            </div>
                         </div>
                     `;
                     productGrid.innerHTML += productCardHTML;
                 });
+
+                // Add animations and event listeners after rendering
+                setTimeout(() => {
+                    document.querySelectorAll('.product-item-wrapper').forEach((card, index) => {
+                        card.style.transitionDelay = `${index * 50}ms`;
+                        card.classList.add('animate-fade-in', 'active');
+                    });
+
+                    document.querySelectorAll('.product-favorite-icon').forEach(icon => {
+                        const card = icon.closest('.product-card');
+                        const product = {
+                            name: card.dataset.name,
+                            price: card.dataset.price,
+                            imgSrc: card.dataset.imgSrc,
+                        };
+                        if (window.isFavorited && window.isFavorited(product)) {
+                            icon.innerHTML = '<i class="fas fa-heart"></i>';
+                        }
+                        icon.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            window.toggleFavorite(product, this);
+                        });
+                    });
+                }, 10);
             };
 
             renderProducts(bestSellers);

@@ -31,7 +31,6 @@
                 </ul>
             </div>
              <div class="nav-actions">
-                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
                 <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-basket"></i></button>
             </div>
         </nav>
@@ -40,8 +39,10 @@
     <main style="margin-top: 65px;">
         <div class="product-page-container beautiful-product-page" data-img-src="A10.jpg">
             <div class="product-gallery animate-slide-in-left">
-                <div class="gallery-main-image beautiful-gallery-main">
-                    <img src="A10.jpg" alt="Black Chikankari Kurti" id="main-product-image" loading="lazy">
+                <div class="gallery-slider-container beautiful-gallery-main">
+                    <div class="gallery-slider-track" id="gallery-slider-track">
+                        <!-- Images will be injected by JS -->
+                    </div>
                     <button class="gallery-arrow prev" id="gallery-prev" aria-label="Previous Image">&#10094;</button>
                     <button class="gallery-arrow next" id="gallery-next" aria-label="Next Image">&#10095;</button>
                     <div class="zoom-icon" id="zoom-icon"><i class="fas fa-search-plus"></i></div>
@@ -77,35 +78,50 @@
                 <div class="product-actions animate-fade-in beautiful-product-actions" style="transition-delay: 0.4s;">
                     <button class="cta-btn add-to-cart-btn beautiful-add-to-cart" id="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                 </div>
-                <div class="product-description-accordion animate-fade-in beautiful-description-accordion" style="transition-delay: 0.5s;">
-                    <div class="description-item beautiful-description-item">
-                        <div class="description-header beautiful-description-header">
-                            <span>Product Description</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="description-content beautiful-description-content">
-                            <p>Embrace timeless elegance with this stunning Black Chikankari Kurti. Hand-embroidered with intricate floral patterns, this piece is a testament to traditional craftsmanship. Made from pure, breathable cotton, it ensures comfort throughout the day, making it perfect for both casual outings and festive occasions.</p>
-                            <p><strong>Material:</strong> <span id="product-material">Cotton</span></p>
-                        </div>
+                <!-- New Modern Accordion -->
+                <div class="modern-accordion-container animate-fade-in" style="transition-delay: 0.5s;">
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Description<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Embrace timeless elegance with this stunning Black Chikankari Kurti. Hand-embroidered with intricate floral patterns, this piece is a testament to traditional craftsmanship. Made from pure, breathable cotton, it ensures comfort throughout the day.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Specification<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p><strong>Material:</strong> 100% Premium Cotton <br> <strong>Embroidery:</strong> Hand-stitched Chikankari <br> <strong>Fit:</strong> Regular <br> <strong>Sleeves:</strong> 3/4 Length</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Wash Care<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Hand wash cold separately. Use mild detergent. Do not bleach. Dry in shade. Iron on low heat.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Returns and Exchange Policy<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Easy 7-day returns and exchanges. The product must be in its original condition with all tags intact. Please visit our returns center to initiate a request.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Manufactured and Packaged By<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Mor Fashion Pvt. Ltd., Jubilee Hills, Hyderabad, Telangana, 500033. Country of Origin: India.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Shipping Information<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Free shipping within Hyderabad. Standard shipping (5-7 business days) for other locations. Express shipping options are available at checkout.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">For Complaints<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Contact our Customer Care Executive at: <a href="mailto:support@mor.com" style="color: #333;">support@mor.com</a> or call us at <a href="tel:+919885489448" style="color: #333;">+91-9885489448</a>.</p></div>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <!-- Customer Reviews Section -->
-        <div class="reviews-section animate-fade-in">
-            <h2>Customer Reviews</h2>
-            <button class="write-review-btn" id="write-review-btn">Write a Review</button>
-            <div id="reviews-list">
-                <div class="review">
-                    <div class="review-header">
-                        <span class="review-author">Priya S.</span>
-                        <span class="review-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
-                    </div>
-                    <p class="review-text">Absolutely beautiful kurti! The chikankari work is so intricate and the cotton is very comfortable. Fits perfectly.</p>
-                </div>
+        <div class="modern-reviews-container animate-fade-in">
+            <div class="reviews-section-header">
+                <h2>Customer Reviews</h2>
+                <button class="write-review-btn" id="write-review-btn"><i class="fas fa-pen"></i> Write a Review</button>
             </div>
-            <!-- Review form can be added here -->
+            <div class="reviews-list" id="reviews-list">
+                <!-- Customer reviews will be dynamically added here -->
+            </div>
         </div>
 
         <!-- Related Products Section -->
@@ -128,35 +144,102 @@
 
     <!-- Component Placeholders for mor.js -->
     <div class="overlay"></div>
-    <div id="login-modal" class="modal-overlay" style="display: none;"></div>
+    <div id="login-modal" class="modal-overlay" style="display: none;">
+        <div class="login-modal-content">
+            <span class="modal-close login-modal-close">&times;</span>
+            <h2 id="login-modal-title">Welcome Back</h2>
+            <div class="login-toggle-options">
+                <button class="login-toggle-btn active" data-method="email">Email</button>
+                <button class="login-toggle-btn" data-method="phone">Phone</button>
+            </div>
+            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group" id="mobile-number-group" style="display: none;">
+                    <label for="mobile-number">Mobile Number</label>
+                    <input type="tel" id="mobile-number" placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="forgot-password-group">
+                    <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                <div class="form-group" id="confirm-password-group" style="display: none;">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••">
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="otp-group" style="display: none;">
+                    <label for="otp-input">Enter OTP</label>
+                    <input type="text" id="otp-input" placeholder="6-digit OTP" pattern="[0-9]{6}">
+                </div>
+                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
+            </form>
+            <p class="create-account-link">
+                <span id="toggle-view-text">Don't have an account? </span>
+                <a href="#" id="toggle-view-link">Create your account</a>
+            </p>
+        </div>
+    </div>
     <div id="cart-popup" class="cart-popup">
         <div class="cart-header">
             <h3>Your Cart</h3>
             <button class="close-cart-btn" aria-label="Close Cart"><i class="fas fa-times"></i></button>
         </div>
         <div class="cart-content">
-            <div class="cart-empty">
-                <i class="fas fa-shopping-bag"></i>
-                <p>Your cart is empty</p>
-                <button class="cta-btn continue-shopping-btn">Continue Shopping</button>
-            </div>
+            <div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Your cart is empty</p><button class="cta-btn continue-shopping-btn">Continue Shopping</button></div>
             <div class="cart-items" style="display: none;"></div>
         </div>
         <div class="cart-footer" style="display: none;">
-            <div class="cart-subtotal">
-                <span>Subtotal</span>
-                <span id="cart-subtotal-amount">₹0.00</span>
-            </div>
+            <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-amount">₹0.00</span></div>
             <button class="cta-btn checkout-btn">Proceed to Checkout</button>
         </div>
-    </div>    <div id="favorites-popup" class="favorites-popup"></div>
+    </div>
+    <div id="favorites-popup" class="favorites-popup">
+        <div class="favorites-header">
+            <h3>Your Favorites</h3>
+            <button class="close-favorites-btn" aria-label="Close Favorites"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="favorites-content">
+            <div class="favorites-empty">
+                <i class="far fa-heart"></i>
+                <p>You have no favorites yet</p>
+                <button class="cta-btn start-browsing-btn">Start Browsing</button>
+            </div>
+            <div class="favorites-items" style="display: none;"></div>
+        </div>
+    </div>
     <div id="zoom-modal" class="zoom-modal">
         <span class="zoom-modal-close" id="zoom-modal-close">&times;</span>
         <div class="zoom-modal-content">
             <img src="" alt="Zoomed Product Image" id="zoomed-image" loading="lazy">
         </div>
     </div>
-    <div id="review-modal" class="modal-overlay" style="display: none;"></div>
+    <div id="review-modal" class="modal-overlay" style="display: none;">
+        <div class="review-modal-content">
+            <span class="modal-close review-modal-close">&times;</span>
+            <h3>Write a Review</h3>
+            <form id="review-form">
+                <div class="form-group">
+                    <label>Your Rating</label>
+                    <div class="star-rating-input" id="star-rating-input">
+                        <i class="far fa-star" data-value="1"></i><i class="far fa-star" data-value="2"></i><i class="far fa-star" data-value="3"></i><i class="far fa-star" data-value="4"></i><i class="far fa-star" data-value="5"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="review-text">Your Review</label>
+                    <textarea id="review-text" rows="5" placeholder="Tell us what you think..."></textarea>
+                </div>
+                <button type="submit" class="cta-btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
 
 
     <!-- You can include your footer here -->
@@ -179,16 +262,24 @@
             ];
 
             // --- Product Page Gallery ---
-            const mainImage = document.getElementById('main-product-image');
+            const sliderTrack = document.getElementById('gallery-slider-track');
             const dotsContainer = document.getElementById('gallery-dots-container');
             const prevBtn = document.getElementById('gallery-prev');
             const nextBtn = document.getElementById('gallery-next');
 
             const galleryImages = ["A10.jpg", "A11.jpg", "A12.jpg"];
             let currentImageIndex = 0;
+            
+            // Create images and dots
+            galleryImages.forEach((src, index) => {
+                // Create image element
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Product image ${index + 1}`;
+                img.loading = 'lazy';
+                sliderTrack.appendChild(img);
 
-            // Create dots
-            galleryImages.forEach((_, index) => {
+                // Create dot element
                 const dot = document.createElement('span');
                 dot.classList.add('gallery-dot');
                 if (index === 0) dot.classList.add('active');
@@ -200,13 +291,8 @@
 
             function showImage(index) {
                 // Update main image
-                mainImage.style.opacity = 0;
-                setTimeout(() => {
-                    mainImage.src = galleryImages[index];
-                    mainImage.style.opacity = 1;
-                }, 200); // Half of the transition duration
-
-                // Update active dot
+                sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+                 // Update active dot
                 dots.forEach(d => d.classList.remove('active'));
                 dots[index].classList.add('active');
 
@@ -244,14 +330,18 @@
             const zoomedImage = document.getElementById('zoomed-image');
             const closeModal = document.getElementById('zoom-modal-close');
 
-            zoomIcon.addEventListener('click', () => {
-                zoomedImage.src = mainImage.src;
+            const openZoomModal = (src) => {
+                zoomedImage.src = src;
                 zoomModal.classList.add('show');
-            });
+            };
 
             const closeZoomModal = () => {
                 zoomModal.classList.remove('show');
             }
+
+            zoomIcon.addEventListener('click', () => {
+                openZoomModal(galleryImages[currentImageIndex]);
+            });
 
             closeModal.addEventListener('click', closeZoomModal);
             zoomModal.addEventListener('click', (e) => {
@@ -328,17 +418,16 @@
             // For a multi-page app, you'd typically save the cart to localStorage
             // so it persists across pages. This is a simplified example.
             document.getElementById('add-to-cart-btn').addEventListener('click', (e) => {
-                const productContainer = document.querySelector('.product-page-container');
+                let imgSrc = galleryImages[0];
+                if (imgSrc.includes('/')) imgSrc = imgSrc.split('/').pop();
                 const product = {
                     name: document.getElementById('product-name').textContent,
                     price: document.getElementById('product-price').textContent,
                     size: sizeSelector.querySelector('.size-btn.active').textContent,
-                    imgSrc: mainImage.src,
+                    imgSrc: imgSrc,
                     quantity: parseInt(quantityValue.textContent)
                 };
-                window.addToCart(product);
-                window.showToast(`${product.name} has been added to your cart!`, 'fa-check-circle');
-                window.openCart(); // Open the cart panel to show the added item
+                window.flyToCart(e.target, product);
             });
  
             window.addEventListener('load', () => {
@@ -373,80 +462,86 @@
                 `;
                 relatedProductsContainer.innerHTML += productCardHTML;
             });
-
-            // Re-apply styles from mor.css that might be needed for related products
-            relatedProductsContainer.classList.add('featured-scroll');
-            relatedProductsContainer.querySelectorAll('.product-card').forEach(card => {
-                card.style.height = '17.5rem'; // Match height from mor.css
-            });
         });
 
             // --- Product Description Accordion ---
-            document.querySelectorAll('.description-header').forEach(header => {
+            document.querySelectorAll('.modern-accordion-header').forEach(header => {
                 header.addEventListener('click', () => {
                     const content = header.nextElementSibling;
                     const icon = header.querySelector('i');
-                    
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        content.style.padding = "0";
-                        icon.style.transform = 'rotate(0deg)';
-                    } else {
+                    const item = header.parentElement;
+
+                    item.classList.toggle('active');
+
+                    if (item.classList.contains('active')) {
                         content.style.maxHeight = content.scrollHeight + "px";
-                        content.style.padding = "0 0 1.5rem 0";
-                        icon.style.transform = 'rotate(180deg)';
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus');
+                    } else {
+                        content.style.maxHeight = null;
+                        icon.classList.remove('fa-minus');
+                        icon.classList.add('fa-plus');
                     }
                 });
             });
 
             // --- Review Modal ---
-            const reviewModal = document.querySelector('#review-modal');
-            const openReviewBtn = document.getElementById('write-review-btn');
-            const closeReviewBtn = reviewModal.querySelector('.review-modal-close');
-            const starRatingContainer = document.getElementById('star-rating-input');
-            const stars = starRatingContainer.querySelectorAll('.fa-star');
-            let currentRating = 0;
+            const reviewModal = document.getElementById('review-modal');
+            if (reviewModal) {
+                const openReviewBtn = document.getElementById('write-review-btn');
+                const closeReviewBtn = reviewModal.querySelector('.review-modal-close');
+                const starRatingContainer = document.getElementById('star-rating-input');
+                const stars = starRatingContainer.querySelectorAll('.fa-star');
+                let currentRating = 0;
 
-            const openReviewModal = () => {
-                reviewModal.style.display = 'flex';
-                setTimeout(() => reviewModal.classList.add('show'), 10);
-            };
+                const openReviewModal = () => {
+                    // Check for a logged-in user.
+                    const isLoggedIn = window.isUserLoggedIn && window.isUserLoggedIn();
 
-            const closeReviewModal = () => {
-                reviewModal.classList.remove('show');
-                setTimeout(() => reviewModal.style.display = 'none', 300);
-            };
+                    if (isLoggedIn) {
+                        reviewModal.style.display = 'flex';
+                        setTimeout(() => reviewModal.classList.add('show'), 10);
+                    } else {
+                        window.openLoginModal(); // Function from mor.js
+                    }
+                };
 
-            openReviewBtn.addEventListener('click', openReviewModal);
-            closeReviewBtn.addEventListener('click', closeReviewModal);
-            reviewModal.addEventListener('click', (e) => {
-                if (e.target === reviewModal) closeReviewModal();
-            });
+                const closeReviewModal = () => {
+                    reviewModal.classList.remove('show');
+                    setTimeout(() => reviewModal.style.display = 'none', 300);
+                };
 
-            // Star rating logic
-            stars.forEach(star => {
-                star.addEventListener('mouseover', () => {
-                    const rating = parseInt(star.dataset.value);
-                    stars.forEach((s, i) => {
-                        s.className = i < rating ? 'fas fa-star' : 'far fa-star';
+                openReviewBtn.addEventListener('click', openReviewModal);
+                closeReviewBtn.addEventListener('click', closeReviewModal);
+                reviewModal.addEventListener('click', (e) => {
+                    if (e.target === reviewModal) closeReviewModal();
+                });
+
+                // Star rating logic
+                stars.forEach(star => {
+                    star.addEventListener('mouseover', () => {
+                        const rating = parseInt(star.dataset.value);
+                        stars.forEach((s, i) => {
+                            s.className = i < rating ? 'fas fa-star' : 'far fa-star';
+                        });
+                    });
+
+                    star.addEventListener('mouseout', () => {
+                        stars.forEach((s, i) => {
+                            s.className = i < currentRating ? 'fas fa-star selected' : 'far fa-star';
+                        });
+                    });
+
+                    star.addEventListener('click', () => {
+                        currentRating = parseInt(star.dataset.value);
                     });
                 });
 
-                star.addEventListener('mouseout', () => {
-                    stars.forEach((s, i) => {
-                        s.className = i < currentRating ? 'fas fa-star selected' : 'far fa-star';
-                    });
+                document.getElementById('review-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    window.showToast('Thank you for your review!', 'fa-check-circle');
+                    closeReviewModal();
                 });
-
-                star.addEventListener('click', () => {
-                    currentRating = parseInt(star.dataset.value);
-                });
-            });
-
-            document.getElementById('review-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you for your review!');
-                closeReviewModal();
-            });
+            }
         }); // End of DOMContentLoaded
     </script>
