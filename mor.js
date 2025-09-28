@@ -607,6 +607,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const addToCart = (product) => {
+        // Ensure imgSrc is just the filename, not the full path
+        if (product.imgSrc && product.imgSrc.includes('/')) {
+            product.imgSrc = product.imgSrc.split('/').pop();
+        }
+
         const existingItem = cartItems.find(item => item.name === product.name && item.size === product.size);
 
         if (existingItem) {
