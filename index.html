@@ -26,13 +26,15 @@
                     <li><a href="#collections">Collections</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-cart-link"><i class="fas fa-shopping-basket"></i> Cart</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="far fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button"><i class="fas fa-user"></i> Login</a></li>
                 </ul>
             </div>
             <div class="nav-actions">
-                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-basket"></i></button>
+                <a href="login.html" class="login-btn" aria-label="Login">
+                    <i class="fas fa-user"></i>
+                </a>
             </div>
         </nav>
     </header>
@@ -265,56 +267,21 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Mor Fashion. All rights reserved. | Privacy Policy | Terms of Service</p>
+            <p>&copy; 2025 Mor Fashion. All rights reserved. | <a href="privacy.html" style="color: inherit;">Privacy Policy</a> | <a href="terms.html" style="color: inherit;">Terms of Service</a></p>
         </div>
     </footer>
 
-    <div class="overlay"></div>
-
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal-overlay" style="display: none;">
-        <div class="login-modal-content">
-            <span class="modal-close login-modal-close">&times;</span>
-            <h2 id="login-modal-title">Welcome Back</h2>
-            <div class="login-toggle-options">
-                <button class="login-toggle-btn active" data-method="email">Email</button>
-                <button class="login-toggle-btn" data-method="phone">Phone</button>
-            </div>
-            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" placeholder="you@example.com" required>
-                </div>
-                <div class="form-group" id="mobile-number-group" style="display: none;">
-                    <label for="mobile-number">Mobile Number</label>
-                    <input type="tel" id="mobile-number" placeholder="10-digit mobile number" pattern="[0-9]{10}">
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="••••••••" required>
-                    <i class="fas fa-eye toggle-password"></i>
-                </div>
-                <div class="form-group" id="forgot-password-group">
-                    <a href="#" id="forgot-password-link">Forgot Password?</a>
-                </div>
-                <div class="form-group" id="confirm-password-group" style="display: none;">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" id="confirm-password" placeholder="••••••••">
-                    <i class="fas fa-eye toggle-password"></i>
-                </div>
-                <div class="form-group" id="otp-group" style="display: none;">
-                    <label for="otp-input">Enter OTP</label>
-                    <input type="text" id="otp-input" placeholder="6-digit OTP" pattern="[0-9]{6}">
-                </div>
-                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
-            </form>
-            <p class="create-account-link">
-                <span id="toggle-view-text">Don't have an account? </span>
-                <a href="#" id="toggle-view-link">Create your account</a>
-            </p>
+    <!-- Login Required Modal -->
+    <div id="login-required-modal" class="modal-overlay" style="display: none;">
+        <div class="login-required-modal-content">
+            <span class="modal-close login-required-modal-close">&times;</span>
+            <h3>Login Required</h3>
+            <p>You need to be logged in to use this feature.</p>
+            <button class="cta-btn" id="login-now-btn">Login Now</button>
         </div>
     </div>
+
+    <div class="overlay"></div>
 
     <!-- Cart Side Panel -->
     <div id="cart-popup" class="cart-popup">
@@ -323,19 +290,17 @@
             <button class="close-cart-btn" aria-label="Close Cart"><i class="fas fa-times"></i></button>
         </div>
         <div class="cart-content">
-            <div class="cart-empty">
-                <i class="fas fa-shopping-bag"></i>
-                <p>Your cart is empty</p>
-                <button class="cta-btn continue-shopping-btn">Continue Shopping</button>
-            </div>
+            <div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Your cart is empty</p><button class="cta-btn continue-shopping-btn">Continue Shopping</button></div>
             <div class="cart-items" style="display: none;"></div>
         </div>
-        <div class="cart-footer">
+        <div class="cart-footer" style="display: none;">
             <div class="cart-subtotal">
                 <span>Subtotal</span>
                 <span id="cart-subtotal-amount">₹0.00</span>
             </div>
-            <button class="cta-btn checkout-btn">Proceed to Checkout</button>
+            <a href="cart.html" class="cta-btn checkout-btn" style="text-decoration: none; text-align: center; display: block;">
+                Proceed to Checkout
+            </a>
         </div>
     </div>
 

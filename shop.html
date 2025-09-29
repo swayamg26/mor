@@ -12,56 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mor.css">
     <style>
-        .shop-header {
-            text-align: center;
-            padding: 2rem; 
-            background: #3a3a3a;
-        }
-        .shop-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem; 
-            color: #ffffff;
-        }
-        .shop-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1.5rem 2rem; 
-            background-color: #3a3a3a;
-            border-bottom: 1px solid #555555;
-        }
-        .search-bar {
-            flex-grow: 1;
-            width: 100%;
-            max-width: 400px;
-            padding: 0.8rem 1.2rem; 
-            border: 2px solid #555555;
-            background-color: #444444;
-            color: #ffffff;
-            border-radius: 50px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        .search-bar:focus {
-            outline: none;
-            border-color: #d3d3d3;
-        }
-        .filter-btn {
-            padding: 0.8rem 1.5rem;
-            background-color: #555555;
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            transition: all 0.3s ease;
-        }
-        .filter-btn:hover { 
-            background-color: #444444;
-            transform: scale(1.05);
-        }
+        .shop-header { text-align: center; padding: 2rem; background: #3a3a3a; }
+        .shop-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #ffffff; }
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -70,172 +22,6 @@
             margin: 2rem auto;
             padding: 0 2rem;
         }
-        .no-results {
-            text-align: center;
-            grid-column: 1 / -1;
-            padding: 2rem;
-            font-size: 1.2rem;
-            color: #d3d3d3;
-        }
-
-        /* Filter Sidebar */
-        .filter-sidebar {
-            position: fixed;
-            top: 0;
-            right: -350px; /* Start off-screen */
-            width: 320px;
-            height: 100%;
-            background-color: #3a3a3a;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-            z-index: 1001;
-            transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex;
-            flex-direction: column;
-            color: #fff;
-        }
-        .filter-sidebar.open {
-            right: 0; /* Slide in */
-        }
-        .filter-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #555;
-        }
-        .filter-header h3 {
-            font-family: 'Playfair Display', serif;
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        .close-filter-btn {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .filter-content {
-            padding: 1.5rem;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-        .filter-group {
-            margin-bottom: 2rem;
-        }
-        .filter-group h4 {
-            margin-bottom: 1rem;
-            font-weight: 500;
-            border-bottom: 1px solid #555;
-            padding-bottom: 0.5rem;
-        }
-        /* Animate filter groups on open */
-        .filter-group {
-            opacity: 0;
-            transform: translateX(20px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        .filter-sidebar.open .filter-group {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .filter-sidebar.open .filter-group:nth-child(1) { transition-delay: 0.1s; }
-        .filter-sidebar.open .filter-group:nth-child(2) { transition-delay: 0.2s; }
-
-        .price-slider-container {
-            padding: 0 0.5rem;
-        }
-        #price-range {
-            width: 100%;
-        }
-        #price-value {
-            text-align: center;
-            margin-top: 0.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        .material-filter label {
-            display: block;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            position: relative;
-            padding-left: 30px; /* Space for custom checkbox */
-            user-select: none;
-        }
-        .material-filter input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-        /* Custom checkbox box */
-        .material-filter label::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 20px;
-            width: 20px;
-            background-color: #444;
-            border: 1px solid #555;
-            border-radius: 3px;
-            transition: all 0.2s ease;
-        }
-        /* Custom checkmark */
-        .material-filter label::after {
-            content: '\f00c'; /* Font Awesome check icon */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 4px;
-            top: 1px;
-            font-size: 13px;
-            color: #fff;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.2s ease;
-        }
-        .material-filter input:checked + label::before {
-            background-color: #555;
-            border-color: #d3d3d3;
-        }
-        .material-filter input:checked + label::after {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .filter-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #555;
-            display: flex;
-            gap: 1rem;
-        }
-        .apply-filters-btn, .clear-filters-btn {
-            flex: 1;
-            padding: 0.8rem;
-            border-radius: 5px;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .apply-filters-btn {
-            background-color: #d3d3d3;
-            color: #333;
-        }
-        .clear-filters-btn {
-            background-color: #555;
-            color: #fff;
-        }
-
-        /* Product Image Fade-in Animation */
-        .product-image-container img {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .product-item-wrapper.active .product-image-container img {
-            opacity: 1;
-        }
-
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -244,13 +30,6 @@
             }
             .shop-header h1 {
                 font-size: 2rem;
-            }
-            .shop-controls {
-                flex-direction: column;
-            }
-            .filter-sidebar {
-                width: 280px;
-                right: -300px;
             }
         }
     </style>
@@ -265,13 +44,13 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop</a></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-cart-link"><i class="fas fa-shopping-basket"></i> Cart</button></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="far fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button"><i class="fas fa-user"></i> Login</a></li>
                 </ul>
             </div>
              <div class="nav-actions">
-                <button class="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-basket"></i></button>
+                <a href="login.html" class="login-btn" aria-label="Login"><i class="fas fa-user"></i></a>
             </div>
         </nav>
     </header>
@@ -281,11 +60,6 @@
             <h1>All Products</h1>
         </section>
 
-        <section class="shop-controls">
-            <input type="text" id="search-bar" class="search-bar" placeholder="Search for products...">
-            <button class="filter-btn" id="open-filter-btn"><i class="fas fa-filter"></i> Filters</button>
-        </section>
-
         <section id="product-grid" class="product-grid">
             <!-- Products will be injected here by JS -->
         </section>
@@ -293,75 +67,13 @@
     
     <div class="overlay"></div>
 
-    <!-- Filter Sidebar -->
-    <aside id="filter-sidebar" class="filter-sidebar">
-        <div class="filter-header">
-            <h3>Filters</h3>
-            <button class="close-filter-btn" id="close-filter-btn">&times;</button>
-        </div>
-        <div class="filter-content">
-            <div class="filter-group">
-                <h4>Price</h4>
-                <div class="price-slider-container">
-                    <input type="range" id="price-range" min="1000" max="3000" step="100" value="3000">
-                    <div id="price-value">Max Price: ₹3,000</div>
-                </div>
-            </div>
-            <div class="filter-group">
-                <h4>Material</h4>
-                <div class="material-filter" id="material-filter">
-                    <!-- Material checkboxes will be generated by JS -->
-                </div>
-            </div>
-        </div>
-        <div class="filter-footer">
-            <button class="clear-filters-btn" id="clear-filters-btn">Clear</button>
-            <button class="apply-filters-btn" id="apply-filters-btn">Apply</button>
-        </div>
-    </aside>
-
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal-overlay" style="display: none;">
-        <div class="login-modal-content">
-            <span class="modal-close login-modal-close">&times;</span>
-            <h2 id="login-modal-title">Welcome Back</h2>
-            <div class="login-toggle-options">
-                <button class="login-toggle-btn active" data-method="email">Email</button>
-                <button class="login-toggle-btn" data-method="phone">Phone</button>
-            </div>
-            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" placeholder="you@example.com" required>
-                </div>
-                <div class="form-group" id="mobile-number-group" style="display: none;">
-                    <label for="mobile-number">Mobile Number</label>
-                    <input type="tel" id="mobile-number" placeholder="10-digit mobile number" pattern="[0-9]{10}">
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="••••••••" required>
-                    <i class="fas fa-eye toggle-password"></i>
-                </div>
-                <div class="form-group" id="forgot-password-group">
-                    <a href="#" id="forgot-password-link">Forgot Password?</a>
-                </div>
-                <div class="form-group" id="confirm-password-group" style="display: none;">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" id="confirm-password" placeholder="••••••••">
-                    <i class="fas fa-eye toggle-password"></i>
-                </div>
-                <div class="form-group" id="otp-group" style="display: none;">
-                    <label for="otp-input">Enter OTP</label>
-                    <input type="text" id="otp-input" placeholder="6-digit OTP" pattern="[0-9]{6}">
-                </div>
-                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
-            </form>
-            <p class="create-account-link">
-                <span id="toggle-view-text">Don't have an account? </span>
-                <a href="#" id="toggle-view-link">Create your account</a>
-            </p>
+    <!-- Login Required Modal -->
+    <div id="login-required-modal" class="modal-overlay" style="display: none;">
+        <div class="login-required-modal-content">
+            <span class="modal-close login-required-modal-close">&times;</span>
+            <h3>Login Required</h3>
+            <p>Login to add an item to cart.</p>
+            <button class="cta-btn" id="login-now-btn">Login Now</button>
         </div>
     </div>
 
@@ -384,7 +96,9 @@
                 <span>Subtotal</span>
                 <span id="cart-subtotal-amount">₹0.00</span>
             </div>
-            <button class="cta-btn checkout-btn">Proceed to Checkout</button>
+            <a href="cart.html" class="cta-btn checkout-btn" style="text-decoration: none; text-align: center; display: block;">
+                Proceed to Checkout
+            </a>
         </div>
     </div>
 
@@ -433,99 +147,35 @@
             ];
 
             const productGrid = document.getElementById('product-grid');
-            const searchBar = document.getElementById('search-bar');
-            const filterSidebar = document.getElementById('filter-sidebar');
-            const openFilterBtn = document.getElementById('open-filter-btn');
-            const closeFilterBtn = document.getElementById('close-filter-btn');
-            const applyFiltersBtn = document.getElementById('apply-filters-btn');
-            const clearFiltersBtn = document.getElementById('clear-filters-btn');
-            const overlay = document.querySelector('.overlay');
-            const priceRange = document.getElementById('price-range');
-            const priceValue = document.getElementById('price-value');
-            const materialFilterContainer = document.getElementById('material-filter');
-
-            // --- Filter Sidebar Logic ---
-            const openFilterSidebar = () => {
-                filterSidebar.classList.add('open');
-                overlay.style.display = 'block';
-                setTimeout(() => overlay.classList.add('active'), 10);
-                document.body.classList.add('no-scroll');
-            };
-
-            const closeFilterSidebar = () => {
-                filterSidebar.classList.remove('open');
-                overlay.classList.remove('active');
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    document.body.classList.remove('no-scroll');
-                }, 400);
-            };
-
-            openFilterBtn.addEventListener('click', openFilterSidebar);
-            closeFilterBtn.addEventListener('click', closeFilterSidebar);
-            overlay.addEventListener('click', closeFilterSidebar);
-            applyFiltersBtn.addEventListener('click', () => {
-                handleFiltering();
-                closeFilterSidebar();
-            });
 
             const renderProducts = (productsToRender) => {
                 productGrid.innerHTML = ''; // Clear existing products
 
-                if (productsToRender.length === 0) {
-                    productGrid.innerHTML = '<p class="no-results">No products found matching your search.</p>';
-                    return;
-                }
-
                 productsToRender.forEach(product => {
                     const productCardHTML = `
                         <div class="product-item-wrapper" data-page-url="${product.pageUrl}">
-                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}">
-                                <a href="${product.pageUrl}" class="product-link-wrapper">
-                                    <div class="product-image-container">
-                                        <img src="${product.imgSrc}" alt="${product.name}">
-                                        <div class="product-favorite-icon">
-                                            <i class="far fa-heart"></i>
-                                        </div>
-                                    </div>
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}" data-page-url="${product.pageUrl}">
+                                <div class="product-image-container"><img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
+                                    <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
                                 </div>
-                                <div class="product-info">
-                                    <h4 class="product-name">${product.name}</h4>
-                                    <p class="product-price">${product.price}</p>
-                                </div>
-                            </a>
+                            </div>
+                            <div class="product-info">
+                                <h4 class="product-name">${product.name}</h4><p class="product-price">${product.price}</p>
+                            </div>
                         </div>
                     `;
                     productGrid.innerHTML += productCardHTML;
                 });
 
-                // Re-apply the fade-in animation to the newly rendered cards
-                setTimeout(() => {
-                    document.querySelectorAll('.product-item-wrapper').forEach((card, index) => {
-                        card.style.transitionDelay = `${index * 50}ms`;
-                        card.classList.add('animate-fade-in');
-                        card.classList.add('active'); // Trigger the animation
-                    });
-                }, 10); // A small delay to allow the DOM to update
-
                 // Add event listeners for new favorite icons
-                document.querySelectorAll('.product-favorite-icon').forEach(icon => {
-                    const card = icon.closest('.product-card');
-                    const product = {
-                        name: card.dataset.name,
-                        price: card.dataset.price,
-                        imgSrc: card.dataset.imgSrc,
-                    };
-                    // Check if item is already favorited on render
-                    const isFavorited = window.isFavorited(product);
-                    if (isFavorited) {
-                        icon.innerHTML = '<i class="fas fa-heart"></i>';
-                    }
-
-                    icon.addEventListener('click', function(event) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        window.toggleFavorite(product, this);
+                setTimeout(() => {
+                    document.querySelectorAll('.product-favorite-icon').forEach(icon => {
+                        icon.addEventListener('click', function(event) {
+                            event.stopPropagation();
+                            const card = this.closest('.product-card');
+                            const product = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.querySelector('img').src };
+                            window.toggleFavorite(product, this);
+                        });
                     });
                 });
 
@@ -533,58 +183,10 @@
                 document.querySelectorAll('.product-item-wrapper').forEach(wrapper => {
                     wrapper.addEventListener('click', (e) => { if (!e.target.closest('.product-favorite-icon')) window.location.href = wrapper.dataset.pageUrl; });
                 });
-            };
-
-            const handleFiltering = () => {
-                const searchTerm = searchBar.value.toLowerCase();
-                const maxPrice = parseInt(priceRange.value);
-                const selectedMaterials = [...materialFilterContainer.querySelectorAll('input:checked')].map(el => el.value);
-
-                const filteredProducts = allProducts.filter(product => {
-                    const price = parseInt(product.price.replace('₹', '').replace(',', ''));
-                    const nameMatch = product.name.toLowerCase().includes(searchTerm);
-                    const priceMatch = price <= maxPrice;
-                    const materialMatch = selectedMaterials.length === 0 || selectedMaterials.includes(product.material);
-
-                    return nameMatch && priceMatch && materialMatch;
-                });
-                renderProducts(filteredProducts);
-            };
-            
-            // --- Populate Filters ---
-            const populateFilters = () => {
-                // Price Range
-                priceRange.addEventListener('input', () => {
-                    priceValue.textContent = `Max Price: ₹${parseInt(priceRange.value).toLocaleString()}`;
-                });
-
-                // Materials
-                const materials = [...new Set(allProducts.map(p => p.material))].sort();
-                materialFilterContainer.innerHTML = materials.map((material, index) => `
-                    <div>
-                        <input type="checkbox" value="${material}" id="mat-check-${index}">
-                        <label for="mat-check-${index}">${material}</label>
-                    </div>
-                `).join('');
-            };
-
-            // --- Event Listeners ---
-            searchBar.addEventListener('input', handleFiltering);
-            priceRange.addEventListener('input', handleFiltering);
-            materialFilterContainer.addEventListener('change', handleFiltering);
-
-            clearFiltersBtn.addEventListener('click', () => {
-                searchBar.value = '';
-                priceRange.value = priceRange.max;
-                priceValue.textContent = `Max Price: ₹${parseInt(priceRange.max).toLocaleString()}`;
-                materialFilterContainer.querySelectorAll('input:checked').forEach(el => el.checked = false);
-                handleFiltering();
-            });
+            }
 
             // --- Initial Setup ---
-            populateFilters();
             renderProducts(allProducts);
-            window.updateCartUI(); // Ensure cart count is correct on load
         });
     </script>
 </body>

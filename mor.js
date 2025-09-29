@@ -79,232 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Login Modal Functionality ---
-    // Get all the necessary elements
-    const loginModal = document.getElementById('login-modal');
-    const loginBtns = document.querySelectorAll('.login-btn, #mobile-login-link'); // Desktop and mobile login buttons
-    const closeModalBtns = document.querySelectorAll('.login-modal-close'); // Close buttons for the modal
-
-    // Function to open the login modal
+    // --- Login Page Navigation ---
+    // This function will be called when a login is required.
+    // It redirects to the login page, passing the current page as a parameter
+    // so the user can be redirected back after a successful login.
     const openLoginModal = () => {
-        if (loginModal) {
-            loginModal.style.display = 'flex'; // Use flex to center the content
-            // Add a class to trigger the fade-in animation
-            setTimeout(() => {
-                loginModal.classList.add('show');
-            }, 10); // Small delay to ensure transition is applied
-        }
+        // Get the current path, but remove the leading slash
+        const redirectPath = window.location.pathname.substring(1) + window.location.search;
+        window.location.href = `login.html?redirect=${redirectPath}`;
     };
-
-    // Function to close the login modal
-    const closeLoginModal = () => {
-        if (loginModal) {
-            loginModal.classList.remove('show');
-            // Wait for the fade-out animation to finish before hiding
-            setTimeout(() => {
-                loginModal.style.display = 'none';
-            }, 300); // This duration should match the CSS transition time
-        }
-    };
-
-    // Add click event listeners to all login buttons
-    loginBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default button behavior
-            openLoginModal(); // Re-enable the on-page modal
-        });
-    });
-
-    // Add click event listeners to all close buttons
-    closeModalBtns.forEach(btn => {
-        btn.addEventListener('click', closeLoginModal);
-    });
-
-    // Add click event listener to the modal overlay itself to close it
-    if (loginModal) {
-        loginModal.addEventListener('click', (event) => {
-            // Close the modal only if the click is on the overlay itself, not the content
-            if (event.target === loginModal) {
-                closeLoginModal();
-            }
-        });
-    }
-
-    // --- Login/Signup View Toggle ---
-    const toggleViewLink = document.getElementById('toggle-view-link');
-    const forgotPasswordLink = document.getElementById('forgot-password-link');
-    if (toggleViewLink && forgotPasswordLink) {
-        let currentView = 'login'; // Can be 'login', 'signup', or 'forgotPassword'
-        let loginMethod = 'email'; // 'email' or 'phone'
-        let otpSent = false;
-
-        const title = document.getElementById('login-modal-title');
-        const subtitle = document.getElementById('login-modal-subtitle');
-        const loginToggleContainer = document.querySelector('.login-toggle-options');
-        const emailGroup = document.querySelector('#login-form .form-group:first-of-type');
-        const emailInput = document.getElementById('login-email');
-        const mobileNumberGroup = document.getElementById('mobile-number-group');
-        const mobileInput = document.getElementById('mobile-number');
-        const passwordGroup = document.getElementById('login-password').parentElement;
-        const confirmGroup = document.getElementById('confirm-password-group');
-        const confirmInput = document.getElementById('confirm-password');
-        const otpGroup = document.getElementById('otp-group');
-        const otpInput = document.getElementById('otp-input');
-        const submitBtn = document.getElementById('login-submit-btn');
-        const toggleText = document.getElementById('toggle-view-text');
-        const forgotPasswordGroup = document.getElementById('forgot-password-group');
-
-        const updateView = () => {
-            // Reset all states first
-            emailGroup.style.display = 'block';
-            emailInput.placeholder = "you@example.com";
-            mobileNumberGroup.style.display = 'none';
-            mobileInput.required = false;
-            passwordGroup.style.display = 'block';
-            confirmGroup.style.display = 'none';
-            confirmInput.required = false;
-            otpGroup.style.display = 'none';
-            otpInput.required = false;
-            forgotPasswordGroup.style.display = 'block';
-            loginToggleContainer.style.display = 'flex';
-            otpSent = false;
-
-            if (currentView === 'login') {
-                title.textContent = 'Welcome Back';
-                subtitle.textContent = 'Log in to access your account and favorites.';
-                submitBtn.textContent = 'Log In';
-                toggleText.textContent = "Don't have an account? ";
-                toggleViewLink.textContent = 'Create your account';
-
-                if (loginMethod === 'phone') {
-                    emailGroup.style.display = 'block'; // Re-use email field for phone
-                    emailInput.type = 'tel';
-                    emailInput.placeholder = '10-digit mobile number';
-                    passwordGroup.style.display = 'none';
-                    forgotPasswordGroup.style.display = 'none';
-                    submitBtn.textContent = 'Send OTP';
-                } else { // email
-                    emailInput.type = 'email';
-                    emailInput.placeholder = 'you@example.com';
-                }
-
-            } else if (currentView === 'signup') {
-                title.textContent = 'Create Account';
-                subtitle.textContent = 'Join us to save your favorites and more.';
-                submitBtn.textContent = 'Sign Up';
-                mobileNumberGroup.style.display = 'block';
-                mobileInput.required = true;
-                loginToggleContainer.style.display = 'none';
-                confirmGroup.style.display = 'block';
-                confirmInput.required = true;
-                forgotPasswordGroup.style.display = 'none';
-                toggleText.textContent = 'Already have an account? ';
-                toggleViewLink.textContent = 'Log in';
-            } else if (currentView === 'forgotPassword') {
-                title.textContent = 'Reset Password';
-                subtitle.textContent = 'Enter your email to receive a password reset link.';
-                submitBtn.textContent = 'Send Reset Link';
-                passwordGroup.style.display = 'none';
-                loginToggleContainer.style.display = 'none';
-                forgotPasswordGroup.style.display = 'none';
-                toggleText.textContent = 'Remembered your password? ';
-                toggleViewLink.textContent = 'Back to Login';
-            }
-        };
-
-        toggleViewLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (currentView === 'login') {
-                currentView = 'signup';
-            } else if (currentView === 'signup') {
-                currentView = 'login';
-            } else {
-                currentView = 'login'; // From 'forgotPassword' view, go back to login
-            }
-            updateView();
-        });
-
-        forgotPasswordLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            currentView = 'forgotPassword';
-            updateView();
-        });
-
-        // --- Login Method Toggle ---
-        loginToggleContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('login-toggle-btn')) {
-                loginMethod = e.target.dataset.method;
-                loginToggleContainer.querySelector('.active').classList.remove('active');
-                e.target.classList.add('active');
-                updateView();
-            }
-        });
-
-        // Also handle form submission
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            if (currentView === 'login' && loginMethod === 'phone') {
-                if (!otpSent) {
-                    if (!/^\d{10}$/.test(emailInput.value)) {
-                        alert('Please enter a valid 10-digit phone number.');
-                        return;
-                    }
-                    // Simulate sending OTP
-                    alert(`OTP sent to ${emailInput.value}`);
-                    otpSent = true;
-                    otpGroup.style.display = 'block';
-                    otpInput.required = true;
-                    submitBtn.textContent = 'Verify OTP & Log In';
-                } else {
-                    // Simulate OTP verification
-                    if (otpInput.value === '123456') { // Example OTP
-                        alert('Login successful!');
-                        closeLoginModal();
-                    } else {
-                        alert('Invalid OTP. Please try again.');
-                    }
-                }
-                return; // Stop further execution for phone login
-            }
-
-            if (currentView === 'signup') {
-                const password = document.getElementById('login-password').value;
-                const confirmPassword = confirmInput.value;
-                if (password !== confirmPassword) {
-                    alert('Passwords do not match. Please try again.');
-                    return;
-                }
-                if (!/^\d{10}$/.test(mobileInput.value)) {
-                    alert('Please enter a valid 10-digit mobile number.');
-                    return; // Stop form submission
-                }
-                alert('Signup successful!');
-                closeLoginModal();
-            }
-            if (currentView === 'forgotPassword') {
-                alert('Password reset link sent to your email!');
-                closeLoginModal();
-            }
-            // Other submission logic for login/signup would go here
-        });
-
-        // --- Show/Hide Password ---
-        document.querySelectorAll('.toggle-password').forEach(icon => {
-            icon.addEventListener('click', () => {
-                const input = icon.previousElementSibling;
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            });
-        })
-    }
+    window.openLoginModal = openLoginModal;
 
 
     // Header background opacity on scroll
@@ -324,31 +108,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinksContainer = document.querySelector('.nav-links-container');
     const overlay = document.querySelector('.overlay');
     const closeMenuBtn = document.querySelector('.close-menu');
-
+    
     // --- Cart Side Panel ---
     const cartPopup = document.getElementById('cart-popup');
-    const openCartBtn = document.querySelector('.cart-btn');
+    const openCartBtns = document.querySelectorAll('.cart-btn, #mobile-cart-link'); // Desktop and mobile cart buttons
     const closeCartBtn = document.querySelector('.close-cart-btn');
     const continueShoppingBtn = document.querySelector('.continue-shopping-btn');
 
     const openCart = () => {
-        if (cartPopup) {
-            cartPopup.classList.add('open');
-            if (overlay) overlay.className = 'overlay right'; // Set overlay style for right panel
-            handleOverlayAndScroll(true);
-        }
-    };
-
-    const toggleMenu = () => {
-        if (!navLinksContainer) return;
-        const header = document.querySelector('.header');
-        const shouldOpen = !navLinksContainer.classList.contains('open');
-        
-        navLinksContainer.classList.toggle('open', shouldOpen);
-        if (overlay) overlay.className = 'overlay left'; // Set overlay style for left panel
-        handleOverlayAndScroll(shouldOpen);
-
-        if (header) header.classList.toggle('menu-open', shouldOpen);
+        if (cartPopup) cartPopup.classList.add('open');
+        if (overlay) overlay.className = 'overlay right';
+        handleOverlayAndScroll(true);
     };
 
     const handleOverlayAndScroll = (shouldOpen) => {
@@ -370,15 +140,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const toggleMenu = () => {
+        if (!navLinksContainer) return;
+        const header = document.querySelector('.header');
+        const shouldOpen = !navLinksContainer.classList.contains('open');
+        
+        navLinksContainer.classList.toggle('open', shouldOpen);
+        if (overlay) overlay.className = 'overlay left'; // Set overlay style for left panel
+        handleOverlayAndScroll(shouldOpen);
+
+        if (header) header.classList.toggle('menu-open', shouldOpen);
+    };
+
     const closeSidePanels = () => {
         const header = document.querySelector('.header');
         let wasPanelOpen = false;
-        if (cartPopup && cartPopup.classList.contains('open')) {
-            cartPopup.classList.remove('open');
-            wasPanelOpen = true;
-        }
         if (favoritesPopup && favoritesPopup.classList.contains('open')) {
             favoritesPopup.classList.remove('open');
+            wasPanelOpen = true;
+        }
+        if (cartPopup && cartPopup.classList.contains('open')) {
+            cartPopup.classList.remove('open');
             wasPanelOpen = true;
         }
         if (navLinksContainer && navLinksContainer.classList.contains('open')) {
@@ -421,14 +203,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    if (openCartBtn) openCartBtn.addEventListener('click', openCart);
-    if (closeCartBtn) closeCartBtn.addEventListener('click', closeSidePanels);
-    if (continueShoppingBtn) continueShoppingBtn.addEventListener('click', closeSidePanels);
     
     openFavoritesBtns.forEach(btn => {
         btn.addEventListener('click', openFavorites);
     });
     if (closeFavoritesBtn) closeFavoritesBtn.addEventListener('click', closeSidePanels);
+    openCartBtns.forEach(btn => {
+        btn.addEventListener('click', openCart);
+    });
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeSidePanels);
     if (startBrowsingBtn) {
         startBrowsingBtn.addEventListener('click', () => {
             closeSidePanels();
@@ -436,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (continueShoppingBtn) continueShoppingBtn.addEventListener('click', closeSidePanels);
     // Add closing functionality to the overlay for all side panels
     if (overlay) overlay.addEventListener('click', closeSidePanels);
 
@@ -467,6 +251,37 @@ document.addEventListener('DOMContentLoaded', () => {
         return localStorage.getItem('mor_user_loggedin') === 'true';
     };
     window.isUserLoggedIn = isUserLoggedIn;
+
+    // --- Login Required Modal ---
+    const loginRequiredModal = document.getElementById('login-required-modal');
+    if (loginRequiredModal) {
+        const closeLoginRequiredBtn = loginRequiredModal.querySelector('.login-required-modal-close');
+        const loginNowBtn = document.getElementById('login-now-btn');
+        const modalMessage = loginRequiredModal.querySelector('p');
+
+        const openLoginRequiredModal = (message) => {
+            if (message) {
+                modalMessage.innerHTML = message;
+            }
+
+            loginRequiredModal.style.display = 'flex';
+            setTimeout(() => loginRequiredModal.classList.add('show'), 10);
+        };
+        window.openLoginRequiredModal = openLoginRequiredModal;
+
+        const closeLoginRequiredModal = () => {
+            loginRequiredModal.classList.remove('show');
+            // Reset to default message after closing
+            setTimeout(() => { modalMessage.innerHTML = 'You need to be logged in to use this feature.'; }, 300);
+            setTimeout(() => loginRequiredModal.style.display = 'none', 300);
+        };
+
+        closeLoginRequiredBtn.addEventListener('click', closeLoginRequiredModal);
+        loginRequiredModal.addEventListener('click', (e) => {
+            if (e.target === loginRequiredModal) closeLoginRequiredModal();
+        });
+        loginNowBtn.addEventListener('click', window.openLoginModal);
+    }
 
     // --- Favorites Functionality ---
     let favoriteItems = JSON.parse(localStorage.getItem('mor_favorites')) || [];
@@ -507,6 +322,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const toggleFavorite = (product, icon) => {
+        if (!isUserLoggedIn()) {
+            window.openLoginRequiredModal('You need to be logged in to save favorites.');
+            return;
+        }
+
         const isFavorited = favoriteItems.some(item => item.name === product.name);
 
         if (isFavorited) {
@@ -557,39 +377,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Cart functionality ---
     let cartItems = JSON.parse(localStorage.getItem('mor_cart')) || [];
+
     const cartItemsContainer = document.querySelector('.cart-items');
     const cartEmptyMsg = document.querySelector('.cart-empty');
     const subtotalAmountEl = document.getElementById('cart-subtotal-amount');
     const cartFooter = document.querySelector('.cart-footer');
-
     const saveCart = () => {
         localStorage.setItem('mor_cart', JSON.stringify(cartItems));
         updateCartUI();
     };
     window.saveCart = saveCart; // Make it global
-
+    
     const updateCartUI = () => {
-        // Update cart count in header
-        if (openCartBtn) {
-            // This ensures the icon stays consistent and no number is displayed.
-            openCartBtn.innerHTML = `<i class="fas fa-shopping-basket"></i>`;
+        const cartCountEl = document.querySelector('.cart-count');
+        const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+        if (cartCountEl) {
+            cartCountEl.textContent = totalQuantity;
+            cartCountEl.style.display = totalQuantity > 0 ? 'flex' : 'none';
         }
+
+        // If we are on the cart page, render the full cart view
+        if (document.body.querySelector('.cart-page-main')) {
+            renderFullCartPage();
+        } else {
+            // Otherwise, update the side-panel cart
+            renderSidePanelCart();
+        }
+    };
+
+    const renderSidePanelCart = () => {
+        if (!cartItemsContainer || !cartEmptyMsg || !cartFooter) return;
 
         if (cartItems.length === 0) {
             cartItemsContainer.style.display = 'none';
             cartEmptyMsg.style.display = 'block';
-            if (cartFooter) {
-                cartFooter.style.display = 'none';
-            }
+            cartFooter.style.display = 'none';
         } else {
             cartItemsContainer.style.display = 'block';
             cartEmptyMsg.style.display = 'none';
-            if (cartFooter) {
-                cartFooter.style.display = 'block';
-            }
+            cartFooter.style.display = 'block';
 
             cartItemsContainer.innerHTML = ''; // Clear old items
-
             let subtotal = 0;
 
             cartItems.forEach(item => {
@@ -618,6 +447,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const renderFullCartPage = () => {
+        const itemsListContainer = document.querySelector('.cart-items-list .cart-items');
+        const emptyCartView = document.querySelector('.cart-items-list .cart-empty');
+        const orderSummary = document.querySelector('.order-summary');
+
+        if (!itemsListContainer || !emptyCartView || !orderSummary) return;
+
+        if (cartItems.length === 0) {
+            itemsListContainer.style.display = 'none';
+            emptyCartView.style.display = 'block';
+            orderSummary.style.display = 'none';
+        } else {
+            itemsListContainer.style.display = 'block';
+            emptyCartView.style.display = 'none';
+            orderSummary.style.display = 'block';
+
+            itemsListContainer.innerHTML = ''; // Clear old items
+
+            let subtotal = 0;
+
+            cartItems.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                // Using the same layout as the old side panel for consistency
+                itemEl.innerHTML = `
+                    <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price}</div>
+                        <div class="cart-item-size">Size: ${item.size}</div>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn-small" data-name="${item.name}" data-size="${item.size}" data-action="decrease">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn-small" data-name="${item.name}" data-size="${item.size}" data-action="increase">+</button>
+                    </div>
+                    <button class="cart-item-remove" data-name="${item.name}" data-size="${item.size}">&times;</button>
+                `;
+                itemsListContainer.appendChild(itemEl);
+                const priceValue = parseFloat(item.price.replace('₹', '').replace(',', ''));
+                subtotal += priceValue * item.quantity;
+            });
+
+            // Update Order Summary
+            document.getElementById('summary-subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `₹${subtotal.toFixed(2)}`;
+        }
+    };
+
     const addToCart = (product) => {
         // Ensure imgSrc is just the filename, not the full path
         if (product.imgSrc && product.imgSrc.includes('/')) {
@@ -637,7 +515,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Fly-to-Cart Animation ---
     const flyToCart = (startElement, product) => {
-        const cartIcon = document.querySelector('.cart-btn');
+        // Gate the feature behind login
+        if (!isUserLoggedIn()) {
+            window.openLoginRequiredModal('Login to add an item to cart.');
+            return;
+        }
+
+        const cartIcon = document.querySelector('.cart-btn i');
         if (!cartIcon) return;
 
         // Add to cart data structure first
@@ -669,14 +553,17 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             flyingImg.remove();
             showToast(`${product.name} has been added to your cart!`, 'fa-check-circle');
-            openCart();
+            // Maybe briefly animate the cart icon
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => { cartBtn.style.transform = 'scale(1)'; }, 200);
         }, 1000); // This duration should match the CSS transition duration
     };
     window.flyToCart = flyToCart;
 
 
     // Event delegation for cart item actions
-    cartItemsContainer.addEventListener('click', (e) => {
+    document.body.addEventListener('click', (e) => { // This listener is now very broad, might be better to scope it
         const target = e.target;
         const name = target.dataset.name;
         const size = target.dataset.size;
@@ -697,7 +584,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        saveCart();
+        if (target.closest('.cart-items-list') || target.closest('.cart-items')) {
+            saveCart();
+        }
     });
 
     document.querySelectorAll('.product-favorite-icon').forEach(icon => {
