@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Cart Side Panel ---
     const cartPopup = document.getElementById('cart-popup');
-    const openCartBtns = document.querySelectorAll('.cart-btn, #mobile-cart-link'); // Desktop and mobile cart buttons
+    const openCartBtns = document.querySelectorAll('.cart-btn'); // Desktop cart buttons
     const closeCartBtn = document.querySelector('.close-cart-btn');
     const continueShoppingBtn = document.querySelector('.continue-shopping-btn');
 
@@ -248,6 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Simple Auth Check (for demonstration) ---
     const isUserLoggedIn = () => {
+        // This now reads the state set by the Firebase onAuthStateChanged listener
+        // in src/index.js. It's no longer the source of truth, just a convenient
+        // synchronous check for UI purposes.
         return localStorage.getItem('mor_user_loggedin') === 'true';
     };
     window.isUserLoggedIn = isUserLoggedIn;
@@ -562,32 +565,49 @@ document.addEventListener('DOMContentLoaded', () => {
     window.flyToCart = flyToCart;
 
 
-    // Event delegation for cart item actions
-    document.body.addEventListener('click', (e) => { // This listener is now very broad, might be better to scope it
+    // Event delegation for cart item actions.
+    // We attach it to a common parent that exists on the page.
+    const cartInteractionHandler = (e) => {
         const target = e.target;
-        const name = target.dataset.name;
-        const size = target.dataset.size;
+        let cartNeedsUpdate = false;
 
-        if (target.classList.contains('cart-item-remove')) {
+        if (target.closest('.cart-item-remove')) {
+            const itemElement = target.closest('.cart-item');
+            const name = itemElement.querySelector('.cart-item-remove').dataset.name;
+            const size = itemElement.querySelector('.cart-item-remove').dataset.size;
             cartItems = cartItems.filter(item => !(item.name === name && item.size === size));
-        }
-
-        if (target.classList.contains('quantity-btn-small')) {
+            cartNeedsUpdate = true;
+        } else if (target.closest('.quantity-btn-small')) {
+            const button = target.closest('.quantity-btn-small');
+            const name = button.dataset.name;
+            const size = button.dataset.size;
             const itemToUpdate = cartItems.find(item => item.name === name && item.size === size);
             if (itemToUpdate) {
-                if (target.dataset.action === 'increase') {
+                if (button.dataset.action === 'increase') {
                     itemToUpdate.quantity++;
                 } else if (itemToUpdate.quantity > 1) {
                     itemToUpdate.quantity--;
                 } else { // quantity is 1 and decrease is clicked
                     cartItems = cartItems.filter(item => !(item.name === name && item.size === size));
                 }
+                cartNeedsUpdate = true;
             }
         }
-        if (target.closest('.cart-items-list') || target.closest('.cart-items')) {
+        if (cartNeedsUpdate) {
             saveCart();
         }
-    });
+    };
+
+    // Attach the handler to the specific cart containers if they exist
+    const cartPageContainer = document.querySelector('.cart-page-main');
+    const cartPopupContainer = document.getElementById('cart-popup');
+
+    if (cartPageContainer) {
+        cartPageContainer.addEventListener('click', cartInteractionHandler);
+    }
+    if (cartPopupContainer) {
+        cartPopupContainer.addEventListener('click', cartInteractionHandler);
+    }
 
     document.querySelectorAll('.product-favorite-icon').forEach(icon => {
         icon.addEventListener('click', function(event) {

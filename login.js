@@ -1,3 +1,11 @@
+// Import Firebase auth functions and the auth object from your config
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { auth } from './src/index.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Login/Signup View Toggle ---
     const toggleViewLink = document.getElementById('toggle-view-link');
@@ -10,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = document.getElementById('login-modal-title');
         const subtitle = document.getElementById('login-modal-subtitle');
         const loginToggleContainer = document.querySelector('.login-toggle-options');
+        const emailLabel = document.querySelector('label[for="login-email"]');
         const emailGroup = document.querySelector('#login-form .form-group:first-of-type');
         const emailInput = document.getElementById('login-email');
         const mobileNumberGroup = document.getElementById('mobile-number-group');
@@ -44,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = 'Log In';
                 toggleText.textContent = "Don't have an account? ";
                 toggleViewLink.textContent = 'Create your account';
+                emailLabel.textContent = 'Email';
 
                 if (loginMethod === 'phone') {
                     emailGroup.style.display = 'block'; // Re-use email field for phone
@@ -51,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     emailInput.placeholder = '10-digit mobile number';
                     passwordGroup.style.display = 'none';
                     forgotPasswordGroup.style.display = 'none';
+                    emailLabel.textContent = 'Mobile Number';
                     submitBtn.textContent = 'Send OTP';
                 } else { // email
                     emailInput.type = 'email';
@@ -113,11 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Function to handle successful login
+            // This function is now called by the onAuthStateChanged listener in mor.js
             const handleSuccessfulLogin = () => {
-                // For demonstration, we'll use localStorage to track login state
-                localStorage.setItem('mor_user_loggedin', 'true');
-
                 // Check for a redirect URL in the query parameters
                 const params = new URLSearchParams(window.location.search);
                 const redirectUrl = params.get('redirect');
@@ -129,55 +137,72 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
+            const email = emailInput.value;
+            const password = document.getElementById('login-password').value;
+
             if (currentView === 'login' && loginMethod === 'phone') {
                 if (!otpSent) {
-                    if (!/^\d{10}$/.test(emailInput.value)) {
+                    if (!/^\d{10}$/.test(email)) {
                         alert('Please enter a valid 10-digit phone number.');
                         return;
                     }
-                    // Simulate sending OTP
-                    alert(`OTP sent to ${emailInput.value}`);
+                    // NOTE: Phone auth is not implemented with Firebase yet. This is a placeholder.
+                    alert(`Phone authentication is not yet implemented. OTP simulation for ${email}.`);
                     otpSent = true;
                     otpGroup.style.display = 'block';
                     otpInput.required = true;
                     submitBtn.textContent = 'Verify OTP & Log In';
                 } else {
                     // Simulate OTP verification
-                    if (otpInput.value === '123456') { // Example OTP
-                        alert('Login successful!');
-                        handleSuccessfulLogin();
+                    if (otpInput.value === '123456') {
+                        alert('Phone login simulation successful!');
+                        // In a real scenario, you'd sign in with the phone credential here.
+                        // For now, we'll just redirect.
+                        localStorage.setItem('mor_user_loggedin', 'true'); // Temp flag
+                        handleSuccessfulLogin(); // Redirect
                     } else {
                         alert('Invalid OTP. Please try again.');
                     }
                 }
                 return; // Stop further execution for phone login
-            }
-
-            if (currentView === 'login' && loginMethod === 'email') {
-                alert('Login successful!');
-                handleSuccessfulLogin();
-            }
-
-            if (currentView === 'signup') {
-                const password = document.getElementById('login-password').value;
+            } else if (currentView === 'signup') {
                 const confirmPassword = confirmInput.value;
                 if (password !== confirmPassword) {
                     alert('Passwords do not match. Please try again.');
                     return;
                 }
-                if (!/^\d{10}$/.test(mobileInput.value)) {
-                    alert('Please enter a valid 10-digit mobile number.');
-                    return; // Stop form submission
-                }
-                alert('Signup successful! Please log in.');
-                // Switch to login view after signup
-                currentView = 'login';
-                updateView();
-            }
-            if (currentView === 'forgotPassword') {
-                alert('Password reset link sent to your email!');
-                currentView = 'login';
-                updateView();
+                // Firebase signup
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        console.log('Signup successful:', userCredential.user);
+                        // The onAuthStateChanged listener will handle the redirect.
+                    })
+                    .catch((error) => {
+                        alert(`Signup failed: ${error.message}`);
+                    });
+            } else if (currentView === 'login' && loginMethod === 'email') {
+                // Firebase login
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        console.log('Login successful:', userCredential.user);
+                        // The onAuthStateChanged listener will handle the redirect.
+                    })
+                    .catch((error) => {
+                        alert(`Login failed: ${error.message}`);
+                    });
+            } else if (currentView === 'forgotPassword') {
+                // Firebase password reset
+                sendPasswordResetEmail(auth, email)
+                    .then(() => {
+                        alert('Password reset email sent! Check your inbox.');
+                        currentView = 'login';
+                        updateView();
+                    })
+                    .catch((error) => {
+                        alert(`Password reset failed: ${error.message}`);
+                    });
             }
         });
 

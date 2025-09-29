@@ -26,3 +26,19 @@ const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 const analytics = getAnalytics(firebaseApp);
+
+export { auth, db, storage };
+
+// Track login state
+onAuthStateChanged(auth, (user) => {
+  const statusEl = document.getElementById("status");
+  if (user) {
+    console.log("✅ Logged in as:", user.email);
+    if (statusEl) statusEl.innerText = `Welcome, ${user.email}`;
+    localStorage.setItem('mor_user_loggedin', 'true');
+  } else {
+    console.log("❌ No user logged in");
+    if (statusEl) statusEl.innerText = "Not logged in";
+    localStorage.setItem('mor_user_loggedin', 'false');
+  }
+});
