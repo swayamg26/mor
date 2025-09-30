@@ -660,7 +660,25 @@ main {
     animation: slide-up 0.8s 0.9s ease-out forwards;
 }
 
-.cta-btn:hover {
+.cta-btn-cart-page {
+    display: inline-block;
+    background: #555555;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    /* Note: animation properties are not included to ensure it's visible on page load */
+}
+
+
+.cta-btn-cart-page:hover {
     background: #444444;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);

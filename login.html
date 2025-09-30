@@ -57,13 +57,13 @@
                     <li><a href="index.html#collections">Collections</a></li>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
-                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button"><i class="fas fa-user"></i> Login</a></li>
+                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</a></li>
                     <li class="mobile-only-link"><a href="cart.html" class="nav-link-button"><i class="fas fa-shopping-basket"></i> Cart</a></li>
                     <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
              <div class="nav-actions">
-                <a href="login.html" class="login-btn" aria-label="Login"><i class="fas fa-user"></i></a>
+                <a href="login.html" class="login-btn" aria-label="Login" id="desktop-login-link"><i class="fas fa-user"></i></a>
             </div>
         </nav>
     </header>
@@ -177,7 +177,9 @@
 
     <script src="mor.js"></script>
     <!-- Load Firebase and Auth logic as modules -->
-    <script type="module" src="src/index.js"></script>
+    <script type="module" src="src/auth.js"></script>
     <script type="module" src="login.js"></script>
+    <script type="module" src="./current.js"></script>
+
 </body>
 </html>

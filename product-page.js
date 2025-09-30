@@ -78,18 +78,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const productName = document.getElementById('product-name')?.textContent;
             const productPrice = document.getElementById('product-price')?.textContent;
             const activeSizeBtn = sizeSelector?.querySelector('.size-btn.active');
+            const productContainer = document.querySelector('.product-page-container');
 
-            if (!productName || !productPrice || !activeSizeBtn || !mainImage || !quantityValue) return;
+            if (!productName || !productPrice || !activeSizeBtn || !productContainer || !quantityValue) return;
+
+            // Get image source from product container's data attribute for consistency
+            const imgSrc = productContainer.dataset.imgSrc;
 
             const product = {
                 name: productName,
                 price: productPrice,
                 size: activeSizeBtn.textContent,
-                imgSrc: mainImage.src,
+                imgSrc: imgSrc,
                 quantity: parseInt(quantityValue.textContent)
             };
-            window.addToCart(product);
-            window.showToast(`${product.name} added to cart!`);
+            
+            // Use flyToCart instead of addToCart for animation
+            window.flyToCart(addToCartBtn, product);
+            // No need for showToast since flyToCart includes it
         });
     }
 

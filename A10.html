@@ -26,12 +26,12 @@
                     <li><a href="index.html#collections">Collections</a></li>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</button></li>
+                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</a></li>
                     <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
              <div class="nav-actions">
-                <a href="login.html" class="login-btn" aria-label="Login">
+                <a href="login.html" class="login-btn" aria-label="Login" id="desktop-login-link">
                     <i class="fas fa-user"></i>
                 </a>
             </div>
@@ -461,9 +461,16 @@
             // This part requires your main mor.js cart functions.
             // For a multi-page app, you'd typically save the cart to localStorage
             // so it persists across pages. This is a simplified example.
-            document.getElementById('add-to-cart-btn').addEventListener('click', (e) => {
+            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+                // Gate the feature behind login
+                if (!window.isUserLoggedIn()) {
+                    window.openLoginRequiredModal('Login to add an item to cart.');
+                    return;
+                }
+
                 let imgSrc = galleryImages[0];
                 if (imgSrc.includes('/')) imgSrc = imgSrc.split('/').pop();
+
                 const product = {
                     name: document.getElementById('product-name').textContent,
                     price: document.getElementById('product-price').textContent,
@@ -471,7 +478,8 @@
                     imgSrc: imgSrc,
                     quantity: parseInt(quantityValue.textContent)
                 };
-                window.flyToCart(e.target, product);
+                window.addToCart(product);
+                window.showToast(`${product.name} has been added to your cart!`);
             });
  
             window.addEventListener('load', () => {

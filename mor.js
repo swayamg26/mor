@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // so the user can be redirected back after a successful login.
     const openLoginModal = () => {
         // Get the current path, but remove the leading slash
-        const redirectPath = window.location.pathname.substring(1) + window.location.search;
-        window.location.href = `login.html?redirect=${redirectPath}`;
+        const redirectPath = (window.location.pathname + window.location.search).substring(1);
+        window.location.href = `login.html?redirect=${encodeURIComponent(redirectPath)}`;
     };
     window.openLoginModal = openLoginModal;
 
@@ -362,17 +362,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (target.classList.contains('favorite-item-move-to-cart')) {
             const itemToMove = favoriteItems.find(item => item.name === name);
-            if (itemToMove && document.querySelector(`.product-card[data-name="${name}"]`)) {
-                const productCard = document.querySelector(`.product-card[data-name="${name}"]`);
+            if (itemToMove) {
+                if (!isUserLoggedIn()) {
+                    openLoginRequiredModal('You must be logged in to move items to your cart.');
+                    return;
+                }
+
+                // Since we are in a side panel, we can't rely on the product card being on the page.
+                // We'll add the item with a default size. A better implementation might open a size selector.
                 const productForCart = {
                     ...itemToMove,
-                    size: productCard.dataset.sizes.split(',')[0].trim(), // Get first available size
+                    size: 'M', // Default to 'M' when moving from favorites
                     quantity: 1
                 };
                 addToCart(productForCart);
-                // This removes it from favorites and updates UI
-                if (productCard.querySelector('.product-favorite-icon')) {
-                    toggleFavorite(itemToMove, productCard.querySelector('.product-favorite-icon'));
+                showToast(`${itemToMove.name} moved to cart.`);
+
+                // Remove from favorites after moving
+                favoriteItems = favoriteItems.filter(item => item.name !== name);
+                saveFavorites();
+
+                // Also update the icon on the page if it exists
+                const productCard = document.querySelector(`.product-card[data-name="${name}"]`);
+                if (productCard && productCard.querySelector('.product-favorite-icon')) {
+                    productCard.querySelector('.product-favorite-icon').innerHTML = '<i class="far fa-heart"></i>';
                 }
             }
         }
@@ -527,9 +540,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const cartIcon = document.querySelector('.cart-btn i');
         if (!cartIcon) return;
 
-        // Add to cart data structure first
-        addToCart(product);
-
         // Create the visual element for the animation
         const flyingImg = document.createElement('img');
         flyingImg.src = product.imgSrc;
@@ -554,6 +564,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // After animation, show feedback and clean up
         setTimeout(() => {
+            // Add to cart data structure after the animation starts, so UI updates don't feel slow.
+            addToCart(product);
+
             flyingImg.remove();
             showToast(`${product.name} has been added to your cart!`, 'fa-check-circle');
             // Maybe briefly animate the cart icon
