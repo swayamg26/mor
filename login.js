@@ -121,10 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const handleSuccessfulLogin = () => {
-                const params = new URLSearchParams(window.location.search);
-                const redirectUrl = params.get('redirect');
-                window.location.href = redirectUrl || 'index.html';
+            const handleSuccessfulLogin = async () => {
+                try {
+                    // Initialize cart data
+                    if (auth.currentUser) {
+                        await initializeUserCart(auth.currentUser);
+                    }
+                    
+                    // Redirect
+                    const params = new URLSearchParams(window.location.search);
+                    const redirectUrl = params.get('redirect');
+                    window.location.href = redirectUrl || 'index.html';
+                } catch (error) {
+                    console.error("Error initializing cart after login:", error);
+                }
             };
 
             const email = emailInput.value;
