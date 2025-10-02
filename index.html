@@ -27,8 +27,11 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li class="mobile-only-link"><a href="cart.html" class="nav-link-button"><i class="fas fa-shopping-basket"></i> Cart</a></li>
-                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="far fa-heart"></i> Favorites</button></li>                    
-                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</a></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="far fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link" id="mobile-auth-link-container">
+                        <!-- This will be dynamically replaced by JS -->
+                        <a href="login.html" class="nav-link-button" id="mobile-login-link"><i class="fas fa-user"></i> Login</a>
+                    </li>
                 </ul>
             </div>
             <div class="nav-actions">
@@ -305,7 +308,33 @@
 
     <!-- Notification Toast -->
     <div id="notification-toast" class="notification-toast"></div>
+    <script type="module" src="./src/cart.js"></script>
+    <script src="mor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileAuthContainer = document.getElementById('mobile-auth-link-container');
 
-    <script type="module"src="mor.js"></script>
+            function updateAuthUI() {
+                if (window.isUserLoggedIn && window.isUserLoggedIn()) {
+                    // User is logged in, show Logout button
+                    mobileAuthContainer.innerHTML = `
+                        <button class="nav-link-button" id="mobile-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    `;
+                    document.getElementById('mobile-logout-btn').addEventListener('click', () => {
+                        localStorage.removeItem('mor_user_loggedin');
+                        // Optionally, clear other user-specific data
+                        localStorage.removeItem('mor_favorites');
+                        localStorage.removeItem('mor_cart');
+                        window.location.href = 'login.html'; // Redirect to login page
+                    });
+                }
+                // If not logged in, the default "Login" link from HTML will be present.
+            }
+
+            // Run on page load
+            updateAuthUI();
+        });
+    </script>
+    <script type="module" src="./src/fav.js"></script>
 </body>
 </html>

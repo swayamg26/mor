@@ -87,3 +87,108 @@ export async function removeFromCart(productId) {
         return false;
     }
 }
+
+// Update quantity of an item in cart
+export async function updateCartItemQuantity(productId, quantity) {
+    try {
+        if (!auth.currentUser) {
+            alert("Please login to modify cart");
+            return false;
+        }
+
+        if (quantity <= 0) {
+            return removeFromCart(productId);
+        }
+
+        const userId = auth.currentUser.uid;
+        const cart = await getCartFromFirestore(userId);
+
+        if (cart[productId]) {
+            cart[productId].qty = quantity;
+            cart[productId].lastUpdated = new Date().toISOString();
+            
+            await setDoc(doc(db, "carts", userId), {
+                items: cart,
+                updatedAt: new Date().toISOString()
+            });
+
+            localStorage.setItem("mor_cart", JSON.stringify(cart));
+            console.log(`Updated quantity for item ${productId} to ${quantity}`);
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error("Error updating cart quantity:", error);
+        return false;
+    }
+}
+
+// Clear entire cart
+export async function clearCart() {
+    try {
+        if (!auth.currentUser) return false;
+
+        const userId = auth.currentUser.uid;
+        await setDoc(doc(db, "carts", userId), {
+            items: {},
+            updatedAt: new Date().toISOString()
+        });
+
+        localStorage.removeItem("mor_cart");
+        console.log("Cart cleared successfully");
+        return true;
+    } catch (error) {
+        console.error("Error clearing cart:", error);
+        return false;
+    }
+}
+
+// Get cart total
+export async function getCartTotal() {
+    try {
+        if (!auth.currentUser) return 0;
+
+        const cart = await getCartFromFirestore(auth.currentUser.uid);
+        return Object.values(cart).reduce((total, item) => {
+            return total + (item.price * item.qty);
+        }, 0);
+    } catch (error) {
+        console.error("Error calculating cart total:", error);
+        return 0;
+    }
+}
+
+// Sync cart between localStorage and Firestore
+export async function syncCart() {
+    try {
+        if (!auth.currentUser) return false;
+
+        const localCart = localStorage.getItem("mor_cart");
+        const userId = auth.currentUser.uid;
+
+        if (localCart) {
+            // Local cart exists, sync to Firestore
+            const cart = JSON.parse(localCart);
+            await setDoc(doc(db, "carts", userId), {
+                items: cart,
+                updatedAt: new Date().toISOString()
+            });
+        } else {
+            // No local cart, fetch from Firestore
+            const firestoreCart = await getCartFromFirestore(userId);
+            localStorage.setItem("mor_cart", JSON.stringify(firestoreCart));
+        }
+        return true;
+    } catch (error) {
+        console.error("Error syncing cart:", error);
+        return false;
+    }
+}
+
+// Load cart items for current user
+export async function loadCart() {
+    if (!auth.currentUser) return [];
+    const cartObj = await getCartFromFirestore(auth.currentUser.uid);
+    return Object.values(cartObj); // convert object to array for rendering
+}
+
