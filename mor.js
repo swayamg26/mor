@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 itemEl.className = 'cart-item';
                 // Using the same layout as the old side panel for consistency
                 itemEl.innerHTML = `
-                    <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    <img src="./${item.imgSrc}" alt="${item.name}" class="cart-item-img">
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${item.price}</div>
@@ -667,4 +667,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial UI updates on page load
     updateCartUI();
     updateFavoritesUI();
+
+    // Remove loading class after initial UI updates to prevent content flash
+    if (document.body.classList.contains('loading')) {
+        document.body.classList.remove('loading');
+    }
 });

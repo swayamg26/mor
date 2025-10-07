@@ -26,12 +26,13 @@
 }
 /* Renamed from .beautiful-gallery-main to be more specific */
 .gallery-slider-container {
-    background: #232323;
+    background: transparent;
     border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    padding: 1.5rem;
+    box-shadow: none;
+    padding: 0;
     position: relative; /* For arrows */
     overflow: hidden; /* This is crucial for the slider */
+    cursor: grab;
 }
 
 .gallery-slider-track {
@@ -43,7 +44,7 @@
 .gallery-slider-track img {
     flex: 0 0 100%; /* Each image takes up the full container width */
     width: 100%;
-    max-height: 400px; /* Maintain max height */
+    max-height: 550px;
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.12);
@@ -414,7 +415,8 @@ body.no-scroll {
     font-size: 1rem;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;  
+    text-decoration: none; /* Remove underline from link */
 }
 .search-btn:hover {
     background: #444444;
@@ -569,8 +571,8 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+    opacity: 1;
+    transition: none;
     width: 100%;
     height: 100%;
     object-fit: cover; /* Ensures image fills the container, cropping if needed */
@@ -849,7 +851,11 @@ main {
 .product-item-wrapper {
     display: flex;
     flex-direction: column;
-    width: 150px; /* Set a fixed width like the homepage cards */
+    flex-shrink: 0;
+    width: 150px;
+    /* Increase min-height for taller cards */
+    min-height: 240px; /* Unify min-height with .no-info cards */
+    padding: 0; /* Remove vertical padding */
 }
 
 .product-card {
@@ -858,11 +864,15 @@ main {
     border: 1px solid #555555;
     transition: all 0.3s ease;
     cursor: pointer;
-    will-change: transform; /* Performance optimization */
+    will-change: transform;
     overflow: hidden;
     flex-shrink: 0;
-    aspect-ratio: 3 / 4; /* Maintain a consistent rectangular shape */
-    height: auto; /* Allow height to be determined by aspect ratio and width */
+    /* Increase aspect ratio for taller look */
+    aspect-ratio: 16 / 13;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .product-card:hover {
@@ -870,40 +880,33 @@ main {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
-.product-card.added-to-cart {
-    transform: scale(0.98);
+/* Ensure homepage product cards fill the wrapper and are taller */
+.product-item-wrapper.no-info .product-card {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: unset;
+    min-height: 240px;
+    padding: 0; /* Remove vertical padding for image-only cards */
 }
 
-
-.view-all-btn {
-    background: #555555;
-    border: 2px solid #555555;
-    color: #ffffff;
-    padding: 0.8rem 1.5rem;
-    margin-top: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.view-all-btn:hover {
-    background: #444444;
-    color: #ffffff;
-}
-
+/* Adjust image container to keep images undistorted and centered */
 .product-image-container {
     width: 100%;
+    /* Set a fixed height for taller cards, but keep responsive */
     height: 100%;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .product-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Add vertical centering for images */
+    display: block;
 }
 
 .product-info {
@@ -916,6 +919,10 @@ main {
     font-weight: 500;
     color: #ffffff;
     margin-bottom: 0.25rem;
+    height: 2.2em; /* Set a fixed height (approx. 2 lines) */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add "..." for truncated text */
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 
 .product-price {
@@ -961,6 +968,28 @@ main {
     border: 1px solid #eee;
 }
 
+/* View All Button Style */
+.view-all-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    background-color: transparent; /* Keep background transparent */
+    color: #d3d3d3; /* Light gray text */
+    border: 2px solid #555; /* Darker gray border */
+    padding: 0.7rem 1.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.view-all-btn:hover {
+    background-color: #d3d3d3; /* Light gray background on hover */
+    color: #2b2b2b; /* Dark text on hover for contrast */
+    border-color: #d3d3d3; /* Match border to background on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(211, 211, 211, 0.1); /* Subtle light gray shadow */
+}
+
 /* Footer */
 .footer {
     background: #2b2b2b;
@@ -996,6 +1025,24 @@ main {
     color: #ffffff;
 }
 
+.footer-section .social-icons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.footer-section .social-icons a {
+    color: #d3d3d3;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-section .social-icons a:hover {
+    color: #ffffff;
+    transform: scale(1.2);
+}
+
 .footer-bottom {
     text-align: center;
     margin-top: 3rem;
@@ -1015,7 +1062,7 @@ main {
         top: 0;
         left: 0;
         height: 100%;
-        width: 280px;
+        width: 320px;
         background-color: #3a3a3a !important; /* Ensure solid background */
         box-shadow: 5px 0 15px rgba(0,0,0,0.1);
         box-shadow: 5px 0 15px rgba(0,0,0,0.2);
@@ -1616,30 +1663,9 @@ html {
 
 .gallery-arrow {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    border: none;
-    font-size: 1.5rem;
-    padding: 0.75rem;
-    cursor: pointer;
-    z-index: 6;
-    transition: background-color 0.3s;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: none; /* Arrows are removed */
 }
 
-.gallery-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.gallery-arrow.prev { left: 15px; }
-.gallery-arrow.next { right: 15px; }
 
 .gallery-dots-container {
     text-align: center;
@@ -2160,6 +2186,7 @@ html {
     background-color: #555555;
     color: #fff;
 }
+
 
 .favorite-item-remove {
     background: none;
