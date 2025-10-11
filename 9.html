@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navy Blue Kurti Set - Mor</title>
+    <title>Black Chikankari Kurti - Mor</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,159 +12,94 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mor.css">
     <style>
-        /* Additional styles for the product page */
-        .product-page-container {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .product-gallery {
-            position: relative;
-        }
-
-        .gallery-main-image img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .gallery-thumbnails {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .thumbnail-img {
-            width: 80px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.3s;
-        }
-
-        .product-details h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-details p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .product-options {
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .option-group label {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        .size-selector, .quantity-counter {
+        .product-title-container {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: space-between;
+            gap: 1rem;
         }
-
-        .add-to-cart-btn {
-            margin-top: 2rem;
-            width: 100%;
+        .share-btn {
+            background: none;
+            border: none;
+            color: #d3d3d3;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        @media (max-width: 768px) {
-            .product-page-container {
-                grid-template-columns: 1fr;
-                padding: 1rem;
-                margin-top: 2rem;
-            }
-            .product-details h1 {
-                font-size: 2rem;
-            }
-        }
-
-        /* Related Products Section */
-        .related-products-section {
-            max-width: 1200px;
-            margin: 2rem auto 4rem auto;
-            padding: 0 2rem;
-        }
-        .related-products-section h2 {
-            font-family: 'Playfair Display', serif;
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-        }
-        .related-products-scroll {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            padding: 1rem 0;
+        .share-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
     </style>
 </head>
 <body>
+    <!-- You can include your header here if you want it on every product page -->
     <header class="header">
         <nav class="nav">
-            <a href="index.html#home" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img"></a>
+            <button class="hamburger-menu" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img" loading="lazy"></a>
             <div class="nav-links-container">
+                <button class="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
                 <ul class="nav-links">
-                    <li><a href="index.html#home">Home</a></li>
-                    <li><a href="index.html#categories">Categories</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
                     <li><a href="index.html#collections">Collections</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li class="mobile-only-link" id="mobile-auth-link-container">
+                        <!-- This will be dynamically replaced by JS -->
+                        <button class="nav-link-button" id="mobile-login-link" onclick="window.location.href='login.html'">
+                            <i class="fas fa-user"></i> Login
+                        </button>
+                    </li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="fas fa-heart"></i> Favorites</button></li>
                 </ul>
             </div>
              <div class="nav-actions">
-                <a href="index.html" class="cart-btn" style="text-decoration: none; font-size: 1rem; gap: 0.5rem;">
-                    <i class="fas fa-arrow-left"></i> Back
+                <a href="cart.html" class="cart-btn" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" style="display: none;">0</span>
                 </a>
             </div>
         </nav>
     </header>
 
-    <main>
-        <div class="product-page-container fade-in">
-            <div class="product-gallery">
-                <div class="gallery-main-image">
-                    <img src="I10.jpg" alt="Navy Blue Kurti Set" id="main-product-image">
-                    <div class="zoom-icon" id="zoom-icon"><i class="fas fa-search-plus"></i></div>
+    <main style="margin-top: 65px;">
+        <div class="product-page-container beautiful-product-page" data-img-src="1A.jpg">
+            <div class="product-gallery animate-slide-in-left">
+                <div class="gallery-slider-container beautiful-gallery-main">
+                    <div class="gallery-slider-track" id="gallery-slider-track">
+                        <!-- Images will be injected by JS -->
+                    </div>
+                    <div class="product-favorite-icon page-favorite-icon" id="page-favorite-icon">
+                        <i class="far fa-heart"></i>
+                    </div>
                 </div>
-                <div class="gallery-thumbnails" id="gallery-thumbnails">
-                    <img src="I10.jpg" alt="Thumbnail 1" class="thumbnail-img active" data-src="I10.jpg">
-                    <img src="I11.jpg" alt="Thumbnail 2" class="thumbnail-img" data-src="I11.jpg">
-                    <img src="I12.jpg" alt="Thumbnail 3" class="thumbnail-img" data-src="I12.jpg">
-                </div>
+                <div class="gallery-dots-container animate-fade-in" id="gallery-dots-container" style="transition-delay: 0.2s;"></div>
             </div>
-            <div class="product-details">
-                <h1 id="product-name">Navy Blue Kurti Set</h1>
-                <div class="product-price-container">
-                    <p class="product-price" id="product-price">₹1,799</p>
-                    <p class="product-old-price">₹2,399</p>
-                    <p class="product-save-amount">Save ₹600</p>
+            <div class="product-details animate-slide-in-right beautiful-product-details">
+                <div class="product-title-container animate-fade-in" style="transition-delay: 0.1s;">
+                    <h1 id="product-name" class="beautiful-product-title">Black Chikankari Kurti</h1>
+                    <button class="share-btn" id="share-btn" aria-label="Share Product"><i class="fas fa-share-alt"></i></button>
                 </div>
-                <p><strong>Material:</strong> <span id="product-material">Silk Blend</span></p>
-                
-                <div class="product-options">
-                    <div class="option-group">
+                <div class="product-price-container animate-fade-in beautiful-price-container" style="transition-delay: 0.2s;">
+                    <p class="product-price" id="product-price">₹1,499</p>
+                    <p class="product-old-price">₹1,999</p>
+                    <p class="product-save-amount">Save ₹500</p>
+                </div>
+                <div class="product-options animate-fade-in beautiful-product-options" style="transition-delay: 0.3s;">
+                    <div class="option-group beautiful-option-group">
                         <label for="size-selector">Select Size:</label>
                         <div class="size-selector" id="size-selector">
-                            <button class="size-btn active">M</button>
+                            <button class="size-btn active">S</button>
+                            <button class="size-btn">M</button>
                             <button class="size-btn">L</button>
                             <button class="size-btn">XL</button>
                         </div>
                     </div>
-                    <div class="option-group">
+                    <div class="option-group beautiful-option-group">
                         <label for="quantity-counter">Quantity:</label>
                         <div class="quantity-counter" id="quantity-counter">
                             <button class="quantity-btn" data-action="decrease">-</button>
@@ -173,31 +108,59 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="product-actions">
-                    <button class="cta-btn add-to-cart-btn" id="add-to-cart-btn">Add to Cart</button>
+                <div class="product-actions animate-fade-in beautiful-product-actions" style="transition-delay: 0.4s;">
+                    <button class="cta-btn add-to-cart-btn beautiful-add-to-cart" id="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                 </div>
-                <button class="write-review-btn" id="write-review-btn">Write a Review</button>
+                <!-- New Modern Accordion -->
+                <div class="modern-accordion-container animate-fade-in" style="transition-delay: 0.5s;">
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Description<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Embrace timeless elegance with this stunning Black Chikankari Kurti. Hand-embroidered with intricate floral patterns, this piece is a testament to traditional craftsmanship. Made from pure, breathable cotton, it ensures comfort throughout the day.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Specification<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p><strong>Material:</strong> 100% Premium Cotton <br> <strong>Embroidery:</strong> Hand-stitched Chikankari <br> <strong>Fit:</strong> Regular <br> <strong>Sleeves:</strong> 3/4 Length</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Wash Care<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Hand wash cold separately. Use mild detergent. Do not bleach. Dry in shade. Iron on low heat.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Returns and Exchange Policy<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Easy 7-day returns and exchanges. The product must be in its original condition with all tags intact. Please visit our returns center to initiate a request.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Manufactured and Packaged By<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Mor Fashion Pvt. Ltd., Jubilee Hills, Hyderabad, Telangana, 500033. Country of Origin: India.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">Shipping Information<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Free shipping within Hyderabad. Standard shipping (5-7 business days) for other locations. Express shipping options are available at checkout.</p></div>
+                    </div>
+                    <div class="modern-accordion-item">
+                        <button class="modern-accordion-header">For Complaints<i class="fas fa-plus"></i></button>
+                        <div class="modern-accordion-content"><p>Contact our Customer Care Executive at: <a href="mailto:support@mor.com" style="color: #333;">support@mor.com</a> or call us at <a href="tel:+919885489448" style="color: #333;">+91-9885489448</a>.</p></div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <!-- Customer Reviews Section -->
-        <div class="reviews-section">
-            <h2>Customer Reviews</h2>
-            <div id="reviews-list">
-                <div class="review">
-                    <div class="review-header">
-                        <span class="review-author">Divya P.</span>
-                        <span class="review-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
-                    </div>
-                    <p class="review-text">This set is gorgeous! The silk blend has a beautiful sheen and it looks very expensive. Perfect for a family function.</p>
-                </div>
+        <div class="modern-reviews-container animate-fade-in">
+            <div class="reviews-section-header">
+                <h2>Customer Reviews</h2>
             </div>
-            <!-- Review form can be added here -->
+            <div class="reviews-list" id="reviews-list" style="margin-top: 1.5rem;">
+                <!-- Customer reviews will be dynamically added here -->
+            </div>
+            <div class="review-button-container">
+                <button class="write-review-btn" id="write-review-btn"><i class="fas fa-pen"></i> Write a Review</button>
+            </div>
         </div>
 
         <!-- Related Products Section -->
-        <section class="related-products-section">
+        <section class="related-products-section animate-fade-in">
             <h2>You Might Also Like</h2>
             <div class="featured-scroll" id="related-products-container">
                 <!-- Related products will be injected here by JS -->
@@ -205,17 +168,393 @@
         </section>
     </main>
 
-    <!-- Image Zoom Modal -->
-    <div id="zoom-modal" class="zoom-modal" style="display: none;">
-        <span class="zoom-modal-close" id="zoom-modal-close">&times;</span>
-        <div class="zoom-modal-content">
-            <img src="" alt="Zoomed Product Image" id="zoomed-image">
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919885489448" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-text">WhatsApp</span>
+    </a>
+
+    <!-- Notification Toast -->
+    <div id="notification-toast" class="notification-toast"></div>
+
+    <!-- Login Required Modal -->
+    <div id="login-required-modal" class="modal-overlay" style="display: none;">
+        <div class="login-required-modal-content">
+            <span class="modal-close login-required-modal-close">&times;</span>
+            <h3>Login Required</h3>
+            <p>You need to be logged in to use this feature.</p>
+            <button class="cta-btn" id="login-now-btn">Login Now</button>
         </div>
     </div>
 
+    <!-- Component Placeholders for mor.js -->
+    <div class="overlay"></div>
+    <div id="login-modal" class="modal-overlay" style="display: none;">
+        <div class="login-modal-content">
+            <span class="modal-close login-modal-close">&times;</span>
+            <h2 id="login-modal-title">Welcome Back</h2>
+            <div class="login-toggle-options">
+                <button class="login-toggle-btn active" data-method="email">Email</button>
+                <button class="login-toggle-btn" data-method="phone">Phone</button>
+            </div>
+            <p id="login-modal-subtitle">Log in to access your account and favorites.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group" id="mobile-number-group" style="display: none;">
+                    <label for="mobile-number">Mobile Number</label>
+                    <input type="tel" id="mobile-number" placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="forgot-password-group">
+                    <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                <div class="form-group" id="confirm-password-group" style="display: none;">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••">
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <div class="form-group" id="otp-group" style="display: none;">
+                    <label for="otp-input">Enter OTP</label>
+                    <input type="text" id="otp-input" placeholder="6-digit OTP" pattern="[0-9]{6}">
+                </div>
+                <button type="submit" class="login-submit-btn" id="login-submit-btn">Log In</button>
+            </form>
+            <p class="create-account-link">
+                <span id="toggle-view-text">Don't have an account? </span>
+                <a href="#" id="toggle-view-link">Create your account</a>
+            </p>
+        </div>
+    </div>
+    <div id="favorites-popup" class="favorites-popup">
+        <div class="favorites-header">
+            <h3>Your Favorites</h3>
+            <button class="close-favorites-btn" aria-label="Close Favorites"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="favorites-content">
+            <div class="favorites-empty">
+                <i class="far fa-heart"></i>
+                <p>You have no favorites yet</p>
+                <button class="cta-btn start-browsing-btn">Start Browsing</button>
+            </div>
+            <div class="favorites-items" style="display: none;"></div>
+        </div>
+    </div>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Mor</h4>
+                <p>Premium fashion for the modern woman. Discover elegance, embrace style, and express your unique personality with our curated collections.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="index.html#home">Home</a></p>
+                <p><a href="index.html#categories">Categories</a></p>
+                <p><a href="index.html#collections">Collections</a></p>
+                <p><a href="index.html#about">About Us</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <p><a href="#">Size Guide</a></p>
+                <p><a href="#">Shipping Info</a></p>
+                <p><a href="#">Returns & Exchanges</a></p>
+                <p><a href="#">Contact Support</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Newsletter"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Mor Fashion. All rights reserved. | <a href="privacy.html" style="color: inherit;">Privacy Policy</a> | <a href="terms.html" style="color: inherit;">Terms of Service</a></p>
+        </div>
+    </footer>
+
     <script src="mor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+             const allProducts = [
+                { id: "1A", name: "Black Chikankari Kurti", price: "₹1,499", oldPrice: "₹1,999", imgSrc: "1A.jpg", pageUrl: "1.html" },
+                { id: "2A", name: "Stylish Rayon Kurti", price: "₹1,399", oldPrice: "₹1,799", imgSrc: "2A.jpg", pageUrl: "2.html" },
+                { id: "3A", name: "Elegant Georgette Kurti", price: "₹1,599", oldPrice: "₹2,199", imgSrc: "3A.jpg", pageUrl: "3.html" },
+                { id: "4A", name: "Classic Viscose Kurta", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "4A.jpg", pageUrl: "4.html" },
+                { id: "5A", name: "Green Floral Kurti", price: "₹1,199", oldPrice: "₹1,599", imgSrc: "5A.jpg", pageUrl: "5.html" },
+                { id: "6A", name: "Red Printed Kurti", price: "₹1,299", oldPrice: "₹1,699", imgSrc: "6A.jpg", pageUrl: "6.html" },
+                { id: "7A", name: "Yellow Summer Kurti", price: "₹1,099", oldPrice: "₹1,499", imgSrc: "7A.jpg", pageUrl: "7.html" },
+                { id: "8A", name: "Blue Casual Kurti", price: "₹1,399", oldPrice: "₹1,899", imgSrc: "8A.jpg", pageUrl: "8.html" },
+                { id: "9A", name: "Navy Blue Kurti Set", price: "₹1,799", oldPrice: "₹2,399", imgSrc: "9A.jpg", pageUrl: "9.html" },
+                { id: "10A", name: "Maroon Velvet Kurti", price: "₹2,499", oldPrice: "₹3,199", imgSrc: "10A.jpg", pageUrl: "10.html" },
+                { id: "11A", name: "Light Green Kurti", price: "₹1,450", oldPrice: "₹1,950", imgSrc: "11A.jpg", pageUrl: "11.html" },
+                { id: "12A", name: "Purple Silk Kurti", price: "₹1,999", oldPrice: "₹2,599", imgSrc: "12A.jpg", pageUrl: "12.html" }
+            ];
+
+            const currentProduct = {
+                id: "1A",
+                name: "Black Chikankari Kurti",
+                price: "₹1,499",
+                imgSrc: "1A.jpg"
+            };
+
+            // --- Share Button ---
+            document.getElementById('share-btn')?.addEventListener('click', () => {
+                navigator.share({ title: currentProduct.name, text: `Check out this ${currentProduct.name}!`, url: window.location.href })
+                    .catch(() => window.showToast('Sharing is not supported on your browser.', 'fa-exclamation-triangle'));
+            });
+
+            // --- Favorite Button ---
+            const favIconContainer = document.getElementById('page-favorite-icon');
+            if (favIconContainer) {
+                // Set initial state
+                if (window.isFavorited && window.isFavorited(currentProduct)) {
+                    favIconContainer.innerHTML = '<i class="fas fa-heart"></i>';
                 }
-    <script src="product-data.js"></script>
-    <script src="product-page.js"></script>
-</body>
-</html>
+                // Add click listener
+                favIconContainer.addEventListener('click', () => {
+                    if (window.toggleFavorite) {
+                        window.toggleFavorite(currentProduct, favIconContainer);
+                    }
+                });
+            }
+
+            const allProducts_legacy = [
+                { name: "Black Chikankari Kurti", price: "₹1,499", oldPrice: "₹1,999", imgSrc: "1A.jpg", pageUrl: "1.html" },
+                { name: "Stylish Rayon Kurti", price: "₹1,399", oldPrice: "₹1,799", imgSrc: "2A.jpg", pageUrl: "2.html" },
+                { name: "Elegant Georgette Kurti", price: "₹1,599", oldPrice: "₹2,199", imgSrc: "3A.jpg", pageUrl: "3.html" },
+                { name: "Classic Viscose Kurta", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "4A.jpg", pageUrl: "4.html" },
+                { name: "Green Floral Kurti", price: "₹1,199", oldPrice: "₹1,599", imgSrc: "5A.jpg", pageUrl: "5.html" },
+                { name: "Red Printed Kurti", price: "₹1,299", oldPrice: "₹1,699", imgSrc: "6A.jpg", pageUrl: "6.html" },
+                { name: "Yellow Summer Kurti", price: "₹1,099", oldPrice: "₹1,499", imgSrc: "7A.jpg", pageUrl: "7.html" },
+                { name: "Blue Casual Kurti", price: "₹1,399", oldPrice: "₹1,899", imgSrc: "8A.jpg", pageUrl: "8.html" },
+                { name: "Navy Blue Kurti Set", price: "₹1,799", oldPrice: "₹2,399", imgSrc: "9A.jpg", pageUrl: "9.html" },
+                { name: "Maroon Velvet Kurti", price: "₹2,499", oldPrice: "₹3,199", imgSrc: "10A.jpg", pageUrl: "10.html" },
+                { name: "Light Green Kurti", price: "₹1,450", oldPrice: "₹1,950", imgSrc: "11A.jpg", pageUrl: "11.html" },
+                { name: "Purple Silk Kurti", price: "₹1,999", oldPrice: "₹2,599", imgSrc: "12A.jpg", pageUrl: "12.html" }
+            ];
+
+            // --- Product Page Gallery ---
+            const sliderTrack = document.getElementById('gallery-slider-track');
+            const dotsContainer = document.getElementById('gallery-dots-container');
+            const sliderContainer = document.querySelector('.gallery-slider-container');
+             const galleryImages = ["1A.jpg", "1B.jpg", "1C.jpg"];
+            let currentImageIndex = 0;
+            
+            // Create images and dots
+            galleryImages.forEach((src, index) => {
+                // Create image element
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Product image ${index + 1}`;
+                img.loading = 'lazy';
+                sliderTrack.appendChild(img);
+
+                // Create dot element
+                const dot = document.createElement('span');
+                dot.classList.add('gallery-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.dataset.index = index;
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = document.querySelectorAll('.gallery-dot');
+
+            function showImage(index) {
+                // Update main image
+                sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+                 // Update active dot
+                dots.forEach(d => d.classList.remove('active'));
+                dots[index].classList.add('active');
+
+                currentImageIndex = index;
+            }
+
+            // Event Listener for dots
+            dotsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('gallery-dot')) {
+                    const index = parseInt(e.target.dataset.index);
+                    showImage(index);
+                }
+            });
+
+            // --- Swipe functionality for gallery ---
+            let touchStartX = 0;
+            let touchEndX = 0;
+            let isSwiping = false;
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                isSwiping = true;
+                sliderContainer.style.cursor = 'grabbing';
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+                touchEndX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchend', () => {
+                if (!isSwiping) return;
+                isSwiping = false;
+                sliderContainer.style.cursor = 'grab';
+                handleSwipe();
+            });
+
+            // Add mouse events for desktop swiping
+            sliderContainer.addEventListener('mousedown', (e) => {
+                isSwiping = true;
+                touchStartX = e.screenX;
+                sliderContainer.style.cursor = 'grabbing';
+                sliderContainer.style.userSelect = 'none';
+            });
+            sliderContainer.addEventListener('mousemove', (e) => {
+                if (!isSwiping) return;
+                touchEndX = e.screenX;
+            });
+            const mouseUpHandler = () => {
+                if (!isSwiping) return;
+                isSwiping = false;
+                sliderContainer.style.cursor = 'grab';
+                sliderContainer.style.userSelect = '';
+                handleSwipe();
+            };
+            sliderContainer.addEventListener('mouseup', mouseUpHandler);
+            sliderContainer.addEventListener('mouseleave', mouseUpHandler);
+
+            function handleSwipe() {
+                if (touchEndX === 0 || Math.abs(touchEndX - touchStartX) < 50) return; // Threshold
+                if (touchEndX < touchStartX) { // Swiped left
+                    showImage((currentImageIndex + 1) % galleryImages.length);
+                } else { // Swiped right
+                    showImage((currentImageIndex - 1 + galleryImages.length) % galleryImages.length);
+                }
+                touchStartX = 0;
+                touchEndX = 0;
+            }
+
+            // --- Size Selector ---
+            const sizeSelector = document.getElementById('size-selector');
+            sizeSelector.addEventListener('click', (e) => {
+                if (e.target.classList.contains('size-btn')) {
+                    sizeSelector.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                }
+            });
+
+            // --- Quantity Counter ---
+            const quantityValue = document.querySelector('.quantity-value');
+            document.querySelectorAll('.quantity-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let currentQty = parseInt(quantityValue.textContent);
+                    if (btn.dataset.action === 'increase') {
+                        currentQty++;
+                    } else if (currentQty > 1) {
+                        currentQty--;
+                    }
+                    quantityValue.textContent = currentQty;
+                });
+            });
+
+            // --- Add to Cart ---
+            // This part requires your main mor.js cart functions.
+            // For a multi-page app, you'd typically save the cart to localStorage
+            // so it persists across pages. This is a simplified example.
+            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+                // Gate the feature behind login
+                if (!window.isUserLoggedIn()) {
+                    window.openLoginRequiredModal('Login to add an item to cart.');
+                    return;
+                }
+
+                let imgSrc = galleryImages[0];
+                if (imgSrc.includes('/')) imgSrc = imgSrc.split('/').pop();
+
+                const product = {
+                    name: document.getElementById('product-name').textContent,
+                    price: document.getElementById('product-price').textContent,
+                    size: sizeSelector.querySelector('.size-btn.active').textContent,
+                    imgSrc: imgSrc,
+                    quantity: parseInt(quantityValue.textContent)
+                };
+                window.addToCart(product);
+                window.showToast(`${product.name} has been added to your cart!`);
+            });
+ 
+            window.addEventListener('load', () => {
+
+            // --- Related Products ---
+            const relatedProductsContainer = document.getElementById('related-products-container');
+            const currentProductName = document.getElementById('product-name').textContent;
+
+            const relatedProducts = allProducts_legacy
+                .filter(p => p.name !== currentProductName) // Exclude the current product
+                .sort(() => 0.5 - Math.random()) // Shuffle the array
+                .slice(0, 4); // Get the first 4 random products
+
+            relatedProducts.forEach(product => {
+                const productCardHTML = `
+                    <div class="product-item-wrapper no-info">
+                        <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-page-url="${product.pageUrl}">
+                                <div class="product-image-container">
+                                    <img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
+                                    <div class="product-favorite-icon">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                relatedProductsContainer.innerHTML += productCardHTML;
+            });
+        });
+
+            // --- Product Description Accordion ---
+            document.querySelectorAll('.modern-accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('i');
+                    const item = header.parentElement;
+
+                    item.classList.toggle('active');
+
+                    if (item.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus');
+                    } else {
+                        content.style.maxHeight = null;
+                        icon.classList.remove('fa-minus');
+                        icon.classList.add('fa-plus');
+                    }
+                });
+            });
+
+            // --- Review Modal ---
+            const openReviewBtn = document.getElementById('write-review-btn');
+            openReviewBtn.addEventListener('click', () => {
+                // Check for a logged-in user. This function is in mor.js
+                if (window.isUserLoggedIn && window.isUserLoggedIn()) {
+                    // If logged in, redirect to the review page with product ID
+                    window.location.href = `review.html?product=${currentProduct.id}`;
+                } else {
+                    // If not logged in, open the login required modal
+                    window.openLoginRequiredModal('You need to be logged in to write a review.');
+                }
+            });
+        }); // End of DOMContentLoaded
+    </script>
+    <script type="module" src="./src/cart.js"></script>
+    <script type="module" src="./src/review.js"></script>
+    <script type="module" src="./src/fav.js"></script>art

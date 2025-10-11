@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stylish Rayon Kurti - Mor</title>
+    <title>Black Chikankari Kurti - Mor</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,14 +67,12 @@
     </header>
 
     <main style="margin-top: 65px;">
-        <div class="product-page-container beautiful-product-page" data-img-src="2A.jpg">
+        <div class="product-page-container beautiful-product-page" data-img-src="1A.jpg">
             <div class="product-gallery animate-slide-in-left">
                 <div class="gallery-slider-container beautiful-gallery-main">
                     <div class="gallery-slider-track" id="gallery-slider-track">
                         <!-- Images will be injected by JS -->
                     </div>
-                    <button class="gallery-arrow prev" id="gallery-prev" aria-label="Previous Image">&#10094;</button>
-                    <button class="gallery-arrow next" id="gallery-next" aria-label="Next Image">&#10095;</button>
                     <div class="product-favorite-icon page-favorite-icon" id="page-favorite-icon">
                         <i class="far fa-heart"></i>
                     </div>
@@ -116,11 +114,11 @@
                 <div class="modern-accordion-container animate-fade-in" style="transition-delay: 0.5s;">
                     <div class="modern-accordion-item">
                         <button class="modern-accordion-header">Description<i class="fas fa-plus"></i></button>
-                        <div class="modern-accordion-content"><p>Step out in style with this chic and comfortable Rayon Kurti. Its modern design and soft fabric make it a perfect choice for casual outings or office wear. The flattering silhouette ensures you look your best.</p></div>
+                        <div class="modern-accordion-content"><p>Discover modern sophistication with this Stylish Rayon Kurti. Featuring a unique asymmetrical design and delicate floral embroidery, this piece is perfect for contemporary fashion lovers. The soft rayon fabric drapes beautifully for a flattering fit.</p></div>
                     </div>
                     <div class="modern-accordion-item">
                         <button class="modern-accordion-header">Specification<i class="fas fa-plus"></i></button>
-                        <div class="modern-accordion-content"><p><strong>Material:</strong> Premium Rayon <br> <strong>Fit:</strong> Regular <br> <strong>Sleeves:</strong> 3/4 Length</p></div>
+                        <div class="modern-accordion-content"><p><strong>Material:</strong> Premium Rayon <br> <strong>Embroidery:</strong> Machine-embroidered floral motifs <br> <strong>Fit:</strong> Asymmetrical <br> <strong>Sleeves:</strong> Kaftan Style</p></div>
                     </div>
                     <div class="modern-accordion-item">
                         <button class="modern-accordion-header">Wash Care<i class="fas fa-plus"></i></button>
@@ -151,10 +149,12 @@
         <div class="modern-reviews-container animate-fade-in">
             <div class="reviews-section-header">
                 <h2>Customer Reviews</h2>
-                <button class="write-review-btn" id="write-review-btn"><i class="fas fa-pen"></i> Write a Review</button>
             </div>
             <div class="reviews-list" id="reviews-list" style="margin-top: 1.5rem;">
                 <!-- Customer reviews will be dynamically added here -->
+            </div>
+            <div class="review-button-container">
+                <button class="write-review-btn" id="write-review-btn"><i class="fas fa-pen"></i> Write a Review</button>
             </div>
         </div>
 
@@ -268,10 +268,12 @@
             </div>
             <div class="footer-section">
                 <h4>Connect</h4>
-                <p><a href="#">Instagram</a></p>
-                <p><a href="#">Facebook</a></p>
-                <p><a href="#">Twitter</a></p>
-                <p><a href="#">Newsletter</a></p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Newsletter"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
@@ -343,10 +345,8 @@
             // --- Product Page Gallery ---
             const sliderTrack = document.getElementById('gallery-slider-track');
             const dotsContainer = document.getElementById('gallery-dots-container');
-            const prevBtn = document.getElementById('gallery-prev');
-            const nextBtn = document.getElementById('gallery-next');
-
-            const galleryImages = ["2A.jpg", "2B.jpg"];
+            const sliderContainer = document.querySelector('.gallery-slider-container');
+             const galleryImages = ["2A.jpg", "2B.jpg"];
             let currentImageIndex = 0;
             
             // Create images and dots
@@ -378,17 +378,6 @@
                 currentImageIndex = index;
             }
 
-            // Event Listeners for arrows
-            nextBtn.addEventListener('click', () => {
-                const nextIndex = (currentImageIndex + 1) % galleryImages.length;
-                showImage(nextIndex);
-            });
-
-            prevBtn.addEventListener('click', () => {
-                const prevIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-                showImage(prevIndex);
-            });
-
             // Event Listener for dots
             dotsContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('gallery-dot')) {
@@ -397,10 +386,59 @@
                 }
             });
 
-            // Hide arrows if only one image
-            if (galleryImages.length <= 1) {
-                prevBtn.style.display = 'none';
-                nextBtn.style.display = 'none';
+            // --- Swipe functionality for gallery ---
+            let touchStartX = 0;
+            let touchEndX = 0;
+            let isSwiping = false;
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                isSwiping = true;
+                sliderContainer.style.cursor = 'grabbing';
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+                touchEndX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchend', () => {
+                if (!isSwiping) return;
+                isSwiping = false;
+                sliderContainer.style.cursor = 'grab';
+                handleSwipe();
+            });
+
+            // Add mouse events for desktop swiping
+            sliderContainer.addEventListener('mousedown', (e) => {
+                isSwiping = true;
+                touchStartX = e.screenX;
+                sliderContainer.style.cursor = 'grabbing';
+                sliderContainer.style.userSelect = 'none';
+            });
+            sliderContainer.addEventListener('mousemove', (e) => {
+                if (!isSwiping) return;
+                touchEndX = e.screenX;
+            });
+            const mouseUpHandler = () => {
+                if (!isSwiping) return;
+                isSwiping = false;
+                sliderContainer.style.cursor = 'grab';
+                sliderContainer.style.userSelect = '';
+                handleSwipe();
+            };
+            sliderContainer.addEventListener('mouseup', mouseUpHandler);
+            sliderContainer.addEventListener('mouseleave', mouseUpHandler);
+
+            function handleSwipe() {
+                if (touchEndX === 0 || Math.abs(touchEndX - touchStartX) < 50) return; // Threshold
+                if (touchEndX < touchStartX) { // Swiped left
+                    showImage((currentImageIndex + 1) % galleryImages.length);
+                } else { // Swiped right
+                    showImage((currentImageIndex - 1 + galleryImages.length) % galleryImages.length);
+                }
+                touchStartX = 0;
+                touchEndX = 0;
             }
 
             // --- Size Selector ---
@@ -464,19 +502,15 @@
 
             relatedProducts.forEach(product => {
                 const productCardHTML = `
-                    <div class="product-item-wrapper">
+                    <div class="product-item-wrapper no-info">
                         <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
                             <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-page-url="${product.pageUrl}">
                                 <div class="product-image-container">
                                     <img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
-                                    <div class="product-favorite-icon" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}">
+                                    <div class="product-favorite-icon">
                                         <i class="far fa-heart"></i>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product-info">
-                                <h4 class="product-name">${product.name}</h4>
-                                <p class="product-price">${product.price}</p>
                             </div>
                         </a>
                     </div>
@@ -523,5 +557,3 @@
     <script type="module" src="./src/cart.js"></script>
     <script type="module" src="./src/review.js"></script>
     <script type="module" src="./src/fav.js"></script>
-</body>
-</html>

@@ -12,7 +12,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mor.css">
 </head>
+<link rel="stylesheet" href="offer.css">
 <body>
+    <!-- Scrolling Offer Banner -->
+    <div class="offer-banner" id="scrolling-offer-banner">
+        <div class="offer-text-container">
+            <div class="offer-text">
+                <span>🔥 Big Festive Sale! Flat 50% OFF on all Kurtis | Free Shipping Today Only!</span>
+                <span>🔥 Big Festive Sale! Flat 50% OFF on all Kurtis | Free Shipping Today Only!</span>
+            </div>
+        </div>
+        <button class="close-offer-btn" id="close-offer-btn" aria-label="Close offer banner">&times;</button>
+    </div>
     <header class="header">
         <nav class="nav">
             <button class="hamburger-menu" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
@@ -41,7 +52,7 @@
         </nav>
     </header>
 
-    <main>
+    <main style="margin-top: 105px; transition: margin-top 0.4s ease-in-out;">
         <section class="promo-section" id="home">
             <div class="promo-slider-container">
                 <img src="p1.jpg" alt="Promo Image 1" class="promo-img active" loading="lazy">
@@ -53,35 +64,35 @@
         <section class="categories-section" id="categories">
             <h2 class="section-title animate-fade-in">Shop by Categories</h2>
             <div class="categories-scroll">
-                <div class="category-card animate-fade-in" style="transition-delay: 0.1s;">
+                <div class="category-card" style="transition-delay: 0.1s;">
                     <div class="category-content">
                         <h3>Co-ord Sets</h3>
                         <p>Effortless style in matching sets.</p>
                     </div>
                 </div>
-                <div class="category-card animate-fade-in" style="transition-delay: 0.2s;">
+                <div class="category-card" style="transition-delay: 0.2s;">
                     <div class="category-content">
                         <h3>Indo Western</h3>
                         <p>A beautiful fusion of tradition and trend.</p>
                     </div>
                 </div>
-                <div class="category-card animate-fade-in" style="transition-delay: 0.3s;">
+                <div class="category-card" style="transition-delay: 0.3s;">
                     <div class="category-content">
                         <h3>Dresses</h3>
                         <p>Elegant designs for every occasion.</p>
                     </div>
                 </div>
-                <div class="category-card animate-fade-in" style="transition-delay: 0.4s;">
+                <div class="category-card" style="transition-delay: 0.4s;">
                     <div class="category-content">
                         <h3>Kurtis</h3>
                     </div>
                 </div>
-                <div class="category-card animate-fade-in" style="transition-delay: 0.5s;">
+                <div class="category-card" style="transition-delay: 0.5s;">
                     <div class="category-content">
                         <h3>Sarees</h3>
                     </div>
                 </div>
-                <div class="category-card animate-fade-in" style="transition-delay: 0.6s;">
+                <div class="category-card" style="transition-delay: 0.6s;">
                     <div class="category-content">
                         <h3>Tops & Tunics</h3>
                     </div>
@@ -93,8 +104,8 @@
             <div class="featured-header">
                 <h2 class="section-title animate-fade-in">Featured In</h2>
             </div>
-            <div class="related-products-section animate-fade-in">
-                <div class="featured-category animate-fade-in featured-category-runway" style="transition-delay: 0.2s;">
+            <div class="related-products-section">
+                <div class="featured-category featured-category-runway" style="transition-delay: 0.2s;">
                     <h3>Best Sellers This Week</h3>
                     <div class="featured-scroll">
                         <div class="product-item-wrapper no-info">
@@ -140,9 +151,9 @@
                             </div>
                         </div>
                     </div>
-                    <a href="best-sellers.html" class="view-all-btn">View All</a>
+                    <a href="best-sellers.html" class="view-all-btn animate-fade-in" style="transition-delay: 0.5s;">View All</a>
                 </div>
-                <div class="featured-category animate-fade-in featured-category-seasonal" style="transition-delay: 0.4s;">
+                <div class="featured-category featured-category-seasonal" style="transition-delay: 0.4s;">
                     <h3>Seasonal Favorites</h3>
                     <div class="featured-scroll">
                         <div class="product-item-wrapper no-info">
@@ -188,7 +199,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="seasonal-favorites.html" class="view-all-btn">View All</a>
+                    <a href="seasonal-favorites.html" class="view-all-btn animate-fade-in" style="transition-delay: 0.5s;">View All</a>
                 </div>
             </div>
         </section>
@@ -297,6 +308,7 @@
     <!-- Notification Toast -->
     <div id="notification-toast" class="notification-toast"></div>
     <script type="module" src="./src/cart.js"></script>
+    <script src="offer.js"></script>
     <script src="mor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
