@@ -1,0 +1,139 @@
+/* --- Floating Cart Icon on Product Card --- */
+.product-cart-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(43, 43, 43, 0.8); /* #2b2b2b with opacity */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 4;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0; /* Hidden by default on desktop */
+    transform: scale(0.8);
+}
+
+/* Show on hover on desktop */
+@media (min-width: 769px) {
+    .product-card:hover .product-cart-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Always visible on mobile */
+@media (max-width: 768px) {
+    .product-cart-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.product-cart-icon:hover {
+    background-color: #fff;
+    color: #2b2b2b;
+    transform: scale(1.1);
+}
+
+/* --- Quick Add to Cart Modal --- */
+.quick-add-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.quick-add-modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.quick-add-modal-content {
+    background: #3a3a3a;
+    border: 1px solid #555;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.quick-add-modal-overlay.show .quick-add-modal-content {
+    transform: scale(1);
+}
+
+.quick-add-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.quick-add-modal-img {
+    width: 120px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 auto 1rem auto;
+    border: 1px solid #555;
+}
+
+.quick-add-modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.quick-add-modal-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #d3d3d3;
+    margin-bottom: 1.5rem;
+}
+
+.quick-add-modal-content .quantity-counter {
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.quick-add-modal-content .add-to-cart-btn {
+    width: 100%;
+    padding: 0.9rem;
+}
+
+@media (max-width: 480px) {
+    .quick-add-modal-content {
+        padding: 1.5rem;
+    }
+    .quick-add-modal-name {
+        font-size: 1.3rem;
+    }
+}

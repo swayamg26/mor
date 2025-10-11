@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mor.css">
 </head>
+<link rel="stylesheet" href="cartPopup.css">
 <link rel="stylesheet" href="offer.css">
 <body>
     <!-- Scrolling Offer Banner -->
@@ -37,7 +38,7 @@
                     <li><a href="#collections">Collections</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li class="mobile-only-link"><a href="cart.html" class="nav-link-button"><i class="fas fa-shopping-basket"></i> Cart</a></li>
+                    <li class="mobile-only-link"><a href="cart.html" class="nav-link-button"><i class="fas fa-shopping-bag"></i> Cart</a></li>
                     <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="far fa-heart"></i> Favorites</button></li>
                     <li class="mobile-only-link" id="mobile-auth-link-container">
                         <!-- This will be dynamically replaced by JS -->
@@ -112,6 +113,7 @@
                             <div class="product-card" data-name="Black Chikankari Kurti" data-price="₹1,499" data-sizes="S, M, L, XL" data-material="Cotton" data-img-src="1A.jpg" data-gallery-images="1B.jpg,1C.jpg" data-page-url="1.html">
                                 <div class="product-image-container"><img src="1A.jpg" alt="Black Chikankari Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -119,6 +121,7 @@
                             <div class="product-card" data-name="Stylish Rayon Kurti" data-price="₹1,399" data-sizes="S, M, L" data-material="Rayon" data-img-src="2A.jpg" data-gallery-images="2B.jpg" data-page-url="2.html">
                                 <div class="product-image-container"><img src="2A.jpg" alt="Stylish Rayon Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -126,6 +129,7 @@
                             <div class="product-card" data-name="Elegant Georgette Kurti" data-price="₹1,599" data-sizes="M, L, XL" data-material="Georgette" data-img-src="3A.jpg" data-gallery-images="3B.jpg,3C.jpg,3D.jpg,3E.jpg" data-page-url="3.html">
                                 <div class="product-image-container"><img src="3A.jpg" alt="Elegant Georgette Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +137,7 @@
                             <div class="product-card" data-name="Classic Viscose Kurta" data-price="₹1,899" data-sizes="S, M, L, XL, XXL" data-material="Viscose" data-img-src="4A.jpg" data-gallery-images="4B.jpg,4C.jpg" data-page-url="4.html">
                                 <div class="product-image-container"><img src="4A.jpg" alt="Classic Viscose Kurta" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -140,6 +145,7 @@
                             <div class="product-card" data-name="Navy Blue Kurti Set" data-price="₹1,799" data-sizes="M, L, XL" data-material="Silk Blend" data-img-src="9A.jpg" data-gallery-images="9B.jpg,9C.jpg" data-page-url="9.html">
                                 <div class="product-image-container"><img src="9A.jpg" alt="Navy Blue Kurti Set" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +153,7 @@
                             <div class="product-card" data-name="Maroon Velvet Kurti" data-price="₹2,499" data-sizes="S, M, L" data-material="Velvet" data-img-src="10A.jpg" data-gallery-images="10B.jpg,10C.jpg,10D.jpg" data-page-url="10.html">
                                 <div class="product-image-container"><img src="10A.jpg" alt="Maroon Velvet Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -159,42 +166,49 @@
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Green Floral Kurti" data-price="₹1,199" data-sizes="S, M, L" data-material="Cotton" data-img-src="5A.jpg" data-gallery-images="5B.jpg" data-page-url="5.html"><div class="product-image-container"><img src="5A.jpg" alt="Green Floral Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Red Printed Kurti" data-price="₹1,299" data-sizes="M, L, XL" data-material="Rayon" data-img-src="6A.jpg" data-gallery-images="6B.jpg,6C.jpg" data-page-url="6.html"><div class="product-image-container"><img src="6A.jpg" alt="Red Printed Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Yellow Summer Kurti" data-price="₹1,099" data-sizes="S, M" data-material="Cotton" data-img-src="7A.jpg" data-gallery-images="7B.jpg" data-page-url="7.html"><div class="product-image-container"><img src="7A.jpg" alt="Yellow Summer Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Blue Casual Kurti" data-price="₹1,399" data-sizes="S, M, L, XL" data-material="Viscose" data-img-src="8A.jpg" data-gallery-images="8B.jpg,8C.jpg,8D.jpg" data-page-url="8.html"><div class="product-image-container"><img src="8A.jpg" alt="Blue Casual Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Light Green Kurti" data-price="₹1,450" data-sizes="S, M, L" data-material="Cotton" data-img-src="11A.jpg" data-gallery-images="11B.jpg" data-page-url="11.html"><div class="product-image-container"><img src="11A.jpg" alt="Light Green Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Purple Silk Kurti" data-price="₹1,999" data-sizes="M, L, XL" data-material="Silk" data-img-src="12A.jpg" data-gallery-images="12B.jpg" data-page-url="12.html"><div class="product-image-container"><img src="12A.jpg" alt="Purple Silk Kurti" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="product-item-wrapper no-info">
                             <div class="product-card" data-name="Royal Blue Silk Saree" data-price="₹2,999" data-sizes="Free Size" data-material="Silk" data-img-src="13A.jpg" data-gallery-images="13B.jpg" data-page-url="13.html"><div class="product-image-container"><img src="13A.jpg" alt="Royal Blue Silk Saree" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -309,6 +323,7 @@
     <div id="notification-toast" class="notification-toast"></div>
     <script type="module" src="./src/cart.js"></script>
     <script src="offer.js"></script>
+    <script src="cartPopup.js"></script>
     <script src="mor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

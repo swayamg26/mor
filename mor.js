@@ -639,8 +639,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(card => {
         card.addEventListener('click', (e) => {
-            // Prevent navigation if an icon inside the card was clicked
-            if (e.target.closest('.product-favorite-icon')) {
+            // Prevent navigation if an interactive icon inside the card was clicked
+            if (e.target.closest('.product-favorite-icon') || e.target.closest('.product-cart-icon')) {
                 return;
             }
             const productPage = card.dataset.pageUrl;
