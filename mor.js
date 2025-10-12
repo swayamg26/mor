@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 itemEl.className = 'cart-item';
                 // Using the same layout as the old side panel for consistency
                 itemEl.innerHTML = `
-                    <img src="./${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${item.price}</div>

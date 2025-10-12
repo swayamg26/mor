@@ -112,7 +112,7 @@
                     <button class="cta-btn add-to-cart-btn beautiful-add-to-cart" id="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                 </div>
                 <!-- New Modern Accordion -->
-                <div class="modern-accordion-container animate-fade-in" style="transition-delay: 0.5s;">
+                <div class="modern-accordion-container" style="transition-delay: 0.5s;">
                     <div class="modern-accordion-item">
                         <button class="modern-accordion-header">Description<i class="fas fa-plus"></i></button>
                         <div class="modern-accordion-content"><p>Embrace timeless elegance with this stunning Black Chikankari Kurti. Hand-embroidered with intricate floral patterns, this piece is a testament to traditional craftsmanship. Made from pure, breathable cotton, it ensures comfort throughout the day.</p></div>
@@ -147,7 +147,7 @@
         </div>
 
         <!-- Customer Reviews Section -->
-        <div class="modern-reviews-container animate-fade-in">
+        <div class="modern-reviews-container">
             <div class="reviews-section-header">
                 <h2>Customer Reviews</h2>
             </div>
@@ -283,9 +283,20 @@
     </footer>
 
     <script src="mor.js"></script>
-    <script>
+    <script type="module">
+        import { initializeProductPage } from './src/product-loader.js';
+
         document.addEventListener('DOMContentLoaded', function() {
-             const allProducts = [
+            const productData = {
+                id: "1A",
+                name: "Black Chikankari Kurti",
+                price: "₹1,499",
+                imgSrc: "1A.jpg",
+                galleryImages: ["1A.jpg", "1B.jpg", "1C.jpg"]
+            };
+
+            // This can be moved to a shared products.js module later
+            const allProducts = [
                 { id: "1A", name: "Black Chikankari Kurti", price: "₹1,499", oldPrice: "₹1,999", imgSrc: "1A.jpg", pageUrl: "1.html" },
                 { id: "2A", name: "Stylish Rayon Kurti", price: "₹1,399", oldPrice: "₹1,799", imgSrc: "2A.jpg", pageUrl: "2.html" },
                 { id: "3A", name: "Elegant Georgette Kurti", price: "₹1,599", oldPrice: "₹2,199", imgSrc: "3A.jpg", pageUrl: "3.html" },
@@ -299,204 +310,14 @@
                 { id: "11A", name: "Light Green Kurti", price: "₹1,450", oldPrice: "₹1,950", imgSrc: "11A.jpg", pageUrl: "11.html" },
                 { id: "12A", name: "Purple Silk Kurti", price: "₹1,999", oldPrice: "₹2,599", imgSrc: "12A.jpg", pageUrl: "12.html" }
             ];
-
-            const currentProduct = {
-                id: "1A",
-                name: "Black Chikankari Kurti",
-                price: "₹1,499",
-                imgSrc: "1A.jpg"
-            };
-
-            // --- Share Button ---
-            document.getElementById('share-btn')?.addEventListener('click', () => {
-                navigator.share({ title: currentProduct.name, text: `Check out this ${currentProduct.name}!`, url: window.location.href })
-                    .catch(() => window.showToast('Sharing is not supported on your browser.', 'fa-exclamation-triangle'));
-            });
-
-            // --- Favorite Button ---
-            const favIconContainer = document.getElementById('page-favorite-icon');
-            if (favIconContainer) {
-                // Set initial state
-                if (window.isFavorited && window.isFavorited(currentProduct)) {
-                    favIconContainer.innerHTML = '<i class="fas fa-heart"></i>';
-                }
-                // Add click listener
-                favIconContainer.addEventListener('click', () => {
-                    if (window.toggleFavorite) {
-                        window.toggleFavorite(currentProduct, favIconContainer);
-                    }
-                });
-            }
-
-            const allProducts_legacy = [
-                { name: "Black Chikankari Kurti", price: "₹1,499", oldPrice: "₹1,999", imgSrc: "1A.jpg", pageUrl: "1.html" },
-                { name: "Stylish Rayon Kurti", price: "₹1,399", oldPrice: "₹1,799", imgSrc: "2A.jpg", pageUrl: "2.html" },
-                { name: "Elegant Georgette Kurti", price: "₹1,599", oldPrice: "₹2,199", imgSrc: "3A.jpg", pageUrl: "3.html" },
-                { name: "Classic Viscose Kurta", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "4A.jpg", pageUrl: "4.html" },
-                { name: "Green Floral Kurti", price: "₹1,199", oldPrice: "₹1,599", imgSrc: "5A.jpg", pageUrl: "5.html" },
-                { name: "Red Printed Kurti", price: "₹1,299", oldPrice: "₹1,699", imgSrc: "6A.jpg", pageUrl: "6.html" },
-                { name: "Yellow Summer Kurti", price: "₹1,099", oldPrice: "₹1,499", imgSrc: "7A.jpg", pageUrl: "7.html" },
-                { name: "Blue Casual Kurti", price: "₹1,399", oldPrice: "₹1,899", imgSrc: "8A.jpg", pageUrl: "8.html" },
-                { name: "Navy Blue Kurti Set", price: "₹1,799", oldPrice: "₹2,399", imgSrc: "9A.jpg", pageUrl: "9.html" },
-                { name: "Maroon Velvet Kurti", price: "₹2,499", oldPrice: "₹3,199", imgSrc: "10A.jpg", pageUrl: "10.html" },
-                { name: "Light Green Kurti", price: "₹1,450", oldPrice: "₹1,950", imgSrc: "11A.jpg", pageUrl: "11.html" },
-                { name: "Purple Silk Kurti", price: "₹1,999", oldPrice: "₹2,599", imgSrc: "12A.jpg", pageUrl: "12.html" }
-            ];
-
-            // --- Product Page Gallery ---
-            const sliderTrack = document.getElementById('gallery-slider-track');
-            const dotsContainer = document.getElementById('gallery-dots-container');
-            const sliderContainer = document.querySelector('.gallery-slider-container');
-             const galleryImages = ["1A.jpg", "1B.jpg", "1C.jpg"];
-            let currentImageIndex = 0;
             
-            // Create images and dots
-            galleryImages.forEach((src, index) => {
-                // Create image element
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = `Product image ${index + 1}`;
-                img.loading = 'lazy';
-                sliderTrack.appendChild(img);
-
-                // Create dot element
-                const dot = document.createElement('span');
-                dot.classList.add('gallery-dot');
-                if (index === 0) dot.classList.add('active');
-                dot.dataset.index = index;
-                dotsContainer.appendChild(dot);
-            });
-
-            const dots = document.querySelectorAll('.gallery-dot');
-
-            function showImage(index) {
-                // Update main image
-                sliderTrack.style.transform = `translateX(-${index * 100}%)`;
-                 // Update active dot
-                dots.forEach(d => d.classList.remove('active'));
-                dots[index].classList.add('active');
-
-                currentImageIndex = index;
-            }
-
-            // Event Listener for dots
-            dotsContainer.addEventListener('click', (e) => {
-                if (e.target.classList.contains('gallery-dot')) {
-                    const index = parseInt(e.target.dataset.index);
-                    showImage(index);
-                }
-            });
-
-            // --- Swipe functionality for gallery ---
-            let touchStartX = 0;
-            let touchEndX = 0;
-            let isSwiping = false;
-
-            sliderContainer.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-                isSwiping = true;
-                sliderContainer.style.cursor = 'grabbing';
-            }, { passive: true });
-
-            sliderContainer.addEventListener('touchmove', (e) => {
-                if (!isSwiping) return;
-                touchEndX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
-            sliderContainer.addEventListener('touchend', () => {
-                if (!isSwiping) return;
-                isSwiping = false;
-                sliderContainer.style.cursor = 'grab';
-                handleSwipe();
-            });
-
-            // Add mouse events for desktop swiping
-            sliderContainer.addEventListener('mousedown', (e) => {
-                isSwiping = true;
-                touchStartX = e.screenX;
-                sliderContainer.style.cursor = 'grabbing';
-                sliderContainer.style.userSelect = 'none';
-            });
-            sliderContainer.addEventListener('mousemove', (e) => {
-                if (!isSwiping) return;
-                touchEndX = e.screenX;
-            });
-            const mouseUpHandler = () => {
-                if (!isSwiping) return;
-                isSwiping = false;
-                sliderContainer.style.cursor = 'grab';
-                sliderContainer.style.userSelect = '';
-                handleSwipe();
-            };
-            sliderContainer.addEventListener('mouseup', mouseUpHandler);
-            sliderContainer.addEventListener('mouseleave', mouseUpHandler);
-
-            function handleSwipe() {
-                if (touchEndX === 0 || Math.abs(touchEndX - touchStartX) < 50) return; // Threshold
-                if (touchEndX < touchStartX) { // Swiped left
-                    showImage((currentImageIndex + 1) % galleryImages.length);
-                } else { // Swiped right
-                    showImage((currentImageIndex - 1 + galleryImages.length) % galleryImages.length);
-                }
-                touchStartX = 0;
-                touchEndX = 0;
-            }
-
-            // --- Size Selector ---
-            const sizeSelector = document.getElementById('size-selector');
-            sizeSelector.addEventListener('click', (e) => {
-                if (e.target.classList.contains('size-btn')) {
-                    sizeSelector.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                }
-            });
-
-            // --- Quantity Counter ---
-            const quantityValue = document.querySelector('.quantity-value');
-            document.querySelectorAll('.quantity-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let currentQty = parseInt(quantityValue.textContent);
-                    if (btn.dataset.action === 'increase') {
-                        currentQty++;
-                    } else if (currentQty > 1) {
-                        currentQty--;
-                    }
-                    quantityValue.textContent = currentQty;
-                });
-            });
-
-            // --- Add to Cart ---
-            // This part requires your main mor.js cart functions.
-            // For a multi-page app, you'd typically save the cart to localStorage
-            // so it persists across pages. This is a simplified example.
-            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-                // Gate the feature behind login
-                if (!window.isUserLoggedIn()) {
-                    window.openLoginRequiredModal('Login to add an item to cart.');
-                    return;
-                }
-
-                let imgSrc = galleryImages[0];
-                if (imgSrc.includes('/')) imgSrc = imgSrc.split('/').pop();
-
-                const product = {
-                    name: document.getElementById('product-name').textContent,
-                    price: document.getElementById('product-price').textContent,
-                    size: sizeSelector.querySelector('.size-btn.active').textContent,
-                    imgSrc: imgSrc,
-                    quantity: parseInt(quantityValue.textContent)
-                };
-                window.addToCart(product);
-                window.showToast(`${product.name} has been added to your cart!`);
-            });
- 
-            window.addEventListener('load', () => {
+            initializeProductPage(productData, allProducts);
 
             // --- Related Products ---
             const relatedProductsContainer = document.getElementById('related-products-container');
             const currentProductName = document.getElementById('product-name').textContent;
 
-            const relatedProducts = allProducts_legacy
+            const relatedProducts = allProducts
                 .filter(p => p.name !== currentProductName) // Exclude the current product
                 .sort(() => 0.5 - Math.random()) // Shuffle the array
                 .slice(0, 4); // Get the first 4 random products
@@ -519,42 +340,8 @@
                 relatedProductsContainer.innerHTML += productCardHTML;
             });
         });
-
-            // --- Product Description Accordion ---
-            document.querySelectorAll('.modern-accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const content = header.nextElementSibling;
-                    const icon = header.querySelector('i');
-                    const item = header.parentElement;
-
-                    item.classList.toggle('active');
-
-                    if (item.classList.contains('active')) {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        icon.classList.remove('fa-plus');
-                        icon.classList.add('fa-minus');
-                    } else {
-                        content.style.maxHeight = null;
-                        icon.classList.remove('fa-minus');
-                        icon.classList.add('fa-plus');
-                    }
-                });
-            });
-
-            // --- Review Modal ---
-            const openReviewBtn = document.getElementById('write-review-btn');
-            openReviewBtn.addEventListener('click', () => {
-                // Check for a logged-in user. This function is in mor.js
-                if (window.isUserLoggedIn && window.isUserLoggedIn()) {
-                    // If logged in, redirect to the review page with product ID
-                    window.location.href = `review.html?product=${currentProduct.id}`;
-                } else {
-                    // If not logged in, open the login required modal
-                    window.openLoginRequiredModal('You need to be logged in to write a review.');
-                }
-            });
-        }); // End of DOMContentLoaded
     </script>
     <script type="module" src="./src/cart.js"></script>
     <script type="module" src="./src/review.js"></script>
     <script type="module" src="./src/fav.js"></script>
+    <script src="./src/horizontalfade.js"></script>

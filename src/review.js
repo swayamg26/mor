@@ -18,6 +18,12 @@ export async function addReview(productId, reviewData) {
     return false;
   }
   try {
+    // Ensure the parent document for the product exists before adding a review.
+    // This prevents errors when adding the first review for a product.
+    const productReviewDoc = doc(db, "reviews", productId);
+    await setDoc(productReviewDoc, { lastUpdated: serverTimestamp() }, { merge: true });
+
+    // Now, add the review to the 'items' subcollection.
     const review = {
       rating: reviewData.rating,
       comment: reviewData.comment || "",
@@ -25,7 +31,7 @@ export async function addReview(productId, reviewData) {
       userEmail: auth.currentUser.email || null,
       createdAt: serverTimestamp()
     };
-    const reviewsCol = collection(db, "reviews", productId, "items");
+    const reviewsCol = collection(productReviewDoc, "items");
     await addDoc(reviewsCol, review);
     return true;
   } catch (error) {
@@ -97,24 +103,24 @@ export function displayReviews(reviews, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = "";
-  if (!reviews || reviews.length === 0) {
-    container.innerHTML = "<p>No reviews yet. Be the first to review!</p>";
+  if (reviews.length === 0) {
+    container.innerHTML = '<p style="text-align: center; color: #888;">No reviews yet. Be the first to write one!</p>';
     return;
   }
   reviews.forEach(review => {
     const reviewDiv = document.createElement("div");
-    reviewDiv.className = "review-item";
+    reviewDiv.className = "review-card"; // Use the modern review-card style
     const created = review.createdAt && review.createdAt.seconds
       ? new Date(review.createdAt.seconds * 1000)
       : (review.createdAt?.toDate ? review.createdAt.toDate() : null);
     reviewDiv.innerHTML = `
-      <div class="review-header">
+      <div class="review-card-header">
+        <div class="review-author">${review.userEmail || 'Anonymous'}</div>
         <div class="review-rating">${'★'.repeat(review.rating || 0)}${'☆'.repeat(5 - (review.rating || 0))}</div>
-        <div class="review-author">${review.userName || review.userEmail || 'Anonymous'}</div>
-        <div class="review-date">${created ? created.toLocaleDateString() : ''}</div>
       </div>
-      <div class="review-content">
-        <p>${review.comment || ''}</p>
+      <p class="review-text">${review.comment || ''}</p>
+      <div class="review-date" style="font-size: 0.8rem; color: #888; text-align: right; margin-top: 0.5rem;">
+        <div class="review-date">${created ? created.toLocaleDateString() : ''}</div>
       </div>
     `;
     container.appendChild(reviewDiv);

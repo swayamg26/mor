@@ -119,6 +119,42 @@
     margin-bottom: 1.5rem;
 }
 
+.quick-add-modal-content .modal-option-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.quick-add-modal-content .modal-option-group label {
+    font-weight: 600;
+    color: #d3d3d3;
+}
+
+.quick-add-modal-content .size-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.quick-add-modal-content .size-btn {
+    background: #232323;
+    color: #fff;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-add-modal-content .size-btn.active,
+.quick-add-modal-content .size-btn:hover {
+    border-color: #d3d3d3;
+    background: #444;
+}
+
 .quick-add-modal-content .quantity-counter {
     justify-content: center;
     margin-bottom: 1.5rem;

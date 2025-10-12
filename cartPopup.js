@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="" alt="Product Image" class="quick-add-modal-img">
                 <h3 class="quick-add-modal-name"></h3>
                 <p class="quick-add-modal-price"></p>
+                <div class="modal-option-group">
+                    <label>Size:</label>
+                    <div class="size-selector" id="quick-add-size-selector"></div>
+                </div>
                 <div class="quantity-counter">
                     <button class="quantity-btn" data-action="decrease">-</button>
                     <span class="quantity-value">1</span>
@@ -27,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalName = modalOverlay.querySelector('.quick-add-modal-name');
     const modalPrice = modalOverlay.querySelector('.quick-add-modal-price');
     const quantityValueEl = modalOverlay.querySelector('.quantity-value');
+    const sizeSelectorEl = modalOverlay.querySelector('#quick-add-size-selector');
     const modalAddToCartBtn = modalOverlay.querySelector('.add-to-cart-btn');
 
     let currentProductData = null;
@@ -38,6 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
         modalName.textContent = productData.name;
         modalPrice.textContent = productData.price;
         quantityValueEl.textContent = '1'; // Reset quantity
+
+        // Populate sizes
+        sizeSelectorEl.innerHTML = '';
+        const sizes = productData.sizes ? productData.sizes.split(',').map(s => s.trim()) : ['M'];
+        sizes.forEach((size, index) => {
+            const sizeBtn = document.createElement('button');
+            sizeBtn.className = 'size-btn';
+            sizeBtn.textContent = size;
+            sizeBtn.dataset.size = size;
+            if (index === 0) {
+                sizeBtn.classList.add('active');
+            }
+            sizeSelectorEl.appendChild(sizeBtn);
+        });
+
         modalOverlay.classList.add('show');
     }
 
@@ -59,9 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     price: card.dataset.price,
                     imgSrc: card.dataset.imgSrc,
                     pageUrl: card.dataset.pageUrl,
-                    // A default size is needed. For a real app, you might want to
-                    // add a size selector to this modal as well.
-                    size: card.dataset.sizes ? card.dataset.sizes.split(',')[0].trim() : 'M',
+                    sizes: card.dataset.sizes || 'M',
                 };
                 openQuickAddModal(productData);
             }
@@ -80,6 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
     modalContent.addEventListener('click', (e) => {
         const target = e.target;
 
+        // Size selector logic
+        if (target.classList.contains('size-btn')) {
+            sizeSelectorEl.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            target.classList.add('active');
+        }
+
+
         // Quantity counter logic
         if (target.classList.contains('quantity-btn')) {
             let currentQty = parseInt(quantityValueEl.textContent);
@@ -94,9 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add to cart button logic
         if (target.classList.contains('add-to-cart-btn')) {
             if (currentProductData) {
+                const selectedSize = sizeSelectorEl.querySelector('.size-btn.active')?.dataset.size || 'M';
                 const productToAdd = {
                     ...currentProductData,
                     quantity: parseInt(quantityValueEl.textContent),
+                    size: selectedSize,
                 };
 
                 if (window.isUserLoggedIn && !window.isUserLoggedIn()) {

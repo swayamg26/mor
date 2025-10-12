@@ -191,59 +191,9 @@
     </footer>
 
     <script src="mor.js"></script>
-    <!-- Replace the previous non-module <script> handling stars and submit with this module script -->
+    <script type="module" src="./src/review.js"></script>
     <script type="module">
-      import { addReview, getReviews } from './src/review.js';
-
-      const starRatingContainer = document.getElementById('star-rating-input');
-      const stars = starRatingContainer.querySelectorAll('.fa-star');
-      let currentRating = 0;
-
-      // read product id from query param (fallback to UNKNOWN)
-      const params = new URLSearchParams(window.location.search);
-      const productId = params.get('product') || params.get('pid') || 'UNKNOWN_PRODUCT';
-
-      // Star rating interactions
-      stars.forEach(star => {
-        const val = parseInt(star.dataset.value);
-        star.addEventListener('mouseover', () => {
-          stars.forEach((s, i) => s.className = i < val ? 'fas fa-star' : 'far fa-star');
-        });
-        star.addEventListener('mouseout', () => {
-          stars.forEach((s, i) => s.className = i < currentRating ? 'fas fa-star selected' : 'far fa-star');
-        });
-        star.addEventListener('click', () => {
-          currentRating = val;
-          stars.forEach((s, i) => s.className = i < currentRating ? 'fas fa-star selected' : 'far fa-star');
-        });
-      });
-
-      // Load existing reviews (optional UI)
-      async function loadReviews() {
-        const reviewsListEl = document.getElementById('reviews-list');
-        if (!reviewsListEl) return;
-        reviewsListEl.innerHTML = '<p>Loading reviews...</p>';
-        const reviews = await getReviews(productId);
-        if (!reviews.length) {
-          reviewsListEl.innerHTML = '<p>No reviews yet.</p>';
-          return;
-        }
-        reviewsListEl.innerHTML = '';
-        reviews.forEach(r => {
-          const created = r.createdAt && r.createdAt.seconds ? new Date(r.createdAt.seconds * 1000) : '';
-          const div = document.createElement('div');
-          div.className = 'review-item';
-          div.innerHTML = `
-            <div class="review-rating">${'★'.repeat(r.rating || 0)}${'☆'.repeat(5 - (r.rating || 0))}</div>
-            <div class="review-comment">${r.comment || ''}</div>
-            <div class="review-meta"><small>${r.userEmail || 'Anonymous'} • ${created ? created.toLocaleDateString() : ''}</small></div>
-          `;
-          reviewsListEl.appendChild(div);
-        });
-      }
-      // initial load
-      loadReviews();
-
+      import { addReview } from './src/review.js';
       // Submit handler
       const reviewForm = document.getElementById('review-form');
       reviewForm.addEventListener('submit', async (e) => {
@@ -251,6 +201,12 @@
         if (!currentRating) {
           if (window.showToast) window.showToast('Please select a rating.', 'fa-exclamation-circle');
           return;
+        }
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('product');
+        if (!productId) {
+            if (window.showToast) window.showToast('Could not find product to review.', 'fa-exclamation-triangle');
+            return;
         }
         const comment = document.getElementById('review-text').value.trim();
         // Ensure user is logged in before submitting
@@ -270,18 +226,36 @@
           reviewForm.reset();
           currentRating = 0;
           stars.forEach(s => s.className = 'far fa-star');
-          // reload reviews or navigate back
-          await loadReviews();
           setTimeout(() => {
-            // Optionally go back to product page if referrer is product page
-            const ref = document.referrer;
-            if (ref && (ref.includes('A10.html') || ref.includes('1.html'))) {
-              window.location.href = ref;
+            // Go back to the previous page
+            if (document.referrer) {
+              window.location.href = document.referrer;
+            } else {
+              window.location.href = 'shop.html'; // Fallback
             }
           }, 800);
         } else {
           if (window.showToast) window.showToast('Failed to submit review.', 'fa-times-circle');
         }
+      });
+
+      // Star rating interactions
+      const starRatingContainer = document.getElementById('star-rating-input');
+      const stars = starRatingContainer.querySelectorAll('.fa-star');
+      let currentRating = 0;
+
+      stars.forEach(star => {
+        const val = parseInt(star.dataset.value);
+        star.addEventListener('mouseover', () => {
+          stars.forEach((s, i) => s.className = i < val ? 'fas fa-star' : 'far fa-star');
+        });
+        star.addEventListener('mouseout', () => {
+          stars.forEach((s, i) => s.className = i < currentRating ? 'fas fa-star selected' : 'far fa-star');
+        });
+        star.addEventListener('click', () => {
+          currentRating = val;
+          stars.forEach((s, i) => s.className = i < currentRating ? 'fas fa-star selected' : 'far fa-star');
+        });
       });
     </script>
 </body>

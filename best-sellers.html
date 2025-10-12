@@ -11,6 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mor.css">
+    <link rel="stylesheet" href="cartPopup.css">
     <style>
         .shop-header { text-align: center; padding: 2rem; background: #3a3a3a; }
         .shop-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #ffffff; }
@@ -198,6 +199,7 @@
                             <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}" data-page-url="${product.pageUrl}">
                                 <div class="product-image-container"><img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
+                                    <div class="product-cart-icon"><i class="fas fa-shopping-cart"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -240,6 +242,7 @@
         });
     </script>
     <script src="mor.js"></script>
+    <script src="cartPopup.js"></script>
     <script type="module" src="./src/cart.js"></script>
     <script type="module" src="./src/fav.js"></script>
 </body>

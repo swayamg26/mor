@@ -246,40 +246,7 @@
         </div>
     </div>
 
-    <footer class="footer" id="contact">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Mor</h4>
-                <p>Premium fashion for the modern woman. Discover elegance, embrace style, and express your unique personality with our curated collections.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <p><a href="index.html#home">Home</a></p>
-                <p><a href="index.html#categories">Categories</a></p>
-                <p><a href="index.html#collections">Collections</a></p>
-                <p><a href="index.html#about">About Us</a></p>
-            </div>
-            <div class="footer-section">
-                <h4>Customer Care</h4>
-                <p><a href="#">Size Guide</a></p>
-                <p><a href="#">Shipping Info</a></p>
-                <p><a href="#">Returns & Exchanges</a></p>
-                <p><a href="#">Contact Support</a></p>
-            </div>
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <div class="social-icons">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Newsletter"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Mor Fashion. All rights reserved. | <a href="privacy.html" style="color: inherit;">Privacy Policy</a> | <a href="terms.html" style="color: inherit;">Terms of Service</a></p>
-        </div>
-    </footer>
+    <footer class="footer" id="footer-placeholder"></footer>
 
     <script src="mor.js"></script>
     <script>
@@ -488,36 +455,6 @@
                 window.addToCart(product);
                 window.showToast(`${product.name} has been added to your cart!`);
             });
- 
-            window.addEventListener('load', () => {
-
-            // --- Related Products ---
-            const relatedProductsContainer = document.getElementById('related-products-container');
-            const currentProductName = document.getElementById('product-name').textContent;
-
-            const relatedProducts = allProducts_legacy
-                .filter(p => p.name !== currentProductName) // Exclude the current product
-                .sort(() => 0.5 - Math.random()) // Shuffle the array
-                .slice(0, 4); // Get the first 4 random products
-
-            relatedProducts.forEach(product => {
-                const productCardHTML = `
-                    <div class="product-item-wrapper no-info">
-                        <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
-                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-page-url="${product.pageUrl}">
-                                <div class="product-image-container">
-                                    <img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
-                                    <div class="product-favorite-icon">
-                                        <i class="far fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                `;
-                relatedProductsContainer.innerHTML += productCardHTML;
-            });
-        });
 
             // --- Product Description Accordion ---
             document.querySelectorAll('.modern-accordion-header').forEach(header => {
@@ -552,8 +489,37 @@
                     window.openLoginRequiredModal('You need to be logged in to write a review.');
                 }
             });
+
+            // --- Related Products ---
+            const relatedProductsContainer = document.getElementById('related-products-container');
+            const currentProductName = document.getElementById('product-name').textContent;
+
+            const relatedProducts = allProducts_legacy
+                .filter(p => p.name !== currentProductName) // Exclude the current product
+                .sort(() => 0.5 - Math.random()) // Shuffle the array
+                .slice(0, 4); // Get the first 4 random products
+
+            relatedProducts.forEach(product => {
+                const productCardHTML = `
+                    <div class="product-item-wrapper no-info">
+                        <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-page-url="${product.pageUrl}">
+                                <div class="product-image-container">
+                                    <img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
+                                    <div class="product-favorite-icon">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                relatedProductsContainer.innerHTML += productCardHTML;
+            });
         }); // End of DOMContentLoaded
     </script>
     <script type="module" src="./src/cart.js"></script>
     <script type="module" src="./src/review.js"></script>
     <script type="module" src="./src/fav.js"></script>
+    <script src="./src/footer-loader.js"></script>
+    <script src="./src/horizontalfade.js"></script>

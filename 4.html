@@ -490,36 +490,6 @@
                 window.addToCart(product);
                 window.showToast(`${product.name} has been added to your cart!`);
             });
- 
-            window.addEventListener('load', () => {
-
-            // --- Related Products ---
-            const relatedProductsContainer = document.getElementById('related-products-container');
-            const currentProductName = document.getElementById('product-name').textContent;
-
-            const relatedProducts = allProducts_legacy
-                .filter(p => p.name !== currentProductName) // Exclude the current product
-                .sort(() => 0.5 - Math.random()) // Shuffle the array
-                .slice(0, 4); // Get the first 4 random products
-
-            relatedProducts.forEach(product => {
-                const productCardHTML = `
-                    <div class="product-item-wrapper no-info">
-                        <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
-                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-page-url="${product.pageUrl}">
-                                <div class="product-image-container">
-                                    <img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
-                                    <div class="product-favorite-icon">
-                                        <i class="far fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                `;
-                relatedProductsContainer.innerHTML += productCardHTML;
-            });
-        });
 
             // --- Product Description Accordion ---
             document.querySelectorAll('.modern-accordion-header').forEach(header => {
@@ -554,8 +524,36 @@
                     window.openLoginRequiredModal('You need to be logged in to write a review.');
                 }
             });
+
+            // --- Related Products ---
+            const relatedProductsContainer = document.getElementById('related-products-container');
+            const currentProductName = document.getElementById('product-name').textContent;
+
+            const relatedProducts = allProducts_legacy
+                .filter(p => p.name !== currentProductName) // Exclude the current product
+                .sort(() => 0.5 - Math.random()) // Shuffle the array
+                .slice(0, 4); // Get the first 4 random products
+
+            relatedProducts.forEach(product => {
+                const productCardHTML = `
+                    <div class="product-item-wrapper no-info">
+                        <a href="${product.pageUrl}" style="text-decoration: none; color: inherit;">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-page-url="${product.pageUrl}">
+                                <div class="product-image-container">
+                                    <img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
+                                    <div class="product-favorite-icon">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                relatedProductsContainer.innerHTML += productCardHTML;
+            });
         }); // End of DOMContentLoaded
     </script>
     <script type="module" src="./src/cart.js"></script>
     <script type="module" src="./src/review.js"></script>
     <script type="module" src="./src/fav.js"></script>in
+    <script src="./src/horizontalfade.js"></script>
