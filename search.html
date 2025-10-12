@@ -76,7 +76,7 @@
                 </ul>
             </div>
             <div class="nav-actions">
-                <a href="cart.html" class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-cart"></i><span class="cart-count" style="display: none;">0</span></a>
+                <a href="cart.html" class="nav-action-link" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count" style="display: none;">0</span></a>
             </div>
         </nav>
     </header>
@@ -105,19 +105,19 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const allProducts = [
-                { name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "1A.jpg", pageUrl: "1.html", material: "Cotton" },
-                { name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "2A.jpg", pageUrl: "2.html", material: "Rayon" },
-                { name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "3A.jpg", pageUrl: "3.html", material: "Georgette" },
-                { name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "4A.jpg", pageUrl: "4.html", material: "Viscose" },
-                { name: "Green Floral Kurti", price: "₹1,199", imgSrc: "5A.jpg", pageUrl: "5.html", material: "Cotton" },
-                { name: "Red Printed Kurti", price: "₹1,299", imgSrc: "6A.jpg", pageUrl: "6.html", material: "Rayon" },
-                { name: "Yellow Summer Kurti", price: "₹1,099", imgSrc: "7A.jpg", pageUrl: "7.html", material: "Cotton" },
-                { name: "Blue Casual Kurti", price: "₹1,399", imgSrc: "8A.jpg", pageUrl: "8.html", material: "Viscose" },
-                { name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "9A.jpg", pageUrl: "9.html", material: "Silk Blend" },
-                { name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "10A.jpg", pageUrl: "10.html", material: "Velvet" },
-                { name: "Light Green Kurti", price: "₹1,450", imgSrc: "11A.jpg", pageUrl: "11.html", material: "Cotton" },
-                { name: "Purple Silk Kurti", price: "₹1,999", imgSrc: "12A.jpg", pageUrl: "12.html", material: "Silk" },
-                { name: "Royal Blue Silk Saree", price: "₹2,999", imgSrc: "13A.jpg", pageUrl: "13.html", material: "Silk" }
+                { id: "1A", name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "1A.jpg", pageUrl: "product.html?id=1A", material: "Cotton" },
+                { id: "2A", name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "2A.jpg", pageUrl: "product.html?id=2A", material: "Rayon" },
+                { id: "3A", name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "3A.jpg", pageUrl: "product.html?id=3A", material: "Georgette" },
+                { id: "4A", name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "4A.jpg", pageUrl: "product.html?id=4A", material: "Viscose" },
+                { id: "5A", name: "Green Floral Kurti", price: "₹1,199", imgSrc: "5A.jpg", pageUrl: "product.html?id=5A", material: "Cotton" },
+                { id: "6A", name: "Red Printed Kurti", price: "₹1,299", imgSrc: "6A.jpg", pageUrl: "product.html?id=6A", material: "Rayon" },
+                { id: "7A", name: "Yellow Summer Kurti", price: "₹1,099", imgSrc: "7A.jpg", pageUrl: "product.html?id=7A", material: "Cotton" },
+                { id: "8A", name: "Blue Casual Kurti", price: "₹1,399", imgSrc: "8A.jpg", pageUrl: "product.html?id=8A", material: "Viscose" },
+                { id: "9A", name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "9A.jpg", pageUrl: "product.html?id=9A", material: "Silk Blend" },
+                { id: "10A", name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "10A.jpg", pageUrl: "product.html?id=10A", material: "Velvet" },
+                { id: "11A", name: "Light Green Kurti", price: "₹1,450", imgSrc: "11A.jpg", pageUrl: "product.html?id=11A", material: "Cotton" },
+                { id: "12A", name: "Purple Silk Kurti", price: "₹1,999", imgSrc: "12A.jpg", pageUrl: "product.html?id=12A", material: "Silk" },
+                { id: "13A", name: "Royal Blue Silk Saree", price: "₹2,999", imgSrc: "13A.jpg", pageUrl: "product.html?id=13A", material: "Silk" }
             ];
 
             const searchInput = document.querySelector('.search-input');

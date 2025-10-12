@@ -44,10 +44,11 @@
 .gallery-slider-track img {
     flex: 0 0 100%; /* Each image takes up the full container width */
     width: 100%;
-    max-height: 550px;
-    object-fit: cover;
+    height: 100%; /* Allow height to be flexible */
+    max-height: 550px; /* But don't let it get too tall on desktop */
+    object-fit: contain; /* Changed from 'cover' to 'contain' */
     border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12); /* Keep the shadow */
 }
 
 .beautiful-gallery-main {
@@ -81,11 +82,13 @@
 }
 @media (max-width: 600px) {
     .beautiful-product-page {
-        padding: 0.5rem 0.1rem;
+        padding: 1rem 0.5rem; /* Slightly more padding for breathing room */
         border-radius: 10px;
+        margin-top: 1rem; /* Reduce top margin on mobile */
+        margin-bottom: 1rem; /* Reduce bottom margin on mobile */
     }
     .beautiful-product-details {
-        padding: 1rem 0.2rem;
+        padding: 1rem 0.5rem; /* Consistent padding */
     }
     .beautiful-gallery-main {
         padding: 0.5rem;
@@ -469,6 +472,14 @@ body.no-scroll {
     transform: scale(1.1) rotate(5deg);
 }
 
+/* New style to ensure direct links in nav-actions are styled correctly */
+.nav-actions .nav-action-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
 .login-btn:hover, .favorites-btn:hover, .nav-links a:hover {
     background: #444444;
     color: #ffffff;
@@ -744,6 +755,12 @@ main {
     box-shadow: 0 8px 25px rgba(0,0,0, 0.07);
 }
 
+.category-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    border-color: #d3d3d3;
+}
+
 .category-card::before {
     content: '';
     position: absolute;
@@ -753,22 +770,17 @@ main {
     transition: all 0.4s ease;
 }
 
-.category-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-    border-color: #d3d3d3;
-}
-
 .category-card:hover::before {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
 }
 
-.category-card:nth-child(1) { background-image: url('https://images.meesho.com/images/products/533976910/fuwvl_512.avif?width=512'); } /* Co-ord */
-.category-card:nth-child(2) { background-image: url('https://images.meesho.com/images/products/568701931/19itc_512.webp'); } /* Indo Western */
-.category-card:nth-child(3) { background-image: url('https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/a/7/a7e9696HK_SRK2_1.jpg?rnd=20200526195200&tr=w-512'); } /* Dresses */
-.category-card:nth-child(4) { background-image: url('https://images.meesho.com/images/products/484722759/z69ul_512.jpg'); } /* Kurtis */
-.category-card:nth-child(5) { background-image: url('https://images.meesho.com/images/products/547593959/k2qwu_512.jpg'); } /* Sarees */
-.category-card:nth-child(6) { background-image: url('https://images.meesho.com/images/products/486249339/a5qym_512.jpg'); } /* Tops & Tunics */
+/* Lazy-load classes for category background images */
+.bg-cat-1 { background-image: url('https://images.meesho.com/images/products/533976910/fuwvl_512.avif?width=512'); }
+.bg-cat-2 { background-image: url('https://images.meesho.com/images/products/568701931/19itc_512.webp'); }
+.bg-cat-3 { background-image: url('https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/a/7/a7e9696HK_SRK2_1.jpg?rnd=20200526195200&tr=w-512'); }
+.bg-cat-4 { background-image: url('https://images.meesho.com/images/products/484722759/z69ul_512.jpg'); }
+.bg-cat-5 { background-image: url('https://images.meesho.com/images/products/547593959/k2qwu_512.jpg'); }
+.bg-cat-6 { background-image: url('https://images.meesho.com/images/products/486249339/a5qym_512.jpg'); }
 
 .category-content {
     position: relative;
@@ -874,7 +886,7 @@ main {
     border: 1px solid #555555;
     transition: all 0.3s ease;
     cursor: pointer;
-    will-change: transform;
+    will-change: transform, box-shadow;
     overflow: hidden;
     flex-shrink: 0;
     /* Increase aspect ratio for taller look */
@@ -1927,6 +1939,17 @@ html {
 .cart-item:last-child {
     border-bottom: none;
     margin-bottom: 0;
+}
+
+.cart-item-name-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.cart-item-img-link {
+    text-decoration: none;
+    line-height: 0; /* Prevents extra space below the image */
 }
 
 .cart-item-img {

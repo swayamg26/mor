@@ -38,7 +38,8 @@
                 </ul>
             </div>
              <div class="nav-actions">
-                <a href="cart.html" class="cart-btn" aria-label="Shopping Cart"><i class="fas fa-shopping-cart"></i><span class="cart-count" style="display: none;">0</span></a>
+                <a href="search.html" class="search-btn" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="cart.html" class="nav-action-link" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count" style="display: none;">0</span></a>
             </div>
         </nav>
     </header>
@@ -52,6 +53,26 @@
             <!-- Products will be injected here by JS -->
         </section>
     </main>
+
+    <!-- Quick Add Modal -->
+    <div class="quick-add-modal-overlay" id="quick-add-modal-overlay">
+        <div class="quick-add-modal-content">
+            <button class="quick-add-modal-close" aria-label="Close modal">&times;</button>
+            <img src="" alt="Product Image" class="quick-add-modal-img">
+            <h3 class="quick-add-modal-name"></h3>
+            <p class="quick-add-modal-price"></p>
+            <div class="modal-option-group">
+                <label>Size:</label>
+                <div class="size-selector" id="quick-add-size-selector"></div>
+            </div>
+            <div class="quantity-counter">
+                <button class="quantity-btn" data-action="decrease">-</button>
+                <span class="quantity-value">1</span>
+                <button class="quantity-btn" data-action="increase">+</button>
+            </div>
+            <button class="cta-btn add-to-cart-btn">Add to Cart</button>
+        </div>
+    </div>
 
     <!-- Component Placeholders & Modals -->
     <!-- Login Modal -->
@@ -181,12 +202,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const bestSellers = [
-                { name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "1A.jpg", pageUrl: "1.html" },
-                { name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "2A.jpg", pageUrl: "2.html" },
-                { name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "3A.jpg", pageUrl: "3.html" },
-                { name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "4A.jpg", pageUrl: "4.html" },
-                { name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "9A.jpg", pageUrl: "9.html" },
-                { name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "10A.jpg", pageUrl: "10.html" }
+                { name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "1A.jpg", pageUrl: "product.html?id=1A" },
+                { name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "2A.jpg", pageUrl: "product.html?id=2A" },
+                { name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "3A.jpg", pageUrl: "product.html?id=3A" },
+                { name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "4A.jpg", pageUrl: "product.html?id=4A" },
+                { name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "9A.jpg", pageUrl: "product.html?id=9A" },
+                { name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "10A.jpg", pageUrl: "product.html?id=10A" }
             ];
 
             const productGrid = document.getElementById('product-grid');

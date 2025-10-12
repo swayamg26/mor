@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+const initializeApp = () => {
     // --- Intersection Observer for fade-in animations ---
     const observerOptions = {
         threshold: 0.1,
@@ -92,16 +92,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Header background opacity on scroll
+    const header = document.querySelector('.header');
+    let ticking = false;
     window.addEventListener('scroll', () => {
-        const header = document.querySelector('.header');
-        if (header) {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                if (header) {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
     });
+
+    // --- Offer Banner ---
+    const offerBanner = document.getElementById('scrolling-offer-banner');
+    const closeOfferBtn = document.getElementById('close-offer-btn');
+    const mainContentForOffer = document.querySelector('main');
+
+    if (offerBanner && closeOfferBtn && mainContentForOffer) {
+        closeOfferBtn.addEventListener('click', () => {
+            offerBanner.classList.add('hidden');
+            // Adjust the main content's top margin to fill the space
+            const currentMarginTop = parseInt(window.getComputedStyle(mainContentForOffer).marginTop, 10);
+            const bannerHeight = offerBanner.offsetHeight;
+            mainContentForOffer.style.marginTop = `${currentMarginTop - bannerHeight}px`;
+        });
+    }
 
     // --- Mobile Navigation ---
     const hamburger = document.querySelector('.hamburger-menu');
@@ -209,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     if (closeFavoritesBtn) closeFavoritesBtn.addEventListener('click', closeSidePanels);
     openCartBtns.forEach(btn => {
+        // This listener now only applies to non-header cart buttons, like on product cards.
         btn.addEventListener('click', openCart);
     });
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeSidePanels);
@@ -437,15 +460,27 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItemsContainer.innerHTML = ''; // Clear old items
             let subtotal = 0;
 
-            cartItems.forEach(item => {
+            cartItems.forEach((item, index) => {
                 const itemEl = document.createElement('div');
                 itemEl.className = 'cart-item';
+
+                // Create size dropdown
+                const availableSizes = item.sizes ? item.sizes.split(',').map(s => s.trim()) : ['S', 'M', 'L', 'XL'];
+                const sizeOptions = availableSizes.map(s => 
+                    `<option value="${s}" ${s === item.size ? 'selected' : ''}>${s}</option>`
+                ).join('');
+                const sizeSelectorId = `cart-item-size-selector-${index}`;
+                const sizeSelectorHTML = `
+                    <select id="${sizeSelectorId}" class="cart-item-size-selector" data-item-index="${index}">${sizeOptions}</select>
+                `;
                 itemEl.innerHTML = `
-                    <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    <a href="${item.pageUrl}" class="cart-item-img-link">
+                        <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    </a>
                     <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name}</div>
+                        <a href="${item.pageUrl}" class="cart-item-name-link"><div class="cart-item-name">${item.name}</div></a>
                         <div class="cart-item-price">${item.price}</div>
-                        <div class="cart-item-size">Size: ${item.size}</div>
+                        <div class="cart-item-size">Size: ${sizeSelectorHTML}</div>
                     </div>
                     <div class="cart-item-quantity">
                         <button class="quantity-btn-small" data-name="${item.name}" data-size="${item.size}" data-action="decrease">-</button>
@@ -460,6 +495,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             subtotalAmountEl.textContent = `₹${subtotal.toFixed(2)}`;
+
+            // Add event listeners for the new size selectors
+            document.querySelectorAll('.cart-item-size-selector').forEach(selector => {
+                selector.addEventListener('change', (e) => {
+                    const newSize = e.target.value;
+                    const itemIndex = parseInt(e.target.dataset.itemIndex, 10);
+                    const itemToUpdate = cartItems[itemIndex];
+
+                    // Check if an item with the new size already exists
+                    const existingItem = cartItems.find((item, index) => 
+                        item.name === itemToUpdate.name && item.size === newSize && index !== itemIndex
+                    );
+
+                    if (existingItem) {
+                        showToast('This size is already in your cart.', 'fa-exclamation-circle');
+                        e.target.value = itemToUpdate.size; // Revert selector
+                    } else {
+                        itemToUpdate.size = newSize;
+                        saveCart();
+                    }
+                });
+            });
         }
     };
 
@@ -488,9 +545,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 itemEl.className = 'cart-item';
                 // Using the same layout as the old side panel for consistency
                 itemEl.innerHTML = `
-                    <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    <a href="${item.pageUrl}" class="cart-item-img-link">
+                        <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    </a>
                     <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name}</div>
+                        <a href="${item.pageUrl}" class="cart-item-name-link"><div class="cart-item-name">${item.name}</div></a>
                         <div class="cart-item-price">${item.price}</div>
                         <div class="cart-item-size">Size: ${item.size}</div>
                     </div>
@@ -516,6 +575,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ensure imgSrc is just the filename, not the full path
         if (product.imgSrc && product.imgSrc.includes('/')) {
             product.imgSrc = product.imgSrc.split('/').pop();
+        }
+
+        // Ensure the product in cart has the 'sizes' property.
+        if (!product.sizes) {
+            product.sizes = 'S, M, L, XL'; // Default sizes if not provided
         }
 
         const existingItem = cartItems.find(item => item.name === product.name && item.size === product.size);
@@ -550,15 +614,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const startRect = startElement.getBoundingClientRect();
         const cartRect = cartIcon.getBoundingClientRect();
 
-        // Set initial position
-        flyingImg.style.left = `${startRect.left + startRect.width / 2}px`;
-        flyingImg.style.top = `${startRect.top + startRect.height / 2}px`;
+        // Set initial position using transform
+        const startX = startRect.left + startRect.width / 2;
+        const startY = startRect.top + startRect.height / 2;
+        flyingImg.style.transform = `translate(${startX}px, ${startY}px)`;
 
         // Animate to the cart icon
         setTimeout(() => {
-            flyingImg.style.left = `${cartRect.left + cartRect.width / 2}px`;
-            flyingImg.style.top = `${cartRect.top + cartRect.height / 2}px`;
-            flyingImg.style.transform = 'scale(0.1)';
+            const endX = cartRect.left + cartRect.width / 2;
+            const endY = cartRect.top + cartRect.height / 2;
+            flyingImg.style.transform = `translate(${endX}px, ${endY}px) scale(0.1)`;
             flyingImg.style.opacity = '0';
         }, 10);
 
@@ -577,6 +642,79 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.flyToCart = flyToCart;
 
+    // --- Quick Add Modal (from cartPopup.js) ---
+    const quickAddModalOverlay = document.getElementById('quick-add-modal-overlay');
+    if (quickAddModalOverlay) {
+        const modalContent = quickAddModalOverlay.querySelector('.quick-add-modal-content');
+        const closeBtn = quickAddModalOverlay.querySelector('.quick-add-modal-close');
+        const modalImg = quickAddModalOverlay.querySelector('.quick-add-modal-img');
+        const modalName = quickAddModalOverlay.querySelector('.quick-add-modal-name');
+        const modalPrice = quickAddModalOverlay.querySelector('.quick-add-modal-price');
+        const quantityValueEl = quickAddModalOverlay.querySelector('.quantity-value');
+        const sizeSelectorEl = quickAddModalOverlay.querySelector('#quick-add-size-selector');
+        const modalAddToCartBtn = quickAddModalOverlay.querySelector('.add-to-cart-btn');
+
+        let currentProductData = null;
+
+        const openQuickAddModal = (productData) => {
+            currentProductData = productData;
+            modalImg.src = productData.imgSrc;
+            modalImg.alt = productData.name;
+            modalName.textContent = productData.name;
+            modalPrice.textContent = productData.price;
+            quantityValueEl.textContent = '1'; // Reset quantity
+
+            // Populate sizes
+            sizeSelectorEl.innerHTML = '';
+            const sizes = productData.sizes ? productData.sizes.split(',').map(s => s.trim()) : ['M'];
+            sizes.forEach((size, index) => {
+                const sizeBtn = document.createElement('button');
+                sizeBtn.className = 'size-btn';
+                sizeBtn.textContent = size;
+                sizeBtn.dataset.size = size;
+                if (index === 0) {
+                    sizeBtn.classList.add('active');
+                }
+                sizeSelectorEl.appendChild(sizeBtn);
+            });
+
+            quickAddModalOverlay.classList.add('show');
+        };
+
+        const closeQuickAddModal = () => {
+            quickAddModalOverlay.classList.remove('show');
+        };
+
+        // Listeners for closing the modal
+        closeBtn.addEventListener('click', closeQuickAddModal);
+        quickAddModalOverlay.addEventListener('click', (e) => {
+            if (e.target === quickAddModalOverlay) {
+                closeQuickAddModal();
+            }
+        });
+
+        // Listeners for modal quantity and add to cart
+        modalContent.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.classList.contains('size-btn')) {
+                sizeSelectorEl.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+                target.classList.add('active');
+            } else if (target.classList.contains('quantity-btn')) {
+                let currentQty = parseInt(quantityValueEl.textContent);
+                if (target.dataset.action === 'increase') currentQty++;
+                else if (currentQty > 1) currentQty--;
+                quantityValueEl.textContent = currentQty;
+            } else if (target.classList.contains('add-to-cart-btn') && currentProductData) {
+                const selectedSize = sizeSelectorEl.querySelector('.size-btn.active')?.dataset.size || 'M';
+                const productToAdd = { ...currentProductData, quantity: parseInt(quantityValueEl.textContent), size: selectedSize };
+                flyToCart(modalAddToCartBtn, productToAdd); // Use flyToCart for consistency
+                closeQuickAddModal();
+            }
+        });
+
+        // Make the open function globally available
+        window.openQuickAddModal = openQuickAddModal;
+    }
 
     // Event delegation for cart item actions.
     // We attach it to a common parent that exists on the page.
@@ -589,6 +727,43 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = itemElement.querySelector('.cart-item-remove').dataset.name;
             const size = itemElement.querySelector('.cart-item-remove').dataset.size;
             cartItems = cartItems.filter(item => !(item.name === name && item.size === size));
+            cartNeedsUpdate = true;
+        } else if (target.closest('.quantity-btn-small')) {
+            const button = target.closest('.quantity-btn-small');
+            const name = button.dataset.name;
+            const size = button.dataset.size;
+            const itemToUpdate = cartItems.find(item => item.name === name && item.size === size);
+            if (itemToUpdate) {
+                if (button.dataset.action === 'increase') {
+                    itemToUpdate.quantity++;
+                } else if (itemToUpdate.quantity > 1) {
+                    itemToUpdate.quantity--;
+                } else { // quantity is 1 and decrease is clicked
+                    cartItems = cartItems.filter(item => !(item.name === name && item.size === size));
+                }
+                cartNeedsUpdate = true;
+            }
+        } else if (target.matches('.cart-item-size-selector')) {
+            const selector = target;
+            const newSize = selector.value;
+            const itemIndex = parseInt(selector.dataset.itemIndex, 10);
+            const itemToUpdate = cartItems[itemIndex];
+
+            // Check if an item with the same name and new size already exists
+            const existingItem = cartItems.find((item, index) =>
+                item.name === itemToUpdate.name && item.size === newSize && index !== itemIndex
+            );
+
+            if (existingItem) {
+                // If it exists, merge them
+                existingItem.quantity += itemToUpdate.quantity;
+                // Remove the old item
+                cartItems.splice(itemIndex, 1);
+                showToast(`Merged with existing item in cart.`, 'fa-info-circle');
+            } else {
+                // Otherwise, just update the size
+                itemToUpdate.size = newSize;
+            }
             cartNeedsUpdate = true;
         } else if (target.closest('.quantity-btn-small')) {
             const button = target.closest('.quantity-btn-small');
@@ -636,18 +811,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Product Card Click to Navigate ---
-    const productCards = document.querySelectorAll('.product-card');
-    productCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Prevent navigation if an interactive icon inside the card was clicked
-            if (e.target.closest('.product-favorite-icon') || e.target.closest('.product-cart-icon')) {
-                return;
-            }
-            const productPage = card.dataset.pageUrl;
-            if (productPage) {
-                window.location.href = productPage;
-            }
-        });
+    // Use event delegation on the body for any product card click
+    document.body.addEventListener('click', (e) => { 
+        // Find the closest wrapper, which should handle navigation
+        const wrapper = e.target.closest('.product-item-wrapper');
+        if (!wrapper) return; // Click was not on or inside a product item
+
+        const card = wrapper.querySelector('.product-card'); 
+        if (!card) return;
+
+        // Prevent navigation if an interactive icon inside the card was clicked
+        const favoriteIcon = e.target.closest('.product-favorite-icon');
+        // Make selector more specific to only target cart icons inside product cards
+        const cartIcon = e.target.closest('.product-card .product-cart-icon');
+    
+        if (favoriteIcon) { // Handle favorite click
+            const product = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc };
+            toggleFavorite(product, favoriteIcon);
+            return;
+        } else if (cartIcon) { // Handle cart click inside a product card
+            const productData = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc, sizes: card.dataset.sizes || 'M' };
+            openQuickAddModal(productData);
+            return;
+        }
+        const productPage = card.dataset.pageUrl;
+        if (productPage) {
+             window.location.href = productPage;
+        }
     });
 
     // --- CTA button handlers ---
@@ -672,4 +862,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.body.classList.contains('loading')) {
         document.body.classList.remove('loading');
     }
-});
+};
+
+initializeApp();
