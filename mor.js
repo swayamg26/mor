@@ -642,7 +642,29 @@ const initializeApp = () => {
     };
     window.flyToCart = flyToCart;
 
-    // --- Quick Add Modal (from cartPopup.js) ---
+    // --- Quick Add Modal ---
+    // Create the modal structure once and append it to the body
+    const modalHTML = `
+        <div class="quick-add-modal-overlay" id="quick-add-modal-overlay">
+            <div class="quick-add-modal-content">
+                <button class="quick-add-modal-close" aria-label="Close modal">&times;</button>
+                <img src="" alt="Product Image" class="quick-add-modal-img">
+                <h3 class="quick-add-modal-name"></h3>
+                <p class="quick-add-modal-price"></p>
+                <div class="modal-option-group">
+                    <label>Size:</label>
+                    <div class="size-selector" id="quick-add-size-selector"></div>
+                </div>
+                <div class="quantity-counter">
+                    <button class="quantity-btn" data-action="decrease">-</button>
+                    <span class="quantity-value">1</span>
+                    <button class="quantity-btn" data-action="increase">+</button>
+                </div>
+                <button class="cta-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
     const quickAddModalOverlay = document.getElementById('quick-add-modal-overlay');
     if (quickAddModalOverlay) {
         const modalContent = quickAddModalOverlay.querySelector('.quick-add-modal-content');
@@ -830,6 +852,10 @@ const initializeApp = () => {
             toggleFavorite(product, favoriteIcon);
             return;
         } else if (cartIcon) { // Handle cart click inside a product card
+            // If on the index page, do not open the quick add modal.
+            if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html')) {
+                return;
+            }
             const productData = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc, sizes: card.dataset.sizes || 'M' };
             openQuickAddModal(productData);
             return;
