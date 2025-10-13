@@ -11,6 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mor.css">
+    <link rel="stylesheet" href="cartPopup.css">
     <style>
         .shop-header { text-align: center; padding: 2rem; background: #3a3a3a; }
         .shop-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #ffffff; }
@@ -52,6 +53,26 @@
             <!-- Products will be injected here by JS -->
         </section>
     </main>
+
+    <!-- Quick Add Modal -->
+    <div class="quick-add-modal-overlay" id="quick-add-modal-overlay">
+        <div class="quick-add-modal-content">
+            <button class="quick-add-modal-close" aria-label="Close modal">&times;</button>
+            <img src="" alt="Product Image" class="quick-add-modal-img">
+            <h3 class="quick-add-modal-name"></h3>
+            <p class="quick-add-modal-price"></p>
+            <div class="modal-option-group">
+                <label>Size:</label>
+                <div class="size-selector" id="quick-add-size-selector"></div>
+            </div>
+            <div class="quantity-counter">
+                <button class="quantity-btn" data-action="decrease">-</button>
+                <span class="quantity-value">1</span>
+                <button class="quantity-btn" data-action="increase">+</button>
+            </div>
+            <button class="cta-btn add-to-cart-btn">Add to Cart</button>
+        </div>
+    </div>
 
     <!-- Component Placeholders & Modals -->
     <!-- Login Modal -->
