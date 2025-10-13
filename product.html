@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="mor.css">
     <style>
         /* Styles from the old product pages, now centralized here */
-        .product-page-container.loading {
-            display: none; /* Hide until data is loaded */
+        .loading {
+            visibility: hidden; /* Hide until data is loaded to prevent layout shift */
         }
         .product-title-container {
             display: flex;
@@ -144,7 +144,7 @@
         </div>
 
         <!-- Customer Reviews Section -->
-        <div class="modern-reviews-container">
+        <div class="modern-reviews-container loading">
             <div class="reviews-section-header">
                 <h2>Customer Reviews</h2>
             </div>
@@ -157,7 +157,7 @@
         </div>
 
         <!-- Related Products Section -->
-        <section class="related-products-section animate-fade-in">
+        <section class="related-products-section animate-fade-in loading">
             <h2>You Might Also Like</h2>
             <div class="featured-scroll" id="related-products-container">
                 <!-- Related products will be injected here by JS -->

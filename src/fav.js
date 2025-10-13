@@ -148,21 +148,24 @@ export async function syncFavorites() {
         if (!auth.currentUser) return false;
         
         const localFavorites = localStorage.getItem("mor_favorites");
+        const firestoreFavorites = await getFavoritesFromFirestore(auth.currentUser.uid);
         const userId = auth.currentUser.uid;
         
-        if (localFavorites) {
-            const favorites = JSON.parse(localFavorites);
+        if (localFavorites && localFavorites !== '[]') {
+            // If local has items, merge with firestore and push up. Local is master.
+            const localItems = JSON.parse(localFavorites);
+            const firestoreItems = firestoreFavorites;
+            const merged = [...localItems];
+            firestoreItems.forEach(fsItem => {
+                if (!merged.some(lItem => lItem.id === fsItem.id)) merged.push(fsItem);
+            });
             await setDoc(doc(db, "favorites", userId), {
-                items: favorites,
+                items: merged,
                 updatedAt: new Date().toISOString()
             });
-            return true;
-        }
-        
-        const firestoreFavorites = await getFavoritesFromFirestore(userId);
-        if (firestoreFavorites.length > 0) {
+        } else if (firestoreFavorites.length > 0) {
+            // If local is empty but firestore has items, pull them down.
             localStorage.setItem("mor_favorites", JSON.stringify(firestoreFavorites));
-            return true;
         }
         
         return false;

@@ -263,5 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     // --- Final Step: Show the content ---
-    document.querySelector('.product-page-container').classList.remove('loading');
+    document.querySelectorAll('.loading').forEach(el => {
+        el.classList.remove('loading');
+    });
 });

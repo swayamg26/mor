@@ -1,4 +1,4 @@
-import { auth } from './src/auth.js';
+import { auth, initializeUserCart } from './src/auth.js';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,

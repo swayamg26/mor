@@ -70,6 +70,11 @@
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 await signOut(auth);
+                // Clear local storage for user-specific data
+                localStorage.removeItem('mor_user_loggedin');
+                localStorage.removeItem('mor_favorites');
+                localStorage.removeItem('mor_cart');
+                localStorage.removeItem('mor_cart_last'); // Also clear the last saved cart
                 console.log("User signed out successfully.");
             } catch (error) {
                 console.error("Error signing out: ", error);

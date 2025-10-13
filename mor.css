@@ -869,16 +869,6 @@ main {
     min-height: 240px; /* Unify min-height with .no-info cards */
     padding: 0; /* Remove vertical padding */
 }
-/* Horizontal Fade-in Animation */
-.product-item-wrapper {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-.product-item-wrapper.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 .product-card {
     background: #444444;
@@ -909,16 +899,6 @@ main {
     aspect-ratio: unset;
     min-height: 240px;
     padding: 0; /* Remove vertical padding for image-only cards */
-}
-/* Add animation state for related products */
-.product-item-wrapper.no-info {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-.product-item-wrapper.no-info.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* Adjust image container to keep images undistorted and centered */
