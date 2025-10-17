@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
     relatedProductsContainer.innerHTML = '';
     relatedProducts.forEach(p => {
         const productCardHTML = `
-            <div class="product-item-wrapper no-info" data-page-url="product.html?id=${p.id}">
+            <div class="product-item-wrapper no-info animate-fade-in" data-page-url="product.html?id=${p.id}">
                 <div class="product-card" data-name="${p.name}" data-price="${p.price}" data-img-src="${p.imgSrc}" data-sizes="${p.sizes.join(',')}" data-page-url="product.html?id=${p.id}">
                     <div class="product-image-container">
                         <img src="${p.imgSrc}" alt="${p.name}" loading="lazy">

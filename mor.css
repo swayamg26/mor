@@ -1277,14 +1277,13 @@ html {
 /* Animation Classes */
 .animate-fade-in {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.4s ease;
-    will-change: transform, opacity; /* Performance optimization */
+    transform: translateY(0); /* Remove the starting offset */
+    transition: opacity 0.4s ease; /* Only transition opacity */
+    will-change: opacity; /* Performance optimization */
 }
 
 .animate-fade-in.active {
     opacity: 1;
-    transform: translateY(0);
 }
 
 .animate-slide-in-left {
