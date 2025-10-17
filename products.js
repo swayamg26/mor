@@ -21,7 +21,7 @@ const allProducts = [
         specification: "<strong>Material:</strong> Premium Georgette <br> <strong>Print:</strong> Digital Floral Print <br> <strong>Fit:</strong> A-Line <br> <strong>Sleeves:</strong> Bell Sleeves"
     },
     { 
-        id: "4A", name: "Classic Viscose Kurta", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "4A.jpg", material: "Viscose", pageUrl: "product.html?id=4A",
+        id: "14", name: "Classic Viscose Kurta", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "4A.jpg", material: "Viscose", pageUrl: "product.html?id=14",
         galleryImages: ["4A.jpg", "4B.jpg", "4C.jpg"],
         sizes: ["S", "M", "L", "XL", "XXL"],
         description: "Experience luxurious comfort with our Classic Viscose Kurta set. The rich mustard yellow hue and flowing kaftan-style top create a look of effortless grace. Perfect for festive occasions or a stylish day out.",

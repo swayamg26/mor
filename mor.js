@@ -1,21 +1,4 @@
 const initializeApp = () => {
-    // --- Intersection Observer for fade-in animations ---
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, observerOptions);
-    // Observe any element with a class starting with "animate-"
-    document.querySelectorAll('[class*="animate-"]').forEach(el => {
-        observer.observe(el);
-    });
-
     // --- Smooth scrolling for navigation links ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
