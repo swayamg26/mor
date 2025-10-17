@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Favorites - Mor</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="mor.css">
+    <style>
+        .favorites-header { text-align: center; padding: 2rem; background: #3a3a3a; }
+        .favorites-header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #ffffff; }
+        .favorites-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .favorites-empty-page { text-align: center; padding: 4rem 2rem; }
+        .favorites-empty-page i { font-size: 3rem; color: #777; margin-bottom: 1rem; }
+        .favorites-empty-page p { font-size: 1.2rem; color: #d3d3d3; }
+        @media (max-width: 768px) {
+            .favorites-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 0 1rem; }
+            .favorites-header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <button class="hamburger-menu" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo"><img src="logo.jpg" alt="Mor Logo" class="logo-img"></a>
+            <div class="nav-links-container">
+                <button class="close-menu" aria-label="Close Menu"><i class="fas fa-times"></i></button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li class="mobile-only-link"><a href="cart.html" class="nav-link-button"><i class="fas fa-shopping-bag"></i> Cart</a></li>
+                    <li class="mobile-only-link"><button class="nav-link-button" id="mobile-favorites-link"><i class="far fa-heart"></i> Favorites</button></li>
+                    <li class="mobile-only-link"><a href="login.html" class="nav-link-button"><i class="fas fa-user"></i> Login</a></li>
+                </ul>
+            </div>
+             <div class="nav-actions">
+                <a href="search.html" class="search-btn" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="cart.html" class="nav-action-link" aria-label="Shopping Cart"><i class="fas fa-shopping-bag"></i><span class="cart-count" style="display: none;">0</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="favorites-header">
+            <h1>Your Favorites</h1>
+        </section>
+
+        <section id="favorites-grid" class="favorites-grid">
+            <!-- Favorite products will be injected here by JS -->
+        </section>
+    </main>
+
+    <!-- Component Placeholders & Modals -->
+    <div class="overlay"></div>
+
+    <!-- Cart Side Panel -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart-btn" aria-label="Close Cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Your cart is empty</p><button class="cta-btn continue-shopping-btn">Continue Shopping</button></div>
+            <div class="cart-items" style="display: none;"></div>
+        </div>
+        <div class="cart-footer" style="display: none;">
+            <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-amount">₹0.00</span></div>
+            <a href="cart.html" class="cta-btn checkout-btn" style="text-decoration: none; text-align: center; display: block;">
+                Proceed to Checkout
+            </a>
+        </div>
+    </div>
+    <!-- Favorites Side Panel -->
+    <div id="favorites-popup" class="favorites-popup">
+        <div class="favorites-header">
+            <h3>Your Favorites</h3>
+            <button class="close-favorites-btn" aria-label="Close Favorites"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="favorites-content">
+            <div class="favorites-empty"><i class="far fa-heart"></i><p>You have no favorites yet</p><button class="cta-btn start-browsing-btn">Start Browsing</button></div>
+            <div class="favorites-items" style="display: none;"></div>
+        </div>
+    </div>
+    <div id="notification-toast" class="notification-toast"></div>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Mor</h4>
+                <p>Premium fashion for the modern woman. Discover elegance, embrace style, and express your unique personality with our curated collections.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="index.html#home">Home</a></p>
+                <p><a href="index.html#categories">Categories</a></p>
+                <p><a href="index.html#collections">Collections</a></p>
+                <p><a href="index.html#about">About Us</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <p><a href="#">Size Guide</a></p>
+                <p><a href="#">Shipping Info</a></p>
+                <p><a href="#">Returns & Exchanges</a></p>
+                <p><a href="#">Contact Support</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Newsletter"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Mor Fashion. All rights reserved. | <a href="privacy.html" style="color: inherit;">Privacy Policy</a> | <a href="terms.html" style="color: inherit;">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="mor.js"></script>
+    <script type="module" src="./src/cart.js"></script>
+    <script type="module" src="./src/fav.js"></script>
+
+</body>
+</html>
+    </script>
+</head>
+<body>
+    <div id="favorites-container"></div>
+</body>
+</html>

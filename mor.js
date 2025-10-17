@@ -321,29 +321,60 @@ const initializeApp = () => {
 
     const updateFavoritesUI = () => {
         // Update UI based on whether there are favorite items
-        if (!favoritesItemsContainer || !favoritesEmptyMsg) return;
-        if (favoriteItems.length === 0) {
-            favoritesItemsContainer.style.display = 'none';
-            favoritesEmptyMsg.style.display = 'block';
-        } else {
-            favoritesItemsContainer.style.display = 'block';
-            favoritesEmptyMsg.style.display = 'none';
-            favoritesItemsContainer.innerHTML = ''; // Clear old items
+        const favoritesPageGrid = document.getElementById('favorites-grid');
 
-            favoriteItems.forEach(item => {
-                const itemEl = document.createElement('div');
-                itemEl.className = 'favorite-item'; // Use a different class to avoid style conflicts
-                itemEl.innerHTML = `
-                    <img src="${item.imgSrc}" alt="${item.name}" class="favorite-item-img">
-                    <div class="favorite-item-details">
-                        <div class="favorite-item-name">${item.name}</div>
-                        <div class="favorite-item-price">${item.price}</div>
-                        <button class="favorite-item-move-to-cart" data-name="${item.name}">Move to Cart</button>
+        // Handle the side panel
+        if (favoritesItemsContainer && favoritesEmptyMsg) {
+            if (favoriteItems.length === 0) {
+                favoritesItemsContainer.style.display = 'none';
+                favoritesEmptyMsg.style.display = 'block';
+            } else {
+                favoritesItemsContainer.style.display = 'block';
+                favoritesEmptyMsg.style.display = 'none';
+                favoritesItemsContainer.innerHTML = ''; // Clear old items
+
+                favoriteItems.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'favorite-item'; // Use a different class to avoid style conflicts
+                    itemEl.innerHTML = `
+                        <img src="${item.imgSrc}" alt="${item.name}" class="favorite-item-img">
+                        <div class="favorite-item-details">
+                            <div class="favorite-item-name">${item.name}</div>
+                            <div class="favorite-item-price">${item.price}</div>
+                            <button class="favorite-item-move-to-cart" data-name="${item.name}">Move to Cart</button>
+                        </div>
+                        <button class="favorite-item-remove" data-name="${item.name}">&times;</button>
+                    `;
+                    favoritesItemsContainer.appendChild(itemEl);
+                });
+            }
+        }
+
+        // Handle the dedicated favorites page grid
+        if (favoritesPageGrid) {
+            favoritesPageGrid.innerHTML = ''; // Clear old items
+            if (favoriteItems.length === 0) {
+                favoritesPageGrid.innerHTML = `
+                    <div class="favorites-empty-page">
+                        <i class="far fa-heart"></i>
+                        <p>You haven't saved any favorites yet.</p>
+                        <a href="shop.html" class="cta-btn">Start Browsing</a>
                     </div>
-                    <button class="favorite-item-remove" data-name="${item.name}">&times;</button>
                 `;
-                favoritesItemsContainer.appendChild(itemEl);
-            });
+            } else {
+                favoriteItems.forEach(product => {
+                    const productCardHTML = `
+                        <div class="product-item-wrapper no-info" data-page-url="${product.pageUrl || `product.html?id=${product.id}`}" style="cursor: pointer;">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}" data-page-url="${product.pageUrl || `product.html?id=${product.id}`}" data-sizes="${product.sizes || 'M'}">
+                                <div class="product-image-container"><img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
+                                    <div class="product-favorite-icon"><i class="fas fa-heart"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    favoritesPageGrid.innerHTML += productCardHTML;
+                });
+            }
         }
     };
 
@@ -355,12 +386,17 @@ const initializeApp = () => {
 
         const isFavorited = favoriteItems.some(item => item.name === product.name);
 
-        if (isFavorited) {
-            favoriteItems = favoriteItems.filter(item => item.name !== product.name);
-            icon.innerHTML = '<i class="far fa-heart"></i>'; // Change to empty heart
+        if (favoriteItems.length === 0) {
+            favoritesItemsContainer.style.display = 'none';
+            favoritesEmptyMsg.style.display = 'block';
         } else {
-            favoriteItems.push(product);
-            icon.innerHTML = '<i class="fas fa-heart"></i>'; // Change to solid heart
+            if (isFavorited) {
+                favoriteItems = favoriteItems.filter(item => item.name !== product.name);
+                icon.innerHTML = '<i class="far fa-heart"></i>'; // Change to empty heart
+            } else {
+                favoriteItems.push(product);
+                icon.innerHTML = '<i class="fas fa-heart"></i>'; // Change to solid heart
+            }
         }
         saveFavorites();
     };
@@ -642,102 +678,6 @@ const initializeApp = () => {
     };
     window.flyToCart = flyToCart;
 
-    // --- Quick Add Modal ---
-    // Create the modal structure once and append it to the body
-    const modalHTML = `
-        <div class="quick-add-modal-overlay" id="quick-add-modal-overlay">
-            <div class="quick-add-modal-content">
-                <button class="quick-add-modal-close" aria-label="Close modal">&times;</button>
-                <img src="" alt="Product Image" class="quick-add-modal-img">
-                <h3 class="quick-add-modal-name"></h3>
-                <p class="quick-add-modal-price"></p>
-                <div class="modal-option-group">
-                    <label>Size:</label>
-                    <div class="size-selector" id="quick-add-size-selector"></div>
-                </div>
-                <div class="quantity-counter">
-                    <button class="quantity-btn" data-action="decrease">-</button>
-                    <span class="quantity-value">1</span>
-                    <button class="quantity-btn" data-action="increase">+</button>
-                </div>
-                <button class="cta-btn add-to-cart-btn">Add to Cart</button>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    const quickAddModalOverlay = document.getElementById('quick-add-modal-overlay');
-    if (quickAddModalOverlay) {
-        const modalContent = quickAddModalOverlay.querySelector('.quick-add-modal-content');
-        const closeBtn = quickAddModalOverlay.querySelector('.quick-add-modal-close');
-        const modalImg = quickAddModalOverlay.querySelector('.quick-add-modal-img');
-        const modalName = quickAddModalOverlay.querySelector('.quick-add-modal-name');
-        const modalPrice = quickAddModalOverlay.querySelector('.quick-add-modal-price');
-        const quantityValueEl = quickAddModalOverlay.querySelector('.quantity-value');
-        const sizeSelectorEl = quickAddModalOverlay.querySelector('#quick-add-size-selector');
-        const modalAddToCartBtn = quickAddModalOverlay.querySelector('.add-to-cart-btn');
-
-        let currentProductData = null;
-
-        const openQuickAddModal = (productData) => {
-            currentProductData = productData;
-            modalImg.src = productData.imgSrc;
-            modalImg.alt = productData.name;
-            modalName.textContent = productData.name;
-            modalPrice.textContent = productData.price;
-            quantityValueEl.textContent = '1'; // Reset quantity
-
-            // Populate sizes
-            sizeSelectorEl.innerHTML = '';
-            const sizes = productData.sizes ? productData.sizes.split(',').map(s => s.trim()) : ['M'];
-            sizes.forEach((size, index) => {
-                const sizeBtn = document.createElement('button');
-                sizeBtn.className = 'size-btn';
-                sizeBtn.textContent = size;
-                sizeBtn.dataset.size = size;
-                if (index === 0) {
-                    sizeBtn.classList.add('active');
-                }
-                sizeSelectorEl.appendChild(sizeBtn);
-            });
-
-            quickAddModalOverlay.classList.add('show');
-        };
-
-        const closeQuickAddModal = () => {
-            quickAddModalOverlay.classList.remove('show');
-        };
-
-        // Listeners for closing the modal
-        closeBtn.addEventListener('click', closeQuickAddModal);
-        quickAddModalOverlay.addEventListener('click', (e) => {
-            if (e.target === quickAddModalOverlay) {
-                closeQuickAddModal();
-            }
-        });
-
-        // Listeners for modal quantity and add to cart
-        modalContent.addEventListener('click', (e) => {
-            const target = e.target;
-            if (target.classList.contains('size-btn')) {
-                sizeSelectorEl.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
-                target.classList.add('active');
-            } else if (target.classList.contains('quantity-btn')) {
-                let currentQty = parseInt(quantityValueEl.textContent);
-                if (target.dataset.action === 'increase') currentQty++;
-                else if (currentQty > 1) currentQty--;
-                quantityValueEl.textContent = currentQty;
-            } else if (target.classList.contains('add-to-cart-btn') && currentProductData) {
-                const selectedSize = sizeSelectorEl.querySelector('.size-btn.active')?.dataset.size || 'M';
-                const productToAdd = { ...currentProductData, quantity: parseInt(quantityValueEl.textContent), size: selectedSize };
-                flyToCart(modalAddToCartBtn, productToAdd); // Use flyToCart for consistency
-                closeQuickAddModal();
-            }
-        });
-
-        // Make the open function globally available
-        window.openQuickAddModal = openQuickAddModal;
-    }
-
     // Event delegation for cart item actions.
     // We attach it to a common parent that exists on the page.
     const cartInteractionHandler = (e) => {
@@ -850,16 +790,7 @@ const initializeApp = () => {
         if (favoriteIcon) { // Handle favorite click
             const product = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc };
             toggleFavorite(product, favoriteIcon);
-            return;
-        } else if (cartIcon) { // Handle cart click inside a product card
-            // If on the index page, do not open the quick add modal.
-            if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html')) {
-                return;
-            }
-            const productData = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc, sizes: card.dataset.sizes || 'M' };
-            openQuickAddModal(productData);
-            return;
-        }
+            return;        }
         const productPage = card.dataset.pageUrl;
         if (productPage) {
              window.location.href = productPage;

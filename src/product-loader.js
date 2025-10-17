@@ -231,9 +231,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="product-favorite-icon">
                             <i class="far fa-heart"></i>
                         </div>
-                        <div class="product-cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
                     </div>
                 </div>
             </div>
