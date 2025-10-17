@@ -427,15 +427,13 @@ body.no-scroll {
     transform: scale(1.1) rotate(-15deg);
 }
 
-/* New style for the cart button to remove the circle */
-.cart-btn {
+/* Style for the cart link in the header */
+.nav-actions .cart-link {
     background: transparent;
     border: none;
     color: #fff;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1.2rem; /* Slightly larger icon */
-    padding: 10px; /* Add some padding for easier clicking */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -443,18 +441,14 @@ body.no-scroll {
     justify-self: end; /* Align it to the very end */
 }
 .cart-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    cursor: pointer;
     position: relative; /* Needed for positioning the count badge */
     text-decoration: none; /* In case it's a link */
 }
 
 .cart-count {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 2px;
+    right: 2px;
     background-color: #ffffff;
     color: #3a3a3a;
     border-radius: 50%;
@@ -468,7 +462,7 @@ body.no-scroll {
     border: 1px solid #3a3a3a;
 }
 
-.cart-btn:hover i {
+.nav-actions .cart-link:hover i {
     transform: scale(1.1) rotate(5deg);
 }
 
