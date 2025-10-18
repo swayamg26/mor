@@ -222,10 +222,17 @@
                 }, 10);
             };
 
-            // Render all products
-            // `allProducts` is now available globally from products.js
+            // Render products from ID 15 to 25
             if (window.allProducts) {
-                renderProducts(window.allProducts);
+                const filteredProducts = window.allProducts.filter(p => {
+                    // Use a regex to test if the ID is purely numeric
+                    if (/^\d+$/.test(p.id)) {
+                        const idNum = parseInt(p.id, 10);
+                        return idNum >= 15 && idNum <= 25;
+                    }
+                    return false;
+                });
+                renderProducts(filteredProducts);
             }
         });
     </script>
