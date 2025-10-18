@@ -93,77 +93,77 @@ const allProducts = [
     ,
     { 
         id: "15", name: "Crimson Red Kurta Set", price: "₹1,699", oldPrice: "₹2,299", imgSrc: "6A.jpg", material: "Rayon", pageUrl: "product.html?id=15",
-        galleryImages: ["15A.jpg", "15B.jpg", "15C.jpg"],
+        galleryImages: ["15A.jpg", "15B.jpg", "15C.jpg","15D.jpg"],
         sizes: ["S", "M", "L", "XL"],
         description: "A vibrant crimson red kurta set perfect for festive occasions. Made from soft rayon for all-day comfort, this set features intricate embroidery.",
         specification: "<strong>Material:</strong> Premium Rayon <br> <strong>Fit:</strong> Straight <br> <strong>Sleeves:</strong> 3/4 Length"
     },
     { 
         id: "16", name: "Azure Blue Kaftan", price: "₹1,999", oldPrice: "₹2,599", imgSrc: "9A.jpg", material: "Silk Blend", pageUrl: "product.html?id=16",
-        galleryImages: ["16A.jpg", "16B.jpg", "16C.jpg"],
+        galleryImages: ["16A.jpg", "16B.jpg", "16C.jpg","16D.jpg"],
         sizes: ["Free Size"],
         description: "An elegant azure blue kaftan made from a luxurious silk blend. Features delicate pearl detailing on the hem for a touch of sophistication.",
         specification: "<strong>Material:</strong> Silk Blend <br> <strong>Style:</strong> Kaftan <br> <strong>Fit:</strong> Relaxed"
     },
     { 
         id: "17", name: "Golden Mustard Palazzo Set", price: "₹2,199", oldPrice: "₹2,799", imgSrc: "4A.jpg", material: "Viscose", pageUrl: "product.html?id=17",
-        galleryImages: ["17A.jpg", "17B.jpg", "17C.jpg"],
+        galleryImages: ["17A.jpg", "17B.jpg", "17C.jpg","17D.jpg"],
         sizes: ["M", "L", "XL"],
         description: "A stunning golden mustard palazzo set that exudes grace. The flowing fabric and comfortable fit make it ideal for long events.",
         specification: "<strong>Material:</strong> Premium Viscose <br> <strong>Style:</strong> Kurta with Palazzo <br> <strong>Fit:</strong> Relaxed"
     },
     { 
         id: "18", name: "Pastel Green One-Shoulder", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "5A.jpg", material: "Crepe", pageUrl: "product.html?id=18",
-        galleryImages: ["18A.jpg", "18B.jpg"],
+        galleryImages: ["18A.jpg", "18B.jpg", "18C.jpg","18D.jpg"],
         sizes: ["S", "M", "L"],
         description: "A modern and chic one-shoulder outfit in a beautiful pastel green. The draped design is both elegant and contemporary.",
         specification: "<strong>Material:</strong> High-quality Crepe <br> <strong>Style:</strong> One-Shoulder Draped Top <br> <strong>Fit:</strong> Fashion Fit"
     },
     { 
         id: "19", name: "Zebra Print Co-ord Set", price: "₹1,750", oldPrice: "₹2,150", imgSrc: "7A.jpg", material: "Poly-Crepe", pageUrl: "product.html?id=19",
-        galleryImages: ["19A.jpg", "19B.jpg"],
+        galleryImages: ["19A.jpg", "19B.jpg", "19C.jpg","19D.jpg"],
         sizes: ["S", "M", "L"],
         description: "Unleash your wild side with this bold zebra print co-ord set. The set includes a stylish shrug and matching pants.",
         specification: "<strong>Material:</strong> Poly-Crepe <br> <strong>Print:</strong> Animal Print <br> <strong>Fit:</strong> Relaxed"
     },
     { 
         id: "20", name: "Fuchsia Pink Ikat Kurti", price: "₹1,550", oldPrice: "₹2,050", imgSrc: "8A.jpg", material: "Viscose Rayon", pageUrl: "product.html?id=20",
-        galleryImages: ["20A.jpg", "20B.jpg", "20C.jpg"],
+        galleryImages: ["20A.jpg", "20B.jpg", "20C.jpg","20D.jpg"],
         sizes: ["S", "M", "L", "XL"],
         description: "A vibrant fuchsia pink kurti featuring a traditional Ikat print. The neckline is adorned with delicate embroidery.",
         specification: "<strong>Material:</strong> Viscose Rayon <br> <strong>Print:</strong> Ikat <br> <strong>Fit:</strong> Straight"
     },
     { 
         id: "21", name: "Bohemian White Kaftan", price: "₹2,299", oldPrice: "₹2,999", imgSrc: "11A.jpg", material: "Cotton", pageUrl: "product.html?id=21",
-        galleryImages: ["21A.jpg", "21B.jpg"],
+        galleryImages: ["21A.jpg", "21B.jpg","21C.jpg","21D.jpg"],
         sizes: ["Free Size"],
         description: "A beautiful bohemian-style kaftan in white, with contrasting black embroidery. Perfect for a relaxed, stylish look.",
         specification: "<strong>Material:</strong> 100% Cotton <br> <strong>Style:</strong> Kaftan <br> <strong>Embroidery:</strong> Machine Embroidery"
     },
     { 
         id: "22", name: "Abstract Print Silk Set", price: "₹2,399", oldPrice: "₹3,099", imgSrc: "12A.jpg", material: "Silk Blend", pageUrl: "product.html?id=22",
-        galleryImages: ["22A.jpg", "22B.jpg"],
+        galleryImages: ["22A.jpg", "22B.jpg","22C.jpg","22D.jpg"],
         sizes: ["M", "L", "XL"],
         description: "A colorful and artistic co-ord set with an abstract print. The silk blend fabric gives it a luxurious feel.",
         specification: "<strong>Material:</strong> Silk Blend <br> <strong>Print:</strong> Abstract <br> <strong>Fit:</strong> Relaxed"
     },
     { 
         id: "23", name: "Hand-Painted Linen Kurta", price: "₹2,899", oldPrice: "₹3,599", imgSrc: "13A.jpg", material: "Linen", pageUrl: "product.html?id=23",
-        galleryImages: ["23A.jpg", "23B.jpg"],
+        galleryImages: ["23A.jpg", "23B.jpg","23C.jpg","23D.jpg"],
         sizes: ["S", "M", "L"],
         description: "A unique piece of wearable art. This linen kurta features a hand-painted floral design, making each piece one-of-a-kind.",
         specification: "<strong>Material:</strong> Cotton Linen <br> <strong>Art:</strong> Hand-Painted <br> <strong>Fit:</strong> Regular",
     },
     { 
         id: "24", name: "Royal Purple Kaftan", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "2A.jpg", material: "Rayon", pageUrl: "product.html?id=24",
-        galleryImages: [ "24A.jpg", "24B.jpg"],
+        galleryImages: [ "24A.jpg", "24B.jpg","24C.jpg","24D.jpg"],
         sizes: ["Free Size"],
         description: "A deep purple kaftan with exquisite embroidery around the neckline. The flowing rayon fabric ensures a comfortable and flattering fit.",
         specification: "<strong>Material:</strong> Premium Rayon <br> <strong>Style:</strong> Kaftan <br> <strong>Fit:</strong> Relaxed",
     },
     { 
         id: "25", name: "Midnight Black Mirror Work Kurta", price: "₹2,599", oldPrice: "₹3,299", imgSrc: "1A.jpg", material: "Cotton", pageUrl: "product.html?id=25",
-        galleryImages: ["25A.jpg", "25B.jpg", "25C.jpg"],
+        galleryImages: ["25A.jpg", "25B.jpg", "25C.jpg","25D.jpg"],
         sizes: ["S", "M", "L", "XL"],
         description: "An elegant midnight black kurta adorned with traditional mirror work (Abhla embroidery), perfect for evening events and celebrations.",
         specification: "<strong>Material:</strong> 100% Cotton <br> <strong>Embroidery:</strong> Mirror Work (Abhla) <br> <strong>Fit:</strong> Regular"
