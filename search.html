@@ -101,25 +101,10 @@
         </div>
     </footer>
 
+    <script src="products.js"></script>
     <script src="mor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const allProducts = [
-                { id: "1A", name: "Black Chikankari Kurti", price: "₹1,499", imgSrc: "1A.jpg", pageUrl: "product.html?id=1A", material: "Cotton" },
-                { id: "2A", name: "Stylish Rayon Kurti", price: "₹1,399", imgSrc: "2A.jpg", pageUrl: "product.html?id=2A", material: "Rayon" },
-                { id: "3A", name: "Elegant Georgette Kurti", price: "₹1,599", imgSrc: "3A.jpg", pageUrl: "product.html?id=3A", material: "Georgette" },
-                { id: "14", name: "Classic Viscose Kurta", price: "₹1,899", imgSrc: "4A.jpg", pageUrl: "product.html?id=14", material: "Viscose" },
-                { id: "5A", name: "Green Floral Kurti", price: "₹1,199", imgSrc: "5A.jpg", pageUrl: "product.html?id=5A", material: "Cotton" },
-                { id: "6A", name: "Red Printed Kurti", price: "₹1,299", imgSrc: "6A.jpg", pageUrl: "product.html?id=6A", material: "Rayon" },
-                { id: "7A", name: "Yellow Summer Kurti", price: "₹1,099", imgSrc: "7A.jpg", pageUrl: "product.html?id=7A", material: "Cotton" },
-                { id: "8A", name: "Blue Casual Kurti", price: "₹1,399", imgSrc: "8A.jpg", pageUrl: "product.html?id=8A", material: "Viscose" },
-                { id: "9A", name: "Navy Blue Kurti Set", price: "₹1,799", imgSrc: "9A.jpg", pageUrl: "product.html?id=9A", material: "Silk Blend" },
-                { id: "10A", name: "Maroon Velvet Kurti", price: "₹2,499", imgSrc: "10A.jpg", pageUrl: "product.html?id=10A", material: "Velvet" },
-                { id: "11A", name: "Light Green Kurti", price: "₹1,450", imgSrc: "11A.jpg", pageUrl: "product.html?id=11A", material: "Cotton" },
-                { id: "12A", name: "Purple Silk Kurti", price: "₹1,999", imgSrc: "12A.jpg", pageUrl: "product.html?id=12A", material: "Silk" },
-                { id: "13A", name: "Royal Blue Silk Saree", price: "₹2,999", imgSrc: "13A.jpg", pageUrl: "product.html?id=13A", material: "Silk" }
-            ];
-
             const searchInput = document.querySelector('.search-input');
             const searchBtn = document.querySelector('.search-bar-container .search-btn');
             const resultsGrid = document.getElementById('search-results-grid');
@@ -161,7 +146,7 @@
                     renderProducts([]); // Clear results if search is empty
                     return;
                 }
-                const filteredProducts = allProducts.filter(product => 
+                const filteredProducts = window.allProducts.filter(product => 
                     product.name.toLowerCase().includes(searchTerm)
                 );
                 renderProducts(filteredProducts);

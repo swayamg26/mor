@@ -563,9 +563,10 @@ const initializeApp = () => {
                 const itemEl = document.createElement('div');
                 itemEl.className = 'cart-item';
                 // Using the same layout as the old side panel for consistency
+                const imagePath = item.imgSrc.startsWith('photos/') ? item.imgSrc : `photos/${item.imgSrc}`;
                 itemEl.innerHTML = `
                     <a href="${item.pageUrl}" class="cart-item-img-link">
-                        <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                        <img src="${imagePath}" alt="${item.name}" class="cart-item-img">
                     </a>
                     <div class="cart-item-details">
                         <a href="${item.pageUrl}" class="cart-item-name-link"><div class="cart-item-name">${item.name}</div></a>

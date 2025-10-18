@@ -158,21 +158,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Add to Cart ---
     document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-        if (window.isUserLoggedIn && !window.isUserLoggedIn()) {
-            window.openLoginRequiredModal && window.openLoginRequiredModal('Login to add an item to cart.');
-            return;
-        }
-
         const productForCart = {
+            id: product.id, // The base product ID
             name: product.name,
             price: product.price,
             size: sizeSelector.querySelector('.size-btn.active').textContent,
             imgSrc: product.imgSrc,
             quantity: parseInt(quantityValue.textContent),
-            sizes: product.sizes ? product.sizes.join(', ') : ''
+            pageUrl: product.pageUrl
         };
-        window.addToCart && window.addToCart(productForCart);
-        window.showToast && window.showToast(`${product.name} has been added to your cart!`);
+
+        // Use the flyToCart animation which now handles adding the item
+        const startElement = document.getElementById('add-to-cart-btn');
+        window.flyToCart(startElement, productForCart);
     });
 
     // --- Accordion ---
