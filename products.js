@@ -120,7 +120,7 @@ const allProducts = [
         specification: "<strong>Material:</strong> High-quality Crepe <br> <strong>Style:</strong> One-Shoulder Draped Top <br> <strong>Fit:</strong> Fashion Fit"
     },
     { 
-        id: "19", name: "Zebra Print Co-ord Set", price: "₹1,750", oldPrice: "₹2,150", imgSrc: "photos/19A.jpg", material: "Poly-Crepe", pageUrl: "product.html?id=19",
+        id: "19", name: "Zebra Print Co-ord Set", price: "₹1,750", oldPrice: "₹2,150", imgSrc: "photos/19B.jpg", material: "Poly-Crepe", pageUrl: "product.html?id=19",
         galleryImages: ["photos/19A.jpg", "photos/19B.jpg", "photos/19C.jpg","photos/19D.jpg"],
         sizes: ["S", "M", "L"],
         description: "Unleash your wild side with this bold zebra print co-ord set. The set includes a stylish shrug and matching pants.",
