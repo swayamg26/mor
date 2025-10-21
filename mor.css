@@ -552,14 +552,21 @@ main {
 
 .promo-slider-container {
     position: relative;
-    display: flex;
-    align-items: center;
+    display: flex; /* Use flexbox for alignment */
+    align-items: flex-end; /* Align content to the bottom */
     justify-content: center; 
     background: #3a3a3a;
     width: 100%;
     margin: 0 auto;
     overflow: hidden;
     aspect-ratio: 4 / 5;
+}
+
+.promo-content {
+    position: relative; /* Ensure it's on top of the overlay */
+    z-index: 2;
+    padding-bottom: 2rem; /* Add some space from the bottom edge */
+    text-align: center;
 }
 
 .promo-img {

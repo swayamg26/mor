@@ -107,21 +107,21 @@ const allProducts = [
     },
     { 
         id: "17", name: "Golden Mustard Palazzo Set", price: "₹2,199", oldPrice: "₹2,799", imgSrc: "photos/17A.jpg", material: "Viscose", pageUrl: "product.html?id=17",
-        galleryImages: ["photos/17A.jpg", "photos/17B.jpg", "photos/17C.jpg","photos/17D.jpg"],
+        galleryImages: ["photos/17A.jpg", "photos/17B.jpg", "photos/17C.jpg"],
         sizes: ["M", "L", "XL"],
         description: "A stunning golden mustard palazzo set that exudes grace. The flowing fabric and comfortable fit make it ideal for long events.",
         specification: "<strong>Material:</strong> Premium Viscose <br> <strong>Style:</strong> Kurta with Palazzo <br> <strong>Fit:</strong> Relaxed"
     },
     { 
         id: "18", name: "Pastel Green One-Shoulder", price: "₹1,899", oldPrice: "₹2,499", imgSrc: "photos/18A.jpg", material: "Crepe", pageUrl: "product.html?id=18",
-        galleryImages: ["photos/18A.jpg", "photos/18B.jpg", "photos/18C.jpg","photos/18D.jpg"],
+        galleryImages: ["photos/18A.jpg", "photos/18B.jpg", "photos/18C.jpg"],
         sizes: ["S", "M", "L"],
         description: "A modern and chic one-shoulder outfit in a beautiful pastel green. The draped design is both elegant and contemporary.",
         specification: "<strong>Material:</strong> High-quality Crepe <br> <strong>Style:</strong> One-Shoulder Draped Top <br> <strong>Fit:</strong> Fashion Fit"
     },
     { 
         id: "19", name: "Zebra Print Co-ord Set", price: "₹1,750", oldPrice: "₹2,150", imgSrc: "photos/19B.jpg", material: "Poly-Crepe", pageUrl: "product.html?id=19",
-        galleryImages: ["photos/19A.jpg", "photos/19B.jpg", "photos/19C.jpg","photos/19D.jpg"],
+        galleryImages: ["photos/19A.jpg", "photos/19B.jpg", "photos/19C.jpg"],
         sizes: ["S", "M", "L"],
         description: "Unleash your wild side with this bold zebra print co-ord set. The set includes a stylish shrug and matching pants.",
         specification: "<strong>Material:</strong> Poly-Crepe <br> <strong>Print:</strong> Animal Print <br> <strong>Fit:</strong> Relaxed"
@@ -135,14 +135,14 @@ const allProducts = [
     },
     { 
         id: "21", name: "Bohemian White Kaftan", price: "₹2,299", oldPrice: "₹2,999", imgSrc: "photos/21A.jpg", material: "Cotton", pageUrl: "product.html?id=21",
-        galleryImages: ["photos/21A.jpg", "photos/21B.jpg","photos/21C.jpg","photos/21D.jpg"],
+        galleryImages: ["photos/21A.jpg", "photos/21B.jpg","photos/21C.jpg"],
         sizes: ["Free Size"],
         description: "A beautiful bohemian-style kaftan in white, with contrasting black embroidery. Perfect for a relaxed, stylish look.",
         specification: "<strong>Material:</strong> 100% Cotton <br> <strong>Style:</strong> Kaftan <br> <strong>Embroidery:</strong> Machine Embroidery"
     },
     { 
         id: "22", name: "Abstract Print Silk Set", price: "₹2,399", oldPrice: "₹3,099", imgSrc: "photos/22A.jpg", material: "Silk Blend", pageUrl: "product.html?id=22",
-        galleryImages: ["photos/22A.jpg", "photos/22B.jpg","photos/22C.jpg","photos/22D.jpg"],
+        galleryImages: ["photos/22A.jpg", "photos/22B.jpg","photos/22C.jpg"],
         sizes: ["M", "L", "XL"],
         description: "A colorful and artistic co-ord set with an abstract print. The silk blend fabric gives it a luxurious feel.",
         specification: "<strong>Material:</strong> Silk Blend <br> <strong>Print:</strong> Abstract <br> <strong>Fit:</strong> Relaxed"
@@ -163,7 +163,7 @@ const allProducts = [
     },
     { 
         id: "25", name: "Midnight Black Mirror Work Kurta", price: "₹2,599", oldPrice: "₹3,299", imgSrc: "photos/25A.jpg", material: "Cotton", pageUrl: "product.html?id=25",
-        galleryImages: ["photos/25A.jpg", "photos/25B.jpg", "photos/25C.jpg","photos/25D.jpg"],
+        galleryImages: ["photos/25A.jpg", "photos/25B.jpg", "photos/25C.jpg"],
         sizes: ["S", "M", "L", "XL"],
         description: "An elegant midnight black kurta adorned with traditional mirror work (Abhla embroidery), perfect for evening events and celebrations.",
         specification: "<strong>Material:</strong> 100% Cotton <br> <strong>Embroidery:</strong> Mirror Work (Abhla) <br> <strong>Fit:</strong> Regular"
