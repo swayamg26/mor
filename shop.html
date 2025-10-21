@@ -195,8 +195,8 @@
                     const sizes = product.sizes ? product.sizes.join(',') : 'M';
                     const productCardHTML = `
                         <div class="product-item-wrapper no-info" data-page-url="${product.pageUrl}" style="cursor: pointer;">
-                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="photos/${product.imgSrc}" data-page-url="${product.pageUrl}" data-sizes="${sizes}">
-                                <div class="product-image-container"><img src="photos/${product.imgSrc}" alt="${product.name}" loading="lazy">
+                            <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}" data-page-url="${product.pageUrl}" data-sizes="${sizes}">
+                                <div class="product-image-container"><img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
                                     <div class="product-favorite-icon"><i class="far fa-heart"></i></div>
                                 </div>
                             </div>

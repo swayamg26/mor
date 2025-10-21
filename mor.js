@@ -349,7 +349,7 @@ const initializeApp = () => {
                     const productCardHTML = `
                         <div class="product-item-wrapper no-info" data-page-url="${product.pageUrl || `product.html?id=${product.id}`}" style="cursor: pointer;">
                             <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-img-src="${product.imgSrc}" data-page-url="${product.pageUrl || `product.html?id=${product.id}`}" data-sizes="${product.sizes || 'M'}">
-                                <div class="product-image-container"><img src="${product.imgSrc}" alt="${product.name}" loading="lazy">
+                                <div class="product-image-container"><img src="${product.imgSrc.startsWith('photos/') ? product.imgSrc : 'photos/' + product.imgSrc}" alt="${product.name}" loading="lazy">
                                     <div class="product-favorite-icon"><i class="fas fa-heart"></i></div>
                                 </div>
                             </div>

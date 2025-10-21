@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elementsToAnimate.forEach((el, index) => {
         // Apply a staggered delay only to items in a scroll container
         if (el.closest('.featured-scroll, .categories-scroll')) {
-            el.style.transitionDelay = `${index * 30}ms`;
+            el.style.transitionDelay = `${index * 20}ms`;
         }
         observer.observe(el);
     });
