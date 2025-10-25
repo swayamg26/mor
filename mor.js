@@ -361,29 +361,32 @@ const initializeApp = () => {
         }
     };
 
-    const toggleFavorite = (product, icon) => {
+    const toggleFavorite = async (product, icon) => {
         if (!isUserLoggedIn()) {
             window.openLoginRequiredModal('You need to be logged in to save favorites.');
             return;
         }
-
-        const isFavorited = favoriteItems.some(item => item.name === product.name);
-
-        if (favoriteItems.length === 0) {
-            favoritesItemsContainer.style.display = 'none';
-            favoritesEmptyMsg.style.display = 'block';
-        } else {
-            if (isFavorited) {
-                favoriteItems = favoriteItems.filter(item => item.name !== product.name);
-                icon.innerHTML = '<i class="far fa-heart"></i>'; // Change to empty heart
-            } else {
-                favoriteItems.push(product);
-                icon.innerHTML = '<i class="fas fa-heart"></i>'; // Change to solid heart
-            }
+    
+        // Use the new Firebase-backed toggleFavorite function
+        // Ensure you have `id` in the product object for this to work.
+        const productId = product.id;
+        if (!productId) {
+            console.error("Product ID is missing. Cannot toggle favorite.", product);
+            window.showToast('Could not update favorites.', 'fa-exclamation-triangle');
+            return;
         }
-        saveFavorites();
+    
+        // The toggleFavorite from fav.js returns `true` if added, `false` if removed.
+        const wasAdded = await window.toggleFavorite(productId, product);
+    
+        if (wasAdded) {
+            icon.innerHTML = '<i class="fas fa-heart"></i>'; // Change to solid heart
+        } else {
+            icon.innerHTML = '<i class="far fa-heart"></i>'; // Change to empty heart
+        }
+        // The UI update will be handled by the sync/load functions. We can force an update.
+        updateFavoritesUI();
     };
-    window.toggleFavorite = toggleFavorite; // Make it global
 
     const isFavorited = (product) => {
         return favoriteItems.some(item => item.name === product.name);
@@ -610,6 +613,9 @@ const initializeApp = () => {
             cartItems.push(product);
         }
         saveCart();
+
+        // Reload the page to reflect the cart changes
+        window.location.reload();
     };
     window.addToCart = addToCart; // Make it global
 
@@ -770,11 +776,12 @@ const initializeApp = () => {
         const favoriteIcon = e.target.closest('.product-favorite-icon');
         // Make selector more specific to only target cart icons inside product cards
         const cartIcon = e.target.closest('.product-card .product-cart-icon');
-    
+
         if (favoriteIcon) { // Handle favorite click
-            const product = { name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc };
+            const product = { id: card.dataset.pageUrl.split('id=')[1], name: card.dataset.name, price: card.dataset.price, imgSrc: card.dataset.imgSrc, pageUrl: card.dataset.pageUrl };
             toggleFavorite(product, favoriteIcon);
-            return;        }
+            return;
+        }
         const productPage = card.dataset.pageUrl;
         if (productPage) {
              window.location.href = productPage;

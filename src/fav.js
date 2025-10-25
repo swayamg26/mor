@@ -101,6 +101,9 @@ export async function toggleFavorite(productId, productData) {
         return false;
     }
 }
+// Make it globally accessible for mor.js
+window.toggleFavorite = toggleFavorite;
+
 
 export async function isFavorite(productId) {
     try {

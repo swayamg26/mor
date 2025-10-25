@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
         favIconContainer.innerHTML = '<i class="fas fa-heart"></i>';
     }
     favIconContainer.addEventListener('click', () => {
-        window.toggleFavorite && window.toggleFavorite(product, favIconContainer);
+        window.toggleFavorite && window.toggleFavorite(product, favIconContainer); // `product` object already contains the id
     });
 
     // --- Share Button ---
